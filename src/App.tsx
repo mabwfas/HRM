@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Button, Input, Select, Card, TextArea } from './components/ui';
+import { Button, Input, Select, Card, TextArea, DatePicker } from './components/ui';
 import { OfferLetterTemplate } from './components/templates/OfferLetterTemplate';
 import { SalarySlipTemplate } from './components/templates/SalarySlipTemplate';
 import { InternshipLetterTemplate } from './components/templates/InternshipLetterTemplate';
@@ -80,6 +80,50 @@ function App() {
     const [selectedDoc, setSelectedDoc] = useState<DocumentType>('offer-letter');
     const previewRef = useRef<HTMLDivElement>(null);
     const [showSeal, setShowSeal] = useState(true);
+
+    // Dark Mode
+    const [darkMode, setDarkMode] = useState(() => {
+        const saved = localStorage.getItem('hr_darkMode');
+        return saved ? JSON.parse(saved) : false;
+    });
+
+    // Full-screen Preview Mode
+    const [fullscreenPreview, setFullscreenPreview] = useState(false);
+
+    // Employee Database
+    interface SavedEmployee {
+        id: string;
+        name: string;
+        employeeId: string;
+        designation: string;
+        department: string;
+        email?: string;
+        phone?: string;
+        address?: string;
+        joiningDate?: string;
+    }
+    const [savedEmployees, setSavedEmployees] = useState<SavedEmployee[]>(() => {
+        try {
+            const saved = localStorage.getItem('hr_employees');
+            return saved ? JSON.parse(saved) : [];
+        } catch { return []; }
+    });
+    const [showEmployeeModal, setShowEmployeeModal] = useState(false);
+
+    // Persist dark mode
+    useEffect(() => {
+        localStorage.setItem('hr_darkMode', JSON.stringify(darkMode));
+        if (darkMode) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    }, [darkMode]);
+
+    // Persist employees
+    useEffect(() => {
+        localStorage.setItem('hr_employees', JSON.stringify(savedEmployees));
+    }, [savedEmployees]);
 
     // Load saved data from localStorage or use initial data
     const loadFromStorage = <T,>(key: string, initial: T): T => {
@@ -292,17 +336,54 @@ function App() {
     // Mobile navigation state
     const [mobileView, setMobileView] = useState<'docs' | 'form' | 'preview'>('form');
 
+    // Full-screen preview render
+    if (fullscreenPreview) {
+        return (
+            <div className="fixed inset-0 bg-slate-900 z-50 overflow-auto">
+                <div className="sticky top-0 bg-slate-800 p-4 flex justify-between items-center">
+                    <h2 className="text-white font-bold">Preview Mode</h2>
+                    <div className="flex gap-2">
+                        <Button onClick={handleDownloadPDF} size="sm">📥 Download PDF</Button>
+                        <Button onClick={() => setFullscreenPreview(false)} size="sm" className="bg-slate-600">✕ Close</Button>
+                    </div>
+                </div>
+                <div className="flex justify-center p-6">
+                    <div id="print-content">
+                        {selectedDoc === 'offer-letter' && <OfferLetterTemplate ref={previewRef} data={offerData} showSeal={showSeal} />}
+                        {selectedDoc === 'salary-slip' && <SalarySlipTemplate ref={previewRef} data={salaryData} />}
+                        {selectedDoc === 'internship-letter' && <InternshipLetterTemplate ref={previewRef} data={internshipData} />}
+                        {selectedDoc === 'experience-certificate' && <ExperienceCertificateTemplate ref={previewRef} data={experienceData} />}
+                        {selectedDoc === 'relieving-letter' && <RelievingLetterTemplate ref={previewRef} data={relievingData} />}
+                        {selectedDoc === 'appraisal-letter' && <AppraisalLetterTemplate ref={previewRef} data={appraisalData} />}
+                        {selectedDoc === 'internship-completion' && <InternshipCompletionTemplate ref={previewRef} data={internshipCompletionData} />}
+                        {selectedDoc === 'training-certificate' && <TrainingCertificateTemplate ref={previewRef} data={trainingCertificateData} />}
+                        {selectedDoc === 'promotion-letter' && <PromotionLetterTemplate ref={previewRef} data={promotionData} />}
+                        {selectedDoc === 'warning-letter' && <WarningLetterTemplate ref={previewRef} data={warningData} />}
+                        {selectedDoc === 'termination-letter' && <TerminationLetterTemplate ref={previewRef} data={terminationData} />}
+                        {selectedDoc === 'joining-letter' && <JoiningLetterTemplate ref={previewRef} data={joiningData} />}
+                        {selectedDoc === 'address-proof' && <AddressProofLetterTemplate ref={previewRef} data={addressProofData} />}
+                    </div>
+                </div>
+            </div>
+        );
+    }
+
     return (
-        <div className="flex flex-col md:flex-row h-screen w-screen overflow-hidden bg-slate-100 font-sans">
+        <div className={`flex flex-col md:flex-row h-screen w-screen overflow-hidden font-sans ${darkMode ? 'dark bg-slate-900' : 'bg-slate-100'}`}>
             {/* Mobile Header - Only visible on mobile */}
             <div className="md:hidden bg-gradient-to-r from-slate-800 to-slate-900 p-4 flex items-center justify-between">
                 <div>
                     <h1 className="text-lg font-bold text-white">HR Docs Editor</h1>
                     <p className="text-xs text-slate-400">{currentDocOption?.icon} {currentDocOption?.label}</p>
                 </div>
-                <Button onClick={handleDownloadPDF} size="sm">
-                    📥 PDF
-                </Button>
+                <div className="flex gap-2">
+                    <button onClick={() => setDarkMode(!darkMode)} className="p-2 rounded-lg bg-slate-700 text-white">
+                        {darkMode ? '☀️' : '🌙'}
+                    </button>
+                    <Button onClick={handleDownloadPDF} size="sm">
+                        📥 PDF
+                    </Button>
+                </div>
             </div>
 
             {/* Left Sidebar - Hidden on mobile, visible on md+ */}
@@ -357,15 +438,38 @@ function App() {
                 </div>
 
                 {/* Print and Options */}
-                <div className="p-4 border-t border-slate-200 bg-slate-50 space-y-2">
+                <div className="p-4 border-t border-slate-200 bg-slate-50 dark:bg-slate-800 dark:border-slate-700 space-y-2">
+                    <div className="grid grid-cols-2 gap-2">
+                        <button
+                            onClick={() => setShowSeal(!showSeal)}
+                            className={`flex items-center justify-center gap-1 px-3 py-2 rounded-lg text-xs font-medium transition-all ${showSeal
+                                ? 'bg-blue-100 text-blue-700 border border-blue-300'
+                                : 'bg-slate-100 text-slate-600 border border-slate-300'
+                                }`}
+                        >
+                            {showSeal ? '⭕ Seal' : '⚪ Seal'}
+                        </button>
+                        <button
+                            onClick={() => setDarkMode(!darkMode)}
+                            className={`flex items-center justify-center gap-1 px-3 py-2 rounded-lg text-xs font-medium transition-all ${darkMode
+                                ? 'bg-indigo-100 text-indigo-700 border border-indigo-300'
+                                : 'bg-slate-100 text-slate-600 border border-slate-300'
+                                }`}
+                        >
+                            {darkMode ? '☀️ Light' : '🌙 Dark'}
+                        </button>
+                    </div>
                     <button
-                        onClick={() => setShowSeal(!showSeal)}
-                        className={`w-full flex items-center justify-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all ${showSeal
-                            ? 'bg-blue-100 text-blue-700 border border-blue-300'
-                            : 'bg-slate-100 text-slate-600 border border-slate-300'
-                            }`}
+                        onClick={() => setFullscreenPreview(true)}
+                        className="w-full flex items-center justify-center gap-2 px-4 py-2 rounded-lg text-sm font-medium bg-slate-100 text-slate-700 border border-slate-300 hover:bg-slate-200 transition-all"
                     >
-                        {showSeal ? '⭕ Seal: ON' : '⚪ Seal: OFF'}
+                        🔍 Fullscreen Preview
+                    </button>
+                    <button
+                        onClick={() => setShowEmployeeModal(true)}
+                        className="w-full flex items-center justify-center gap-2 px-4 py-2 rounded-lg text-sm font-medium bg-green-100 text-green-700 border border-green-300 hover:bg-green-200 transition-all"
+                    >
+                        👥 Employee Database
                     </button>
                     <Button onClick={handleDownloadPDF} className="w-full" size="lg">
                         📥 Download PDF
@@ -444,7 +548,7 @@ function App() {
                                             <Input label="Year" name="refYear" value={offerData.refYear} onChange={handleChange(setOfferData)} />
                                             <Input label="Number" name="refNumber" value={offerData.refNumber} onChange={handleChange(setOfferData)} />
                                         </div>
-                                        <Input label="Date" name="date" value={offerData.date} onChange={handleChange(setOfferData)} />
+                                        <DatePicker label="Date" name="date" value={offerData.date} onChange={handleChange(setOfferData)} />
                                     </div>
                                 </Card>
                                 <Card title="Candidate Details" headerClassName="bg-indigo-50">
@@ -1184,6 +1288,122 @@ function App() {
           }
         }
       `}</style>
+
+            {/* Employee Database Modal */}
+            {showEmployeeModal && (
+                <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+                    <div className={`w-full max-w-2xl max-h-[80vh] rounded-2xl shadow-2xl overflow-hidden ${darkMode ? 'bg-slate-800' : 'bg-white'}`}>
+                        <div className="p-4 bg-gradient-to-r from-green-600 to-emerald-600 text-white flex justify-between items-center">
+                            <h3 className="text-lg font-bold">👥 Employee Database</h3>
+                            <button onClick={() => setShowEmployeeModal(false)} className="text-white/80 hover:text-white text-2xl">×</button>
+                        </div>
+                        <div className="p-4 overflow-y-auto max-h-[60vh]">
+                            {savedEmployees.length === 0 ? (
+                                <p className={`text-center py-8 ${darkMode ? 'text-slate-400' : 'text-slate-500'}`}>
+                                    No employees saved yet. Fill a form and click "Save Employee" to add.
+                                </p>
+                            ) : (
+                                <div className="space-y-2">
+                                    {savedEmployees.map(emp => (
+                                        <div key={emp.id} className={`flex items-center justify-between p-3 rounded-lg border ${darkMode ? 'bg-slate-700 border-slate-600' : 'bg-slate-50 border-slate-200'}`}>
+                                            <div>
+                                                <p className={`font-medium ${darkMode ? 'text-white' : 'text-slate-800'}`}>{emp.name}</p>
+                                                <p className={`text-sm ${darkMode ? 'text-slate-400' : 'text-slate-500'}`}>{emp.designation} • {emp.department}</p>
+                                            </div>
+                                            <div className="flex gap-2">
+                                                <button
+                                                    onClick={() => {
+                                                        // Auto-fill current form
+                                                        if (selectedDoc === 'offer-letter') {
+                                                            setOfferData(prev => ({ ...prev, candidateName: emp.name, candidateAddress: emp.address || '' }));
+                                                        } else if (selectedDoc === 'salary-slip') {
+                                                            setSalaryData(prev => ({ ...prev, employeeName: emp.name, employeeId: emp.employeeId, designation: emp.designation, department: emp.department }));
+                                                        } else if (selectedDoc === 'experience-certificate') {
+                                                            setExperienceData(prev => ({ ...prev, employeeName: emp.name, employeeId: emp.employeeId, designation: emp.designation, department: emp.department }));
+                                                        } else if (selectedDoc === 'relieving-letter') {
+                                                            setRelievingData(prev => ({ ...prev, employeeName: emp.name, employeeId: emp.employeeId, designation: emp.designation, department: emp.department }));
+                                                        } else if (selectedDoc === 'appraisal-letter') {
+                                                            setAppraisalData(prev => ({ ...prev, employeeName: emp.name, employeeId: emp.employeeId, designation: emp.designation, department: emp.department }));
+                                                        } else if (selectedDoc === 'promotion-letter') {
+                                                            setPromotionData(prev => ({ ...prev, employeeName: emp.name, employeeId: emp.employeeId, currentDesignation: emp.designation, department: emp.department }));
+                                                        } else if (selectedDoc === 'warning-letter') {
+                                                            setWarningData(prev => ({ ...prev, employeeName: emp.name, employeeId: emp.employeeId, designation: emp.designation, department: emp.department }));
+                                                        } else if (selectedDoc === 'termination-letter') {
+                                                            setTerminationData(prev => ({ ...prev, employeeName: emp.name, employeeId: emp.employeeId, designation: emp.designation, department: emp.department }));
+                                                        } else if (selectedDoc === 'joining-letter') {
+                                                            setJoiningData(prev => ({ ...prev, employeeName: emp.name, employeeId: emp.employeeId, designation: emp.designation, department: emp.department }));
+                                                        } else if (selectedDoc === 'address-proof') {
+                                                            setAddressProofData(prev => ({ ...prev, employeeName: emp.name, employeeId: emp.employeeId, designation: emp.designation, department: emp.department, employeeAddress: emp.address || '' }));
+                                                        }
+                                                        setShowEmployeeModal(false);
+                                                    }}
+                                                    className="px-3 py-1 text-sm bg-blue-100 text-blue-700 rounded-lg hover:bg-blue-200"
+                                                >
+                                                    Use
+                                                </button>
+                                                <button
+                                                    onClick={() => setSavedEmployees(prev => prev.filter(e => e.id !== emp.id))}
+                                                    className="px-3 py-1 text-sm bg-red-100 text-red-700 rounded-lg hover:bg-red-200"
+                                                >
+                                                    Delete
+                                                </button>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
+                        </div>
+                        <div className={`p-4 border-t ${darkMode ? 'border-slate-700' : 'border-slate-200'}`}>
+                            <button
+                                onClick={() => {
+                                    // Save current form data as new employee
+                                    const name = selectedDoc === 'offer-letter' ? offerData.candidateName :
+                                        selectedDoc === 'salary-slip' ? salaryData.employeeName :
+                                            selectedDoc === 'experience-certificate' ? experienceData.employeeName :
+                                                selectedDoc === 'relieving-letter' ? relievingData.employeeName :
+                                                    selectedDoc === 'appraisal-letter' ? appraisalData.employeeName :
+                                                        selectedDoc === 'promotion-letter' ? promotionData.employeeName :
+                                                            selectedDoc === 'warning-letter' ? warningData.employeeName :
+                                                                selectedDoc === 'termination-letter' ? terminationData.employeeName :
+                                                                    selectedDoc === 'joining-letter' ? joiningData.employeeName :
+                                                                        selectedDoc === 'address-proof' ? addressProofData.employeeName : '';
+
+                                    if (name) {
+                                        const designation = selectedDoc === 'offer-letter' ? offerData.designation :
+                                            selectedDoc === 'salary-slip' ? salaryData.designation :
+                                                selectedDoc === 'experience-certificate' ? experienceData.designation :
+                                                    selectedDoc === 'relieving-letter' ? relievingData.designation :
+                                                        selectedDoc === 'appraisal-letter' ? appraisalData.designation :
+                                                            selectedDoc === 'promotion-letter' ? promotionData.currentDesignation :
+                                                                selectedDoc === 'warning-letter' ? warningData.designation :
+                                                                    selectedDoc === 'termination-letter' ? terminationData.designation :
+                                                                        selectedDoc === 'joining-letter' ? joiningData.designation :
+                                                                            selectedDoc === 'address-proof' ? addressProofData.designation : '';
+
+                                        const department = selectedDoc === 'offer-letter' ? offerData.department :
+                                            selectedDoc === 'salary-slip' ? salaryData.department : 'General';
+
+                                        const employeeId = selectedDoc === 'salary-slip' ? salaryData.employeeId :
+                                            selectedDoc === 'experience-certificate' ? experienceData.employeeId :
+                                                selectedDoc === 'relieving-letter' ? relievingData.employeeId : 'EMP-' + Date.now().toString(36).toUpperCase();
+
+                                        setSavedEmployees(prev => [...prev, {
+                                            id: Date.now().toString(),
+                                            name,
+                                            employeeId,
+                                            designation,
+                                            department
+                                        }]);
+                                    }
+                                }}
+                                className="w-full py-2 bg-green-600 text-white rounded-lg font-medium hover:bg-green-700"
+                            >
+                                💾 Save Current Form as Employee
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }

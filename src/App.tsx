@@ -1155,16 +1155,32 @@ function App() {
         @media print {
           body { margin: 0; padding: 0; }
           .print\\:hidden { display: none !important; }
+          /* Ensure preview panel is visible and full width */
           #print-content { 
-            width: 100% !important;
+            display: block !important;
+            width: 210mm !important;
             max-width: none !important;
+            overflow: visible !important;
           }
           #print-content > div {
-            width: 100% !important;
-            max-width: 100% !important;
+            display: block !important;
+            width: 210mm !important;
+            min-width: 210mm !important;
+            max-width: 210mm !important;
             box-shadow: none !important;
             margin: 0 !important;
+            padding: 0 !important;
             transform: none !important;
+            transform-origin: top left !important;
+          }
+          /* Override any mobile scaling */
+          .scale-\\[0\\.5\\] {
+            transform: none !important;
+          }
+          /* Ensure templates render at full size */
+          #print-content > div > div {
+            width: 210mm !important;
+            min-height: 297mm !important;
           }
         }
       `}</style>

@@ -123,24 +123,22 @@ export const ExperienceCertificateTemplate = forwardRef<HTMLDivElement, Experien
                     </div>
                 </div>
 
-                {/* Signature Section */}
+                {/* Signature Section - Centered */}
                 <div className="px-10 py-10 mt-8">
-                    <div className="flex justify-between items-end">
-                        {/* Company Seal */}
-                        <CompanySeal companyName={data.companyName} size="md" />
-
-                        <div className="text-right">
-                            <p className="text-sm text-slate-500 mb-2">For {data.companyName}</p>
-                            <img
-                                src={signatureImage}
-                                alt="Signature"
-                                className="h-12 object-contain mb-1 ml-auto"
-                            />
-                            <div className="border-t border-slate-400 pt-1 w-56 text-center">
-                                <p className="font-bold text-slate-800">{data.hrName}</p>
-                                <p className="text-sm text-slate-600">{data.hrDesignation}</p>
-                                <p className="text-xs text-slate-400 mt-1">{data.companyName}</p>
-                            </div>
+                    <div className="flex flex-col items-center">
+                        <p className="text-sm text-slate-500 mb-2">For {data.companyName}</p>
+                        <img
+                            src={signatureImage}
+                            alt="Signature"
+                            className="h-14 object-contain mb-2"
+                        />
+                        <div className="border-t border-slate-400 pt-2 w-56 text-center">
+                            <p className="font-bold text-slate-800">{data.hrName}</p>
+                            <p className="text-sm text-slate-600">{data.hrDesignation}</p>
+                            <p className="text-xs text-slate-400 mt-1">{data.companyName}</p>
+                        </div>
+                        <div className="mt-4">
+                            <CompanySeal companyName={data.companyName} size="md" />
                         </div>
                     </div>
                 </div>

@@ -289,10 +289,24 @@ function App() {
         }));
     };
 
+    // Mobile navigation state
+    const [mobileView, setMobileView] = useState<'docs' | 'form' | 'preview'>('form');
+
     return (
-        <div className="flex h-screen w-screen overflow-hidden bg-slate-100 font-sans">
-            {/* Left Sidebar - Print Hidden */}
-            <div className="w-72 min-w-[288px] bg-white border-r border-slate-200 flex flex-col print:hidden">
+        <div className="flex flex-col md:flex-row h-screen w-screen overflow-hidden bg-slate-100 font-sans">
+            {/* Mobile Header - Only visible on mobile */}
+            <div className="md:hidden bg-gradient-to-r from-slate-800 to-slate-900 p-4 flex items-center justify-between">
+                <div>
+                    <h1 className="text-lg font-bold text-white">HR Docs Editor</h1>
+                    <p className="text-xs text-slate-400">{currentDocOption?.icon} {currentDocOption?.label}</p>
+                </div>
+                <Button onClick={handleDownloadPDF} size="sm">
+                    📥 PDF
+                </Button>
+            </div>
+
+            {/* Left Sidebar - Hidden on mobile, visible on md+ */}
+            <div className="hidden md:flex w-72 min-w-[288px] bg-white border-r border-slate-200 flex-col print:hidden">
                 {/* Header */}
                 <div className="p-5 border-b border-slate-200 bg-gradient-to-r from-slate-800 to-slate-900">
                     <h1 className="text-xl font-bold text-white">HR Docs Editor</h1>
@@ -360,9 +374,44 @@ function App() {
             </div>
 
             {/* Main Content Area */}
-            <div className="flex-1 flex overflow-hidden">
-                {/* Form Panel - Print Hidden */}
-                <div className="w-96 min-w-[384px] bg-white border-r border-slate-200 overflow-y-auto p-5 print:hidden">
+            <div className="flex-1 flex flex-col md:flex-row overflow-hidden">
+                {/* Mobile Document Selector - Only on mobile when docs view selected */}
+                <div className={`${mobileView === 'docs' ? 'flex' : 'hidden'} md:hidden flex-col bg-white overflow-y-auto flex-1`}>
+                    <div className="p-4 border-b border-slate-100">
+                        <label className="block text-xs font-medium text-slate-500 uppercase tracking-wider mb-2">
+                            Select Document Type
+                        </label>
+                        <div className="space-y-2">
+                            {DOCUMENT_OPTIONS.map(opt => (
+                                <button
+                                    key={opt.id}
+                                    onClick={() => {
+                                        setSelectedDoc(opt.id);
+                                        setMobileView('form');
+                                    }}
+                                    className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-left transition-all ${selectedDoc === opt.id
+                                        ? 'bg-blue-50 border-2 border-blue-300 shadow-sm'
+                                        : 'bg-slate-50 border-2 border-transparent hover:bg-slate-100'
+                                        }`}
+                                >
+                                    <span className="text-2xl">{opt.icon}</span>
+                                    <div className="flex-1">
+                                        <p className={`font-medium ${selectedDoc === opt.id ? 'text-blue-700' : 'text-slate-700'}`}>
+                                            {opt.label}
+                                        </p>
+                                        <p className="text-sm text-slate-500">{opt.description}</p>
+                                    </div>
+                                    {selectedDoc === opt.id && (
+                                        <span className="text-blue-500">✓</span>
+                                    )}
+                                </button>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+
+                {/* Form Panel - Hidden on mobile unless form view, visible on md+ */}
+                <div className={`${mobileView === 'form' ? 'flex' : 'hidden'} md:flex w-full md:w-96 md:min-w-[384px] bg-white md:border-r border-slate-200 overflow-y-auto p-4 md:p-5 print:hidden flex-col flex-1 md:flex-initial`}>
                     <div className="mb-5">
                         <h2 className="text-lg font-bold text-slate-800 flex items-center gap-2">
                             <span className="text-2xl">{currentDocOption?.icon}</span>
@@ -1054,24 +1103,51 @@ function App() {
                     </div>
                 </div>
 
-                {/* Preview Panel */}
-                <div className="flex-1 bg-slate-200 overflow-auto p-6 flex justify-center print:p-0 print:bg-white print:block">
-                    <div className="print:w-full" id="print-content">
-                        {selectedDoc === 'offer-letter' && <OfferLetterTemplate ref={previewRef} data={offerData} showSeal={showSeal} />}
-                        {selectedDoc === 'salary-slip' && <SalarySlipTemplate ref={previewRef} data={salaryData} />}
-                        {selectedDoc === 'internship-letter' && <InternshipLetterTemplate ref={previewRef} data={internshipData} />}
-                        {selectedDoc === 'experience-certificate' && <ExperienceCertificateTemplate ref={previewRef} data={experienceData} />}
-                        {selectedDoc === 'relieving-letter' && <RelievingLetterTemplate ref={previewRef} data={relievingData} />}
-                        {selectedDoc === 'appraisal-letter' && <AppraisalLetterTemplate ref={previewRef} data={appraisalData} />}
-                        {selectedDoc === 'internship-completion' && <InternshipCompletionTemplate ref={previewRef} data={internshipCompletionData} />}
-                        {selectedDoc === 'training-certificate' && <TrainingCertificateTemplate ref={previewRef} data={trainingCertificateData} />}
-                        {selectedDoc === 'promotion-letter' && <PromotionLetterTemplate ref={previewRef} data={promotionData} />}
-                        {selectedDoc === 'warning-letter' && <WarningLetterTemplate ref={previewRef} data={warningData} />}
-                        {selectedDoc === 'termination-letter' && <TerminationLetterTemplate ref={previewRef} data={terminationData} />}
-                        {selectedDoc === 'joining-letter' && <JoiningLetterTemplate ref={previewRef} data={joiningData} />}
-                        {selectedDoc === 'address-proof' && <AddressProofLetterTemplate ref={previewRef} data={addressProofData} />}
+                {/* Preview Panel - Hidden on mobile unless preview view, visible on md+ */}
+                <div className={`${mobileView === 'preview' ? 'flex' : 'hidden'} md:flex flex-1 bg-slate-200 overflow-auto p-2 md:p-6 justify-center print:p-0 print:bg-white print:block`}>
+                    <div className="print:w-full w-full md:w-auto overflow-x-auto" id="print-content">
+                        <div className="min-w-[210mm] md:min-w-0 transform scale-[0.5] md:scale-100 origin-top-left md:origin-center">
+                            {selectedDoc === 'offer-letter' && <OfferLetterTemplate ref={previewRef} data={offerData} showSeal={showSeal} />}
+                            {selectedDoc === 'salary-slip' && <SalarySlipTemplate ref={previewRef} data={salaryData} />}
+                            {selectedDoc === 'internship-letter' && <InternshipLetterTemplate ref={previewRef} data={internshipData} />}
+                            {selectedDoc === 'experience-certificate' && <ExperienceCertificateTemplate ref={previewRef} data={experienceData} />}
+                            {selectedDoc === 'relieving-letter' && <RelievingLetterTemplate ref={previewRef} data={relievingData} />}
+                            {selectedDoc === 'appraisal-letter' && <AppraisalLetterTemplate ref={previewRef} data={appraisalData} />}
+                            {selectedDoc === 'internship-completion' && <InternshipCompletionTemplate ref={previewRef} data={internshipCompletionData} />}
+                            {selectedDoc === 'training-certificate' && <TrainingCertificateTemplate ref={previewRef} data={trainingCertificateData} />}
+                            {selectedDoc === 'promotion-letter' && <PromotionLetterTemplate ref={previewRef} data={promotionData} />}
+                            {selectedDoc === 'warning-letter' && <WarningLetterTemplate ref={previewRef} data={warningData} />}
+                            {selectedDoc === 'termination-letter' && <TerminationLetterTemplate ref={previewRef} data={terminationData} />}
+                            {selectedDoc === 'joining-letter' && <JoiningLetterTemplate ref={previewRef} data={joiningData} />}
+                            {selectedDoc === 'address-proof' && <AddressProofLetterTemplate ref={previewRef} data={addressProofData} />}
+                        </div>
                     </div>
                 </div>
+            </div>
+
+            {/* Mobile Bottom Navigation - Only visible on mobile */}
+            <div className="md:hidden bg-white border-t border-slate-200 flex print:hidden">
+                <button
+                    onClick={() => setMobileView('docs')}
+                    className={`flex-1 py-3 flex flex-col items-center gap-1 transition-all ${mobileView === 'docs' ? 'bg-blue-50 text-blue-600' : 'text-slate-500'}`}
+                >
+                    <span className="text-xl">📄</span>
+                    <span className="text-xs font-medium">Documents</span>
+                </button>
+                <button
+                    onClick={() => setMobileView('form')}
+                    className={`flex-1 py-3 flex flex-col items-center gap-1 transition-all ${mobileView === 'form' ? 'bg-blue-50 text-blue-600' : 'text-slate-500'}`}
+                >
+                    <span className="text-xl">✏️</span>
+                    <span className="text-xs font-medium">Edit</span>
+                </button>
+                <button
+                    onClick={() => setMobileView('preview')}
+                    className={`flex-1 py-3 flex flex-col items-center gap-1 transition-all ${mobileView === 'preview' ? 'bg-blue-50 text-blue-600' : 'text-slate-500'}`}
+                >
+                    <span className="text-xl">👁️</span>
+                    <span className="text-xs font-medium">Preview</span>
+                </button>
             </div>
 
             {/* Print Styles */}
@@ -1088,6 +1164,7 @@ function App() {
             max-width: 100% !important;
             box-shadow: none !important;
             margin: 0 !important;
+            transform: none !important;
           }
         }
       `}</style>
@@ -1096,3 +1173,4 @@ function App() {
 }
 
 export default App;
+

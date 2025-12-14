@@ -515,13 +515,13 @@ function App() {
                 </div>
 
                 {/* Form Panel - Hidden on mobile unless form view, visible on md+ */}
-                <div className={`${mobileView === 'form' ? 'flex' : 'hidden'} md:flex w-full md:w-96 md:min-w-[384px] bg-white md:border-r border-slate-200 overflow-y-auto p-4 md:p-5 print:hidden flex-col flex-1 md:flex-initial`}>
+                <div className={`${mobileView === 'form' ? 'flex' : 'hidden'} md:flex w-full md:w-96 md:min-w-[384px] bg-white dark:bg-slate-800 md:border-r border-slate-200 dark:border-slate-700 overflow-y-auto p-4 md:p-5 print:hidden flex-col flex-1 md:flex-initial`}>
                     <div className="mb-5">
-                        <h2 className="text-lg font-bold text-slate-800 flex items-center gap-2">
+                        <h2 className="text-lg font-bold text-slate-800 dark:text-white flex items-center gap-2">
                             <span className="text-2xl">{currentDocOption?.icon}</span>
                             {currentDocOption?.label}
                         </h2>
-                        <p className="text-sm text-slate-500 mt-1">Fill in the details below</p>
+                        <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">Fill in the details below</p>
                     </div>
 
                     {/* Dynamic Form Based on Selection */}

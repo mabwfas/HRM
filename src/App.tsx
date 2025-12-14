@@ -6,6 +6,13 @@ import { InternshipLetterTemplate } from './components/templates/InternshipLette
 import { ExperienceCertificateTemplate } from './components/templates/ExperienceCertificateTemplate';
 import { RelievingLetterTemplate } from './components/templates/RelievingLetterTemplate';
 import { AppraisalLetterTemplate } from './components/templates/AppraisalLetterTemplate';
+import { InternshipCompletionTemplate } from './components/templates/InternshipCompletionTemplate';
+import { TrainingCertificateTemplate } from './components/templates/TrainingCertificateTemplate';
+import { PromotionLetterTemplate } from './components/templates/PromotionLetterTemplate';
+import { WarningLetterTemplate } from './components/templates/WarningLetterTemplate';
+import { TerminationLetterTemplate } from './components/templates/TerminationLetterTemplate';
+import { JoiningLetterTemplate } from './components/templates/JoiningLetterTemplate';
+import { AddressProofLetterTemplate } from './components/templates/AddressProofLetterTemplate';
 import {
     DocumentType,
     DOCUMENT_OPTIONS,
@@ -15,12 +22,26 @@ import {
     ExperienceCertificateData,
     RelievingLetterData,
     AppraisalLetterData,
+    InternshipCompletionData,
+    TrainingCertificateData,
+    PromotionLetterData,
+    WarningLetterData,
+    TerminationLetterData,
+    JoiningLetterData,
+    AddressProofLetterData,
     initialOfferLetterData,
     initialSalarySlipData,
     initialInternshipLetterData,
     initialExperienceCertificateData,
     initialRelievingLetterData,
     initialAppraisalLetterData,
+    initialInternshipCompletionData,
+    initialTrainingCertificateData,
+    initialPromotionLetterData,
+    initialWarningLetterData,
+    initialTerminationLetterData,
+    initialJoiningLetterData,
+    initialAddressProofLetterData,
     MONTHS,
     ROLE_PRESETS,
     DEPARTMENT_OPTIONS,
@@ -77,6 +98,13 @@ function App() {
     const [experienceData, setExperienceData] = useState<ExperienceCertificateData>(() => loadFromStorage('hr_experienceData', initialExperienceCertificateData));
     const [relievingData, setRelievingData] = useState<RelievingLetterData>(() => loadFromStorage('hr_relievingData', initialRelievingLetterData));
     const [appraisalData, setAppraisalData] = useState<AppraisalLetterData>(() => loadFromStorage('hr_appraisalData', initialAppraisalLetterData));
+    const [internshipCompletionData, setInternshipCompletionData] = useState<InternshipCompletionData>(() => loadFromStorage('hr_internshipCompletionData', initialInternshipCompletionData));
+    const [trainingCertificateData, setTrainingCertificateData] = useState<TrainingCertificateData>(() => loadFromStorage('hr_trainingCertificateData', initialTrainingCertificateData));
+    const [promotionData, setPromotionData] = useState<PromotionLetterData>(() => loadFromStorage('hr_promotionData', initialPromotionLetterData));
+    const [warningData, setWarningData] = useState<WarningLetterData>(() => loadFromStorage('hr_warningData', initialWarningLetterData));
+    const [terminationData, setTerminationData] = useState<TerminationLetterData>(() => loadFromStorage('hr_terminationData', initialTerminationLetterData));
+    const [joiningData, setJoiningData] = useState<JoiningLetterData>(() => loadFromStorage('hr_joiningData', initialJoiningLetterData));
+    const [addressProofData, setAddressProofData] = useState<AddressProofLetterData>(() => loadFromStorage('hr_addressProofData', initialAddressProofLetterData));
 
     // Save data to localStorage whenever it changes
     useEffect(() => { localStorage.setItem('hr_offerData', JSON.stringify(offerData)); }, [offerData]);
@@ -85,6 +113,13 @@ function App() {
     useEffect(() => { localStorage.setItem('hr_experienceData', JSON.stringify(experienceData)); }, [experienceData]);
     useEffect(() => { localStorage.setItem('hr_relievingData', JSON.stringify(relievingData)); }, [relievingData]);
     useEffect(() => { localStorage.setItem('hr_appraisalData', JSON.stringify(appraisalData)); }, [appraisalData]);
+    useEffect(() => { localStorage.setItem('hr_internshipCompletionData', JSON.stringify(internshipCompletionData)); }, [internshipCompletionData]);
+    useEffect(() => { localStorage.setItem('hr_trainingCertificateData', JSON.stringify(trainingCertificateData)); }, [trainingCertificateData]);
+    useEffect(() => { localStorage.setItem('hr_promotionData', JSON.stringify(promotionData)); }, [promotionData]);
+    useEffect(() => { localStorage.setItem('hr_warningData', JSON.stringify(warningData)); }, [warningData]);
+    useEffect(() => { localStorage.setItem('hr_terminationData', JSON.stringify(terminationData)); }, [terminationData]);
+    useEffect(() => { localStorage.setItem('hr_joiningData', JSON.stringify(joiningData)); }, [joiningData]);
+    useEffect(() => { localStorage.setItem('hr_addressProofData', JSON.stringify(addressProofData)); }, [addressProofData]);
 
     // Handle role preset selection for Offer Letter
     const handleRolePresetChange = (designation: string) => {
@@ -207,7 +242,15 @@ function App() {
                 selectedDoc === 'internship-letter' ? internshipData.internName :
                     selectedDoc === 'experience-certificate' ? experienceData.employeeName :
                         selectedDoc === 'relieving-letter' ? relievingData.employeeName :
-                            appraisalData.employeeName;
+                            selectedDoc === 'appraisal-letter' ? appraisalData.employeeName :
+                                selectedDoc === 'internship-completion' ? internshipCompletionData.internName :
+                                    selectedDoc === 'training-certificate' ? trainingCertificateData.employeeName :
+                                        selectedDoc === 'promotion-letter' ? promotionData.employeeName :
+                                            selectedDoc === 'warning-letter' ? warningData.employeeName :
+                                                selectedDoc === 'termination-letter' ? terminationData.employeeName :
+                                                    selectedDoc === 'joining-letter' ? joiningData.employeeName :
+                                                        selectedDoc === 'address-proof' ? addressProofData.employeeName :
+                                                            'document';
 
         const filename = `digital-heroes-${selectedDoc}-${(candidateName || 'document').toLowerCase().replace(/\s+/g, '-')}.pdf`;
 
@@ -794,6 +837,220 @@ function App() {
                                 </Card>
                             </>
                         )}
+
+                        {/* ===== INTERNSHIP COMPLETION FORM ===== */}
+                        {selectedDoc === 'internship-completion' && (
+                            <>
+                                <Card title="Intern Details" headerClassName="bg-violet-50">
+                                    <div className="space-y-3">
+                                        <Input label="Intern Name" name="internName" value={internshipCompletionData.internName} onChange={handleChange(setInternshipCompletionData)} />
+                                        <Input label="Internship Role" name="internshipRole" value={internshipCompletionData.internshipRole} onChange={handleChange(setInternshipCompletionData)} />
+                                        <Select label="Department" name="department" value={internshipCompletionData.department} options={DEPARTMENT_OPTIONS.map(d => ({ value: d, label: d }))} onChange={handleChange(setInternshipCompletionData)} />
+                                    </div>
+                                </Card>
+                                <Card title="Duration">
+                                    <div className="space-y-3">
+                                        <Input label="Start Date" name="startDate" value={internshipCompletionData.startDate} onChange={handleChange(setInternshipCompletionData)} />
+                                        <Input label="End Date" name="endDate" value={internshipCompletionData.endDate} onChange={handleChange(setInternshipCompletionData)} />
+                                        <Select label="Duration" name="duration" value={internshipCompletionData.duration} options={INTERNSHIP_DURATION_OPTIONS.map(d => ({ value: d, label: d }))} onChange={handleChange(setInternshipCompletionData)} />
+                                    </div>
+                                </Card>
+                                <Card title="Performance">
+                                    <div className="space-y-3">
+                                        <Select label="Performance Rating" name="performanceRating" value={internshipCompletionData.performanceRating} options={CONDUCT_OPTIONS.map(c => ({ value: c.label.split(' - ')[0], label: c.label }))} onChange={handleChange(setInternshipCompletionData)} />
+                                        <TextArea label="Skills Demonstrated" name="skills" value={internshipCompletionData.skills} onChange={handleChange(setInternshipCompletionData)} rows={2} />
+                                    </div>
+                                </Card>
+                                <Card title="Signatory">
+                                    <Select label="HR Signatory" name="hrName" value={internshipCompletionData.hrName} options={HR_SIGNATORY_OPTIONS.map(h => ({ value: h.name, label: `${h.name} - ${h.designation}` }))} onChange={(e) => handleHrSignatoryChange(e.target.value, setInternshipCompletionData)} />
+                                </Card>
+                            </>
+                        )}
+
+                        {/* ===== TRAINING CERTIFICATE FORM ===== */}
+                        {selectedDoc === 'training-certificate' && (
+                            <>
+                                <Card title="Employee Details" headerClassName="bg-indigo-50">
+                                    <div className="space-y-3">
+                                        <Input label="Employee Name" name="employeeName" value={trainingCertificateData.employeeName} onChange={handleChange(setTrainingCertificateData)} />
+                                        <Input label="Employee ID" name="employeeId" value={trainingCertificateData.employeeId} onChange={handleChange(setTrainingCertificateData)} />
+                                        <Input label="Designation" name="designation" value={trainingCertificateData.designation} onChange={handleChange(setTrainingCertificateData)} />
+                                        <Select label="Department" name="department" value={trainingCertificateData.department} options={DEPARTMENT_OPTIONS.map(d => ({ value: d, label: d }))} onChange={handleChange(setTrainingCertificateData)} />
+                                    </div>
+                                </Card>
+                                <Card title="Training Details">
+                                    <div className="space-y-3">
+                                        <Input label="Training Program Name" name="trainingProgram" value={trainingCertificateData.trainingProgram} onChange={handleChange(setTrainingCertificateData)} />
+                                        <Input label="Training Duration" name="trainingDuration" value={trainingCertificateData.trainingDuration} onChange={handleChange(setTrainingCertificateData)} />
+                                        <Input label="Training Date" name="trainingDate" value={trainingCertificateData.trainingDate} onChange={handleChange(setTrainingCertificateData)} />
+                                        <Input label="Trainer/Conducted By" name="trainerName" value={trainingCertificateData.trainerName} onChange={handleChange(setTrainingCertificateData)} />
+                                    </div>
+                                </Card>
+                                <Card title="Signatory">
+                                    <Select label="HR Signatory" name="hrName" value={trainingCertificateData.hrName} options={HR_SIGNATORY_OPTIONS.map(h => ({ value: h.name, label: `${h.name} - ${h.designation}` }))} onChange={(e) => handleHrSignatoryChange(e.target.value, setTrainingCertificateData)} />
+                                </Card>
+                            </>
+                        )}
+
+                        {/* ===== PROMOTION LETTER FORM ===== */}
+                        {selectedDoc === 'promotion-letter' && (
+                            <>
+                                <Card title="Employee Details" headerClassName="bg-sky-50">
+                                    <div className="space-y-3">
+                                        <Input label="Employee Name" name="employeeName" value={promotionData.employeeName} onChange={handleChange(setPromotionData)} />
+                                        <Input label="Employee ID" name="employeeId" value={promotionData.employeeId} onChange={handleChange(setPromotionData)} />
+                                        <Select label="Department" name="department" value={promotionData.department} options={DEPARTMENT_OPTIONS.map(d => ({ value: d, label: d }))} onChange={handleChange(setPromotionData)} />
+                                    </div>
+                                </Card>
+                                <Card title="Promotion Details">
+                                    <div className="space-y-3">
+                                        <Input label="Current Designation" name="currentDesignation" value={promotionData.currentDesignation} onChange={handleChange(setPromotionData)} />
+                                        <Input label="New Designation" name="newDesignation" value={promotionData.newDesignation} onChange={handleChange(setPromotionData)} />
+                                        <Input label="Effective Date" name="effectiveDate" value={promotionData.effectiveDate} onChange={handleChange(setPromotionData)} />
+                                    </div>
+                                </Card>
+                                <Card title="Compensation">
+                                    <div className="space-y-3">
+                                        <Input label="Current CTC (Annual)" name="currentCtc" type="number" value={promotionData.currentCtc} onChange={handleChange(setPromotionData)} />
+                                        <Input label="New CTC (Annual)" name="newCtc" type="number" value={promotionData.newCtc} onChange={handleChange(setPromotionData)} />
+                                    </div>
+                                </Card>
+                                <Card title="Responsibilities">
+                                    <TextArea label="New Responsibilities" name="newResponsibilities" value={promotionData.newResponsibilities} onChange={handleChange(setPromotionData)} rows={3} />
+                                </Card>
+                                <Card title="Signatory">
+                                    <Select label="HR Signatory" name="hrName" value={promotionData.hrName} options={HR_SIGNATORY_OPTIONS.map(h => ({ value: h.name, label: `${h.name} - ${h.designation}` }))} onChange={(e) => handleHrSignatoryChange(e.target.value, setPromotionData)} />
+                                </Card>
+                            </>
+                        )}
+
+                        {/* ===== WARNING LETTER FORM ===== */}
+                        {selectedDoc === 'warning-letter' && (
+                            <>
+                                <Card title="Employee Details" headerClassName="bg-orange-50">
+                                    <div className="space-y-3">
+                                        <Input label="Employee Name" name="employeeName" value={warningData.employeeName} onChange={handleChange(setWarningData)} />
+                                        <Input label="Employee ID" name="employeeId" value={warningData.employeeId} onChange={handleChange(setWarningData)} />
+                                        <Input label="Designation" name="designation" value={warningData.designation} onChange={handleChange(setWarningData)} />
+                                        <Select label="Department" name="department" value={warningData.department} options={DEPARTMENT_OPTIONS.map(d => ({ value: d, label: d }))} onChange={handleChange(setWarningData)} />
+                                    </div>
+                                </Card>
+                                <Card title="Warning Details">
+                                    <div className="space-y-3">
+                                        <Select label="Warning Type" name="warningType" value={warningData.warningType} options={[
+                                            { value: 'Verbal Warning', label: 'Verbal Warning' },
+                                            { value: 'First Written Warning', label: 'First Written Warning' },
+                                            { value: 'Final Written Warning', label: 'Final Written Warning' },
+                                        ]} onChange={handleChange(setWarningData)} />
+                                        <Input label="Incident Date" name="incidentDate" value={warningData.incidentDate} onChange={handleChange(setWarningData)} />
+                                        <TextArea label="Incident Description" name="incidentDescription" value={warningData.incidentDescription} onChange={handleChange(setWarningData)} rows={3} />
+                                        <Input label="Previous Warnings" name="previousWarnings" value={warningData.previousWarnings} onChange={handleChange(setWarningData)} />
+                                    </div>
+                                </Card>
+                                <Card title="Expectations">
+                                    <div className="space-y-3">
+                                        <TextArea label="Expected Improvement" name="expectedImprovement" value={warningData.expectedImprovement} onChange={handleChange(setWarningData)} rows={2} />
+                                        <TextArea label="Consequence if Not Improved" name="consequenceIfNotImproved" value={warningData.consequenceIfNotImproved} onChange={handleChange(setWarningData)} rows={2} />
+                                    </div>
+                                </Card>
+                                <Card title="Signatory">
+                                    <Select label="HR Signatory" name="hrName" value={warningData.hrName} options={HR_SIGNATORY_OPTIONS.map(h => ({ value: h.name, label: `${h.name} - ${h.designation}` }))} onChange={(e) => handleHrSignatoryChange(e.target.value, setWarningData)} />
+                                </Card>
+                            </>
+                        )}
+
+                        {/* ===== TERMINATION LETTER FORM ===== */}
+                        {selectedDoc === 'termination-letter' && (
+                            <>
+                                <Card title="Employee Details" headerClassName="bg-red-50">
+                                    <div className="space-y-3">
+                                        <Input label="Employee Name" name="employeeName" value={terminationData.employeeName} onChange={handleChange(setTerminationData)} />
+                                        <Input label="Employee ID" name="employeeId" value={terminationData.employeeId} onChange={handleChange(setTerminationData)} />
+                                        <Input label="Designation" name="designation" value={terminationData.designation} onChange={handleChange(setTerminationData)} />
+                                        <Select label="Department" name="department" value={terminationData.department} options={DEPARTMENT_OPTIONS.map(d => ({ value: d, label: d }))} onChange={handleChange(setTerminationData)} />
+                                    </div>
+                                </Card>
+                                <Card title="Termination Details">
+                                    <div className="space-y-3">
+                                        <Select label="Termination Type" name="terminationType" value={terminationData.terminationType} options={[
+                                            { value: 'Termination with Notice', label: 'Termination with Notice' },
+                                            { value: 'Immediate Termination', label: 'Immediate Termination' },
+                                            { value: 'Termination for Cause', label: 'Termination for Cause' },
+                                        ]} onChange={handleChange(setTerminationData)} />
+                                        <Input label="Last Working Date" name="lastWorkingDate" value={terminationData.lastWorkingDate} onChange={handleChange(setTerminationData)} />
+                                        <TextArea label="Termination Reason" name="terminationReason" value={terminationData.terminationReason} onChange={handleChange(setTerminationData)} rows={3} />
+                                    </div>
+                                </Card>
+                                <Card title="Settlement">
+                                    <div className="space-y-3">
+                                        <Input label="Notice Period Status" name="noticePeriodStatus" value={terminationData.noticePeriodStatus} onChange={handleChange(setTerminationData)} />
+                                        <TextArea label="Settlement Details" name="settlementDetails" value={terminationData.settlementDetails} onChange={handleChange(setTerminationData)} rows={2} />
+                                    </div>
+                                </Card>
+                                <Card title="Signatory">
+                                    <Select label="HR Signatory" name="hrName" value={terminationData.hrName} options={HR_SIGNATORY_OPTIONS.map(h => ({ value: h.name, label: `${h.name} - ${h.designation}` }))} onChange={(e) => handleHrSignatoryChange(e.target.value, setTerminationData)} />
+                                </Card>
+                            </>
+                        )}
+
+                        {/* ===== JOINING LETTER FORM ===== */}
+                        {selectedDoc === 'joining-letter' && (
+                            <>
+                                <Card title="Employee Details" headerClassName="bg-green-50">
+                                    <div className="space-y-3">
+                                        <Input label="Employee Name" name="employeeName" value={joiningData.employeeName} onChange={handleChange(setJoiningData)} />
+                                        <Input label="Employee ID" name="employeeId" value={joiningData.employeeId} onChange={handleChange(setJoiningData)} />
+                                        <Input label="Designation" name="designation" value={joiningData.designation} onChange={handleChange(setJoiningData)} />
+                                        <Select label="Department" name="department" value={joiningData.department} options={DEPARTMENT_OPTIONS.map(d => ({ value: d, label: d }))} onChange={handleChange(setJoiningData)} />
+                                    </div>
+                                </Card>
+                                <Card title="Employment Details">
+                                    <div className="space-y-3">
+                                        <Input label="Joining Date" name="joiningDate" value={joiningData.joiningDate} onChange={handleChange(setJoiningData)} />
+                                        <Input label="Reporting To" name="reportingTo" value={joiningData.reportingTo} onChange={handleChange(setJoiningData)} />
+                                        <Select label="Location" name="location" value={joiningData.location} options={LOCATION_OPTIONS.map(l => ({ value: l, label: l }))} onChange={handleChange(setJoiningData)} />
+                                        <Select label="Probation Period" name="probationPeriod" value={joiningData.probationPeriod} options={PROBATION_OPTIONS.map(p => ({ value: p, label: p }))} onChange={handleChange(setJoiningData)} />
+                                    </div>
+                                </Card>
+                                <Card title="Compensation">
+                                    <Input label="Annual CTC" name="annualCtc" type="number" value={joiningData.annualCtc} onChange={handleChange(setJoiningData)} />
+                                </Card>
+                                <Card title="Signatory">
+                                    <Select label="HR Signatory" name="hrName" value={joiningData.hrName} options={HR_SIGNATORY_OPTIONS.map(h => ({ value: h.name, label: `${h.name} - ${h.designation}` }))} onChange={(e) => handleHrSignatoryChange(e.target.value, setJoiningData)} />
+                                </Card>
+                            </>
+                        )}
+
+                        {/* ===== ADDRESS PROOF FORM ===== */}
+                        {selectedDoc === 'address-proof' && (
+                            <>
+                                <Card title="Employee Details" headerClassName="bg-slate-100">
+                                    <div className="space-y-3">
+                                        <Input label="Employee Name" name="employeeName" value={addressProofData.employeeName} onChange={handleChange(setAddressProofData)} />
+                                        <Input label="Employee ID" name="employeeId" value={addressProofData.employeeId} onChange={handleChange(setAddressProofData)} />
+                                        <Input label="Designation" name="designation" value={addressProofData.designation} onChange={handleChange(setAddressProofData)} />
+                                        <Select label="Department" name="department" value={addressProofData.department} options={DEPARTMENT_OPTIONS.map(d => ({ value: d, label: d }))} onChange={handleChange(setAddressProofData)} />
+                                        <Input label="Joining Date" name="joiningDate" value={addressProofData.joiningDate} onChange={handleChange(setAddressProofData)} />
+                                    </div>
+                                </Card>
+                                <Card title="Address Details">
+                                    <div className="space-y-3">
+                                        <TextArea label="Employee Address" name="employeeAddress" value={addressProofData.employeeAddress} onChange={handleChange(setAddressProofData)} rows={3} placeholder="Full residential address" />
+                                        <Select label="Purpose" name="purpose" value={addressProofData.purpose} options={[
+                                            { value: 'Bank Account Opening', label: 'Bank Account Opening' },
+                                            { value: 'Rental Agreement', label: 'Rental Agreement' },
+                                            { value: 'Loan Application', label: 'Loan Application' },
+                                            { value: 'Passport Application', label: 'Passport Application' },
+                                            { value: 'Visa Application', label: 'Visa Application' },
+                                            { value: 'Other', label: 'Other' },
+                                        ]} onChange={handleChange(setAddressProofData)} />
+                                    </div>
+                                </Card>
+                                <Card title="Signatory">
+                                    <Select label="HR Signatory" name="hrName" value={addressProofData.hrName} options={HR_SIGNATORY_OPTIONS.map(h => ({ value: h.name, label: `${h.name} - ${h.designation}` }))} onChange={(e) => handleHrSignatoryChange(e.target.value, setAddressProofData)} />
+                                </Card>
+                            </>
+                        )}
                     </div>
                 </div>
 
@@ -806,6 +1063,13 @@ function App() {
                         {selectedDoc === 'experience-certificate' && <ExperienceCertificateTemplate ref={previewRef} data={experienceData} />}
                         {selectedDoc === 'relieving-letter' && <RelievingLetterTemplate ref={previewRef} data={relievingData} />}
                         {selectedDoc === 'appraisal-letter' && <AppraisalLetterTemplate ref={previewRef} data={appraisalData} />}
+                        {selectedDoc === 'internship-completion' && <InternshipCompletionTemplate ref={previewRef} data={internshipCompletionData} />}
+                        {selectedDoc === 'training-certificate' && <TrainingCertificateTemplate ref={previewRef} data={trainingCertificateData} />}
+                        {selectedDoc === 'promotion-letter' && <PromotionLetterTemplate ref={previewRef} data={promotionData} />}
+                        {selectedDoc === 'warning-letter' && <WarningLetterTemplate ref={previewRef} data={warningData} />}
+                        {selectedDoc === 'termination-letter' && <TerminationLetterTemplate ref={previewRef} data={terminationData} />}
+                        {selectedDoc === 'joining-letter' && <JoiningLetterTemplate ref={previewRef} data={joiningData} />}
+                        {selectedDoc === 'address-proof' && <AddressProofLetterTemplate ref={previewRef} data={addressProofData} />}
                     </div>
                 </div>
             </div>

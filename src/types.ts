@@ -82,7 +82,7 @@ export const ROLE_PRESETS: RolePreset[] = [
         department: 'Engineering',
         reportingTo: 'Senior Developer',
         annualCtc: 360000,
-        responsibilities: 'Theme customization, basic Liquid modifications, bug fixing, following coding standards, learning best practices'
+        responsibilities: 'HTML/CSS development, basic JavaScript, bug fixing, following coding standards, learning best practices'
     },
     {
         designation: 'Frontend Developer',
@@ -546,8 +546,281 @@ export const initialAppraisalLetterData: AppraisalLetterData = {
     hrDesignation: 'HR Manager',
 };
 
+// ============================================
+// INTERNSHIP COMPLETION CERTIFICATE
+// ============================================
+export interface InternshipCompletionData {
+    companyName: string;
+    companyTagline: string;
+    refNumber: string;
+    date: string;
+    internName: string;
+    internshipRole: string;
+    department: string;
+    startDate: string;
+    endDate: string;
+    duration: string;
+    performanceRating: string;
+    skills: string;
+    hrName: string;
+    hrDesignation: string;
+}
+
+export const initialInternshipCompletionData: InternshipCompletionData = {
+    companyName: COMPANY_PRESETS.name,
+    companyTagline: COMPANY_PRESETS.tagline,
+    refNumber: 'DH/HR/IC/' + new Date().getFullYear() + '/001',
+    date: new Date().toLocaleDateString('en-IN', { year: 'numeric', month: 'long', day: 'numeric' }),
+    internName: '',
+    internshipRole: 'Web Development Intern',
+    department: 'Engineering',
+    startDate: '',
+    endDate: '',
+    duration: '3 months',
+    performanceRating: 'Excellent',
+    skills: 'HTML, CSS, JavaScript, React, Git',
+    hrName: 'Prasun Anand',
+    hrDesignation: 'HR Manager',
+};
+
+// ============================================
+// TRAINING COMPLETION CERTIFICATE
+// ============================================
+export interface TrainingCertificateData {
+    companyName: string;
+    companyTagline: string;
+    refNumber: string;
+    date: string;
+    employeeName: string;
+    employeeId: string;
+    designation: string;
+    department: string;
+    trainingProgram: string;
+    trainingDuration: string;
+    trainingDate: string;
+    completionStatus: string;
+    trainerName: string;
+    hrName: string;
+    hrDesignation: string;
+}
+
+export const initialTrainingCertificateData: TrainingCertificateData = {
+    companyName: COMPANY_PRESETS.name,
+    companyTagline: COMPANY_PRESETS.tagline,
+    refNumber: 'DH/HR/TC/' + new Date().getFullYear() + '/001',
+    date: new Date().toLocaleDateString('en-IN', { year: 'numeric', month: 'long', day: 'numeric' }),
+    employeeName: '',
+    employeeId: 'EMP-',
+    designation: 'Junior Web Developer',
+    department: 'Engineering',
+    trainingProgram: 'Advanced Web Development',
+    trainingDuration: '40 hours',
+    trainingDate: '',
+    completionStatus: 'Successfully Completed',
+    trainerName: 'Tech Team',
+    hrName: 'Prasun Anand',
+    hrDesignation: 'HR Manager',
+};
+
+// ============================================
+// PROMOTION LETTER
+// ============================================
+export interface PromotionLetterData {
+    companyName: string;
+    companyTagline: string;
+    refNumber: string;
+    date: string;
+    employeeName: string;
+    employeeId: string;
+    currentDesignation: string;
+    newDesignation: string;
+    department: string;
+    effectiveDate: string;
+    currentCtc: number;
+    newCtc: number;
+    newResponsibilities: string;
+    hrName: string;
+    hrDesignation: string;
+}
+
+export const initialPromotionLetterData: PromotionLetterData = {
+    companyName: COMPANY_PRESETS.name,
+    companyTagline: COMPANY_PRESETS.tagline,
+    refNumber: 'DH/HR/PROM/' + new Date().getFullYear() + '/001',
+    date: new Date().toLocaleDateString('en-IN', { year: 'numeric', month: 'long', day: 'numeric' }),
+    employeeName: '',
+    employeeId: 'EMP-',
+    currentDesignation: 'Junior Web Developer',
+    newDesignation: 'Web Developer',
+    department: 'Engineering',
+    effectiveDate: '',
+    currentCtc: 360000,
+    newCtc: 480000,
+    newResponsibilities: 'Lead small projects, mentor juniors, handle client communication',
+    hrName: 'Prasun Anand',
+    hrDesignation: 'HR Manager',
+};
+
+// ============================================
+// WARNING LETTER
+// ============================================
+export interface WarningLetterData {
+    companyName: string;
+    companyTagline: string;
+    refNumber: string;
+    date: string;
+    employeeName: string;
+    employeeId: string;
+    designation: string;
+    department: string;
+    warningType: string;
+    incidentDate: string;
+    incidentDescription: string;
+    previousWarnings: string;
+    expectedImprovement: string;
+    consequenceIfNotImproved: string;
+    hrName: string;
+    hrDesignation: string;
+}
+
+export const initialWarningLetterData: WarningLetterData = {
+    companyName: COMPANY_PRESETS.name,
+    companyTagline: COMPANY_PRESETS.tagline,
+    refNumber: 'DH/HR/WARN/' + new Date().getFullYear() + '/001',
+    date: new Date().toLocaleDateString('en-IN', { year: 'numeric', month: 'long', day: 'numeric' }),
+    employeeName: '',
+    employeeId: 'EMP-',
+    designation: '',
+    department: '',
+    warningType: 'First Written Warning',
+    incidentDate: '',
+    incidentDescription: '',
+    previousWarnings: 'None',
+    expectedImprovement: 'Immediate improvement in attendance and punctuality',
+    consequenceIfNotImproved: 'Further disciplinary action up to and including termination',
+    hrName: 'Prasun Anand',
+    hrDesignation: 'HR Manager',
+};
+
+// ============================================
+// TERMINATION LETTER
+// ============================================
+export interface TerminationLetterData {
+    companyName: string;
+    companyTagline: string;
+    refNumber: string;
+    date: string;
+    employeeName: string;
+    employeeId: string;
+    designation: string;
+    department: string;
+    terminationType: string;
+    terminationReason: string;
+    lastWorkingDate: string;
+    noticePeriodStatus: string;
+    settlementDetails: string;
+    hrName: string;
+    hrDesignation: string;
+}
+
+export const initialTerminationLetterData: TerminationLetterData = {
+    companyName: COMPANY_PRESETS.name,
+    companyTagline: COMPANY_PRESETS.tagline,
+    refNumber: 'DH/HR/TERM/' + new Date().getFullYear() + '/001',
+    date: new Date().toLocaleDateString('en-IN', { year: 'numeric', month: 'long', day: 'numeric' }),
+    employeeName: '',
+    employeeId: 'EMP-',
+    designation: '',
+    department: '',
+    terminationType: 'Termination with Notice',
+    terminationReason: '',
+    lastWorkingDate: '',
+    noticePeriodStatus: 'Notice period waived',
+    settlementDetails: 'Full and final settlement will be processed within 45 days',
+    hrName: 'Prasun Anand',
+    hrDesignation: 'HR Manager',
+};
+
+// ============================================
+// JOINING CONFIRMATION LETTER
+// ============================================
+export interface JoiningLetterData {
+    companyName: string;
+    companyTagline: string;
+    companyAddress: string;
+    refNumber: string;
+    date: string;
+    employeeName: string;
+    employeeId: string;
+    designation: string;
+    department: string;
+    joiningDate: string;
+    reportingTo: string;
+    location: string;
+    annualCtc: number;
+    probationPeriod: string;
+    hrName: string;
+    hrDesignation: string;
+}
+
+export const initialJoiningLetterData: JoiningLetterData = {
+    companyName: COMPANY_PRESETS.name,
+    companyTagline: COMPANY_PRESETS.tagline,
+    companyAddress: COMPANY_PRESETS.address,
+    refNumber: 'DH/HR/JOIN/' + new Date().getFullYear() + '/001',
+    date: new Date().toLocaleDateString('en-IN', { year: 'numeric', month: 'long', day: 'numeric' }),
+    employeeName: '',
+    employeeId: 'EMP-',
+    designation: 'Junior Web Developer',
+    department: 'Engineering',
+    joiningDate: '',
+    reportingTo: 'Project Manager',
+    location: 'Lucknow, Uttar Pradesh (Hybrid)',
+    annualCtc: 360000,
+    probationPeriod: '3 months (90 days)',
+    hrName: 'Prasun Anand',
+    hrDesignation: 'HR Manager',
+};
+
+// ============================================
+// ADDRESS PROOF LETTER
+// ============================================
+export interface AddressProofLetterData {
+    companyName: string;
+    companyTagline: string;
+    companyAddress: string;
+    refNumber: string;
+    date: string;
+    employeeName: string;
+    employeeId: string;
+    designation: string;
+    department: string;
+    joiningDate: string;
+    employeeAddress: string;
+    purpose: string;
+    hrName: string;
+    hrDesignation: string;
+}
+
+export const initialAddressProofLetterData: AddressProofLetterData = {
+    companyName: COMPANY_PRESETS.name,
+    companyTagline: COMPANY_PRESETS.tagline,
+    companyAddress: COMPANY_PRESETS.address,
+    refNumber: 'DH/HR/ADDR/' + new Date().getFullYear() + '/001',
+    date: new Date().toLocaleDateString('en-IN', { year: 'numeric', month: 'long', day: 'numeric' }),
+    employeeName: '',
+    employeeId: 'EMP-',
+    designation: '',
+    department: '',
+    joiningDate: '',
+    employeeAddress: '',
+    purpose: 'Bank Account Opening',
+    hrName: 'Prasun Anand',
+    hrDesignation: 'HR Manager',
+};
+
 // Document type union
-export type DocumentType = 'offer-letter' | 'salary-slip' | 'internship-letter' | 'experience-certificate' | 'relieving-letter' | 'appraisal-letter';
+export type DocumentType = 'offer-letter' | 'salary-slip' | 'internship-letter' | 'experience-certificate' | 'relieving-letter' | 'appraisal-letter' | 'internship-completion' | 'training-certificate' | 'promotion-letter' | 'warning-letter' | 'termination-letter' | 'joining-letter' | 'address-proof';
 
 export interface DocumentOption {
     id: DocumentType;
@@ -561,7 +834,15 @@ export const DOCUMENT_OPTIONS: DocumentOption[] = [
     { id: 'offer-letter', label: 'Offer Letter', description: 'New hire offer', icon: '📄', color: 'blue' },
     { id: 'salary-slip', label: 'Salary Slip', description: 'Monthly payslip', icon: '💰', color: 'emerald' },
     { id: 'internship-letter', label: 'Internship Letter', description: 'Intern offer', icon: '🎓', color: 'purple' },
+    { id: 'internship-completion', label: 'Internship Certificate', description: 'Completion cert', icon: '🎖️', color: 'violet' },
+    { id: 'training-certificate', label: 'Training Certificate', description: 'Training complete', icon: '📜', color: 'indigo' },
+    { id: 'joining-letter', label: 'Joining Letter', description: 'Confirmation', icon: '✅', color: 'green' },
+    { id: 'promotion-letter', label: 'Promotion Letter', description: 'Promotion notice', icon: '🚀', color: 'sky' },
+    { id: 'appraisal-letter', label: 'Appraisal Letter', description: 'Salary revision', icon: '📈', color: 'cyan' },
     { id: 'experience-certificate', label: 'Experience Certificate', description: 'Work experience', icon: '🏆', color: 'amber' },
     { id: 'relieving-letter', label: 'Relieving Letter', description: 'Exit document', icon: '👋', color: 'rose' },
-    { id: 'appraisal-letter', label: 'Appraisal Letter', description: 'Promotion/raise', icon: '📈', color: 'cyan' },
+    { id: 'warning-letter', label: 'Warning Letter', description: 'Disciplinary', icon: '⚠️', color: 'orange' },
+    { id: 'termination-letter', label: 'Termination Letter', description: 'Employment end', icon: '🚫', color: 'red' },
+    { id: 'address-proof', label: 'Address Proof', description: 'Address verification', icon: '🏠', color: 'slate' },
 ];
+

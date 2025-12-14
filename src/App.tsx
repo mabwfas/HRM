@@ -1,0 +1,834 @@
+import React, { useState, useRef, useEffect } from 'react';
+import { Button, Input, Select, Card, TextArea } from './components/ui';
+import { OfferLetterTemplate } from './components/templates/OfferLetterTemplate';
+import { SalarySlipTemplate } from './components/templates/SalarySlipTemplate';
+import { InternshipLetterTemplate } from './components/templates/InternshipLetterTemplate';
+import { ExperienceCertificateTemplate } from './components/templates/ExperienceCertificateTemplate';
+import { RelievingLetterTemplate } from './components/templates/RelievingLetterTemplate';
+import { AppraisalLetterTemplate } from './components/templates/AppraisalLetterTemplate';
+import {
+    DocumentType,
+    DOCUMENT_OPTIONS,
+    OfferLetterData,
+    SalarySlipData,
+    InternshipLetterData,
+    ExperienceCertificateData,
+    RelievingLetterData,
+    AppraisalLetterData,
+    initialOfferLetterData,
+    initialSalarySlipData,
+    initialInternshipLetterData,
+    initialExperienceCertificateData,
+    initialRelievingLetterData,
+    initialAppraisalLetterData,
+    MONTHS,
+    ROLE_PRESETS,
+    DEPARTMENT_OPTIONS,
+    LOCATION_OPTIONS,
+    PROBATION_OPTIONS,
+    NOTICE_PERIOD_OPTIONS,
+    HR_SIGNATORY_OPTIONS,
+    INTERNSHIP_ROLE_PRESETS,
+    INTERNSHIP_DURATION_OPTIONS,
+    WORKING_HOURS_OPTIONS,
+    CONDUCT_OPTIONS,
+    PERFORMANCE_RATING_OPTIONS,
+} from './types';
+
+// Number to words utility
+const numberToWords = (num: number): string => {
+    const ones = ['', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten',
+        'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen', 'Seventeen', 'Eighteen', 'Nineteen'];
+    const tens = ['', '', 'Twenty', 'Thirty', 'Forty', 'Fifty', 'Sixty', 'Seventy', 'Eighty', 'Ninety'];
+
+    if (num === 0) return 'Zero';
+
+    const numToWords = (n: number): string => {
+        if (n < 20) return ones[n];
+        if (n < 100) return tens[Math.floor(n / 10)] + (n % 10 ? ' ' + ones[n % 10] : '');
+        if (n < 1000) return ones[Math.floor(n / 100)] + ' Hundred' + (n % 100 ? ' ' + numToWords(n % 100) : '');
+        if (n < 100000) return numToWords(Math.floor(n / 1000)) + ' Thousand' + (n % 1000 ? ' ' + numToWords(n % 1000) : '');
+        if (n < 10000000) return numToWords(Math.floor(n / 100000)) + ' Lakh' + (n % 100000 ? ' ' + numToWords(n % 100000) : '');
+        return numToWords(Math.floor(n / 10000000)) + ' Crore' + (n % 10000000 ? ' ' + numToWords(n % 10000000) : '');
+    };
+
+    return numToWords(num) + ' Rupees Only';
+};
+
+function App() {
+    const [selectedDoc, setSelectedDoc] = useState<DocumentType>('offer-letter');
+    const previewRef = useRef<HTMLDivElement>(null);
+    const [showSeal, setShowSeal] = useState(true);
+
+    // Load saved data from localStorage or use initial data
+    const loadFromStorage = <T,>(key: string, initial: T): T => {
+        try {
+            const saved = localStorage.getItem(key);
+            return saved ? JSON.parse(saved) : initial;
+        } catch {
+            return initial;
+        }
+    };
+
+    // All document data states - load from localStorage
+    const [offerData, setOfferData] = useState<OfferLetterData>(() => loadFromStorage('hr_offerData', initialOfferLetterData));
+    const [salaryData, setSalaryData] = useState<SalarySlipData>(() => loadFromStorage('hr_salaryData', initialSalarySlipData));
+    const [internshipData, setInternshipData] = useState<InternshipLetterData>(() => loadFromStorage('hr_internshipData', initialInternshipLetterData));
+    const [experienceData, setExperienceData] = useState<ExperienceCertificateData>(() => loadFromStorage('hr_experienceData', initialExperienceCertificateData));
+    const [relievingData, setRelievingData] = useState<RelievingLetterData>(() => loadFromStorage('hr_relievingData', initialRelievingLetterData));
+    const [appraisalData, setAppraisalData] = useState<AppraisalLetterData>(() => loadFromStorage('hr_appraisalData', initialAppraisalLetterData));
+
+    // Save data to localStorage whenever it changes
+    useEffect(() => { localStorage.setItem('hr_offerData', JSON.stringify(offerData)); }, [offerData]);
+    useEffect(() => { localStorage.setItem('hr_salaryData', JSON.stringify(salaryData)); }, [salaryData]);
+    useEffect(() => { localStorage.setItem('hr_internshipData', JSON.stringify(internshipData)); }, [internshipData]);
+    useEffect(() => { localStorage.setItem('hr_experienceData', JSON.stringify(experienceData)); }, [experienceData]);
+    useEffect(() => { localStorage.setItem('hr_relievingData', JSON.stringify(relievingData)); }, [relievingData]);
+    useEffect(() => { localStorage.setItem('hr_appraisalData', JSON.stringify(appraisalData)); }, [appraisalData]);
+
+    // Handle role preset selection for Offer Letter
+    const handleRolePresetChange = (designation: string) => {
+        const preset = ROLE_PRESETS.find(r => r.designation === designation);
+        if (preset) {
+            setOfferData(prev => ({
+                ...prev,
+                designation: preset.designation,
+                department: preset.department,
+                reportingTo: preset.reportingTo,
+                annualCtc: preset.annualCtc,
+            }));
+        }
+    };
+
+    // Handle internship role preset selection
+    const handleInternshipRoleChange = (role: string) => {
+        const preset = INTERNSHIP_ROLE_PRESETS.find(r => r.role === role);
+        if (preset) {
+            setInternshipData(prev => ({
+                ...prev,
+                internshipRole: preset.role,
+                department: preset.department,
+                stipend: preset.stipend,
+                mentorDesignation: preset.mentorDesignation,
+            }));
+        }
+    };
+
+    // Handle HR signatory selection
+    const handleHrSignatoryChange = (name: string, setter: React.Dispatch<React.SetStateAction<any>>) => {
+        const signatory = HR_SIGNATORY_OPTIONS.find(h => h.name === name);
+        if (signatory) {
+            setter((prev: any) => ({
+                ...prev,
+                hrName: signatory.name,
+                hrDesignation: signatory.designation,
+            }));
+        }
+    };
+
+    // Salary slip calculation
+    useEffect(() => {
+        if (selectedDoc === 'salary-slip') {
+            const monthlyGross = salaryData.annualCtc / 12;
+            const basic = monthlyGross * 0.50;
+            const hra = basic * 0.50;
+            const conveyance = basic * 0.10;
+            const special = monthlyGross - basic - hra - conveyance;
+            const totalDays = 30;
+            const paidDays = totalDays - (salaryData.lopDays || 0);
+            const payoutFactor = paidDays / totalDays;
+
+            const earnedBasic = Math.round(basic * payoutFactor);
+            const earnedHra = Math.round(hra * payoutFactor);
+            const earnedConveyance = Math.round(conveyance * payoutFactor);
+            const earnedSpecial = Math.round(special * payoutFactor);
+            const earnedBonus = salaryData.bonus || 0;
+            const grossEarnings = earnedBasic + earnedHra + earnedConveyance + earnedSpecial + earnedBonus;
+
+            const pf = salaryData.pfEmployee || 1800;
+            const pt = salaryData.professionalTax || 200;
+            const tds = salaryData.tds || 0;
+            const other = salaryData.otherDeductions || 0;
+            const totalDeductions = pf + pt + tds + other;
+            const netPay = Math.round(grossEarnings - totalDeductions);
+
+            setSalaryData(prev => ({
+                ...prev,
+                basicSalary: earnedBasic,
+                hra: earnedHra,
+                conveyanceAllowance: earnedConveyance,
+                specialAllowance: earnedSpecial,
+                paidDays,
+                grossEarnings,
+                totalDeductions,
+                netPay,
+                netPayInWords: numberToWords(netPay),
+            }));
+        }
+    }, [salaryData.annualCtc, salaryData.lopDays, salaryData.pfEmployee, salaryData.professionalTax, salaryData.tds, salaryData.otherDeductions, salaryData.bonus, selectedDoc]);
+
+    // Offer letter salary breakdown calculation
+    useEffect(() => {
+        if (selectedDoc === 'offer-letter') {
+            const monthly = offerData.annualCtc / 12;
+            const basic = Math.round(monthly * 0.50);
+            const hra = Math.round(basic * 0.50);
+            const conveyance = Math.round(basic * 0.10);
+            const special = Math.round(monthly - basic - hra - conveyance - 1800);
+            setOfferData(prev => ({
+                ...prev,
+                basicSalary: basic,
+                hra,
+                conveyanceAllowance: conveyance,
+                specialAllowance: special,
+                pfEmployer: 1800,
+            }));
+        }
+    }, [offerData.annualCtc, selectedDoc]);
+
+    // Appraisal increment calculation
+    useEffect(() => {
+        if (selectedDoc === 'appraisal-letter' && appraisalData.currentCtc > 0) {
+            const increment = Math.round(((appraisalData.newCtc - appraisalData.currentCtc) / appraisalData.currentCtc) * 100);
+            setAppraisalData(prev => ({ ...prev, incrementPercentage: increment }));
+        }
+    }, [appraisalData.currentCtc, appraisalData.newCtc, selectedDoc]);
+
+    // Direct PDF download
+    const handleDownloadPDF = () => {
+        const element = document.getElementById('print-content');
+        if (!element) {
+            window.print();
+            return;
+        }
+
+        const candidateName = selectedDoc === 'offer-letter' ? offerData.candidateName :
+            selectedDoc === 'salary-slip' ? salaryData.employeeName :
+                selectedDoc === 'internship-letter' ? internshipData.internName :
+                    selectedDoc === 'experience-certificate' ? experienceData.employeeName :
+                        selectedDoc === 'relieving-letter' ? relievingData.employeeName :
+                            appraisalData.employeeName;
+
+        const filename = `digital-heroes-${selectedDoc}-${(candidateName || 'document').toLowerCase().replace(/\s+/g, '-')}.pdf`;
+
+        const opt = {
+            margin: 0,
+            filename: filename,
+            image: { type: 'jpeg', quality: 0.95 },
+            html2canvas: {
+                scale: 2,
+                useCORS: true,
+                logging: false
+            },
+            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+            pagebreak: { mode: 'css', before: '.page-break-before', after: '.page-break-after', avoid: '.no-break' }
+        };
+
+        // @ts-ignore - html2pdf is loaded from CDN
+        if (typeof html2pdf !== 'undefined') {
+            // @ts-ignore
+            html2pdf().set(opt).from(element).save();
+        } else {
+            window.print();
+        }
+    };
+
+    const currentDocOption = DOCUMENT_OPTIONS.find(d => d.id === selectedDoc);
+
+    // Generic change handler
+    const handleChange = (setter: React.Dispatch<React.SetStateAction<any>>) => (
+        e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
+    ) => {
+        const { name, value, type } = e.target;
+        setter((prev: any) => ({
+            ...prev,
+            [name]: type === 'number' ? parseFloat(value) || 0 : value,
+        }));
+    };
+
+    return (
+        <div className="flex h-screen w-screen overflow-hidden bg-slate-100 font-sans">
+            {/* Left Sidebar - Print Hidden */}
+            <div className="w-72 min-w-[288px] bg-white border-r border-slate-200 flex flex-col print:hidden">
+                {/* Header */}
+                <div className="p-5 border-b border-slate-200 bg-gradient-to-r from-slate-800 to-slate-900">
+                    <h1 className="text-xl font-bold text-white">HR Docs Editor</h1>
+                    <p className="text-sm text-slate-400 mt-1">Generate professional HR documents</p>
+                </div>
+
+                {/* Document Type Selector */}
+                <div className="p-4 border-b border-slate-100">
+                    <label className="block text-xs font-medium text-slate-500 uppercase tracking-wider mb-2">
+                        Document Type
+                    </label>
+                    <select
+                        value={selectedDoc}
+                        onChange={(e) => setSelectedDoc(e.target.value as DocumentType)}
+                        className="w-full px-4 py-3 rounded-xl border-2 border-slate-200 bg-white text-slate-800 font-medium focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all cursor-pointer"
+                    >
+                        {DOCUMENT_OPTIONS.map(opt => (
+                            <option key={opt.id} value={opt.id}>
+                                {opt.icon} {opt.label}
+                            </option>
+                        ))}
+                    </select>
+                </div>
+
+                {/* Document Type Cards */}
+                <div className="flex-1 p-3 space-y-2 overflow-y-auto">
+                    {DOCUMENT_OPTIONS.map(opt => (
+                        <button
+                            key={opt.id}
+                            onClick={() => setSelectedDoc(opt.id)}
+                            className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-left transition-all ${selectedDoc === opt.id
+                                ? 'bg-blue-50 border-2 border-blue-300 shadow-sm'
+                                : 'bg-slate-50 border-2 border-transparent hover:bg-slate-100'
+                                }`}
+                        >
+                            <span className="text-xl">{opt.icon}</span>
+                            <div className="flex-1 min-w-0">
+                                <p className={`font-medium text-sm truncate ${selectedDoc === opt.id ? 'text-blue-700' : 'text-slate-700'}`}>
+                                    {opt.label}
+                                </p>
+                                <p className="text-xs text-slate-500 truncate">{opt.description}</p>
+                            </div>
+                            {selectedDoc === opt.id && (
+                                <div className="w-2 h-2 rounded-full bg-blue-500"></div>
+                            )}
+                        </button>
+                    ))}
+                </div>
+
+                {/* Print and Options */}
+                <div className="p-4 border-t border-slate-200 bg-slate-50 space-y-2">
+                    <button
+                        onClick={() => setShowSeal(!showSeal)}
+                        className={`w-full flex items-center justify-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all ${showSeal
+                            ? 'bg-blue-100 text-blue-700 border border-blue-300'
+                            : 'bg-slate-100 text-slate-600 border border-slate-300'
+                            }`}
+                    >
+                        {showSeal ? '⭕ Seal: ON' : '⚪ Seal: OFF'}
+                    </button>
+                    <Button onClick={handleDownloadPDF} className="w-full" size="lg">
+                        📥 Download PDF
+                    </Button>
+                </div>
+            </div>
+
+            {/* Main Content Area */}
+            <div className="flex-1 flex overflow-hidden">
+                {/* Form Panel - Print Hidden */}
+                <div className="w-96 min-w-[384px] bg-white border-r border-slate-200 overflow-y-auto p-5 print:hidden">
+                    <div className="mb-5">
+                        <h2 className="text-lg font-bold text-slate-800 flex items-center gap-2">
+                            <span className="text-2xl">{currentDocOption?.icon}</span>
+                            {currentDocOption?.label}
+                        </h2>
+                        <p className="text-sm text-slate-500 mt-1">Fill in the details below</p>
+                    </div>
+
+                    {/* Dynamic Form Based on Selection */}
+                    <div className="space-y-4">
+                        {/* ===== OFFER LETTER FORM ===== */}
+                        {selectedDoc === 'offer-letter' && (
+                            <>
+                                <Card title="🎯 Quick Select Role" headerClassName="bg-gradient-to-r from-blue-500 to-indigo-500 text-white">
+                                    <Select
+                                        label="Select Role (Auto-fills details)"
+                                        name="rolePreset"
+                                        value={offerData.designation}
+                                        options={ROLE_PRESETS.map(r => ({ value: r.designation, label: `${r.designation} - ₹${(r.annualCtc / 100000).toFixed(1)}L` }))}
+                                        onChange={(e) => handleRolePresetChange(e.target.value)}
+                                    />
+                                </Card>
+                                <Card title="Company Details" headerClassName="bg-blue-50">
+                                    <div className="space-y-3">
+                                        <Input label="Company Name" name="companyName" value={offerData.companyName} onChange={handleChange(setOfferData)} />
+                                        <Input label="Company Tagline" name="companyTagline" value={offerData.companyTagline} onChange={handleChange(setOfferData)} />
+                                        <Input label="Company Address" name="companyAddress" value={offerData.companyAddress} onChange={handleChange(setOfferData)} />
+                                        <div className="grid grid-cols-3 gap-2">
+                                            <Input label="Ref Prefix" name="refPrefix" value={offerData.refPrefix} onChange={handleChange(setOfferData)} />
+                                            <Input label="Year" name="refYear" value={offerData.refYear} onChange={handleChange(setOfferData)} />
+                                            <Input label="Number" name="refNumber" value={offerData.refNumber} onChange={handleChange(setOfferData)} />
+                                        </div>
+                                        <Input label="Date" name="date" value={offerData.date} onChange={handleChange(setOfferData)} />
+                                    </div>
+                                </Card>
+                                <Card title="Candidate Details" headerClassName="bg-indigo-50">
+                                    <div className="space-y-3">
+                                        <Input label="Candidate Name" name="candidateName" value={offerData.candidateName} onChange={handleChange(setOfferData)} placeholder="Enter candidate's full name" />
+                                        <Input label="Address" name="candidateAddress" value={offerData.candidateAddress} onChange={handleChange(setOfferData)} placeholder="City, State" />
+                                    </div>
+                                </Card>
+                                <Card title="Position Details">
+                                    <div className="space-y-3">
+                                        <Select
+                                            label="Designation"
+                                            name="designation"
+                                            value={offerData.designation}
+                                            options={ROLE_PRESETS.map(r => ({ value: r.designation, label: r.designation }))}
+                                            onChange={(e) => handleRolePresetChange(e.target.value)}
+                                        />
+                                        <Select
+                                            label="Department"
+                                            name="department"
+                                            value={offerData.department}
+                                            options={DEPARTMENT_OPTIONS.map(d => ({ value: d, label: d }))}
+                                            onChange={handleChange(setOfferData)}
+                                        />
+                                        <Input label="Reporting To" name="reportingTo" value={offerData.reportingTo} onChange={handleChange(setOfferData)} />
+                                        <Select
+                                            label="Location"
+                                            name="location"
+                                            value={offerData.location}
+                                            options={LOCATION_OPTIONS.map(l => ({ value: l, label: l }))}
+                                            onChange={handleChange(setOfferData)}
+                                        />
+                                        <Input label="Joining Date" name="joiningDate" type="date" value={offerData.joiningDate} onChange={handleChange(setOfferData)} />
+                                    </div>
+                                </Card>
+                                <Card title="Compensation" headerClassName="bg-green-50">
+                                    <div className="space-y-3">
+                                        <div className="grid grid-cols-2 gap-3">
+                                            <Input
+                                                label="Monthly CTC (₹)"
+                                                name="monthlyCtc"
+                                                type="number"
+                                                value={Math.round(offerData.annualCtc / 12)}
+                                                onChange={(e) => {
+                                                    const monthly = parseFloat(e.target.value) || 0;
+                                                    setOfferData(prev => ({ ...prev, annualCtc: monthly * 12 }));
+                                                }}
+                                            />
+                                            <Input label="Annual CTC (₹)" name="annualCtc" type="number" value={offerData.annualCtc} onChange={handleChange(setOfferData)} />
+                                        </div>
+                                        <Select
+                                            label="Probation Period"
+                                            name="probationPeriod"
+                                            value={offerData.probationPeriod}
+                                            options={PROBATION_OPTIONS.map(p => ({ value: p, label: p }))}
+                                            onChange={handleChange(setOfferData)}
+                                        />
+                                        <Select
+                                            label="Notice Period"
+                                            name="noticePeriod"
+                                            value={offerData.noticePeriod}
+                                            options={NOTICE_PERIOD_OPTIONS.map(n => ({ value: n, label: n }))}
+                                            onChange={handleChange(setOfferData)}
+                                        />
+                                    </div>
+                                </Card>
+                                <Card title="HR Signatory">
+                                    <Select
+                                        label="HR Signatory"
+                                        name="hrName"
+                                        value={offerData.hrName}
+                                        options={HR_SIGNATORY_OPTIONS.map(h => ({ value: h.name, label: `${h.name} - ${h.designation}` }))}
+                                        onChange={(e) => handleHrSignatoryChange(e.target.value, setOfferData)}
+                                    />
+                                </Card>
+                            </>
+                        )}
+
+                        {/* ===== SALARY SLIP FORM ===== */}
+                        {selectedDoc === 'salary-slip' && (
+                            <>
+                                <Card title="🎯 Quick Select Role" headerClassName="bg-gradient-to-r from-emerald-500 to-teal-500 text-white">
+                                    <Select
+                                        label="Select Role (Auto-fills CTC)"
+                                        name="rolePreset"
+                                        value={salaryData.designation}
+                                        options={ROLE_PRESETS.map(r => ({ value: r.designation, label: `${r.designation} - ₹${(r.annualCtc / 100000).toFixed(1)}L` }))}
+                                        onChange={(e) => {
+                                            const preset = ROLE_PRESETS.find(r => r.designation === e.target.value);
+                                            if (preset) {
+                                                setSalaryData(prev => ({
+                                                    ...prev,
+                                                    designation: preset.designation,
+                                                    department: preset.department,
+                                                    annualCtc: preset.annualCtc,
+                                                }));
+                                            }
+                                        }}
+                                    />
+                                </Card>
+                                <Card title="Employee Details" headerClassName="bg-teal-50">
+                                    <div className="space-y-3">
+                                        <Input label="Employee Name" name="employeeName" value={salaryData.employeeName} onChange={handleChange(setSalaryData)} placeholder="Enter employee name" />
+                                        <Input label="Employee ID" name="employeeId" value={salaryData.employeeId} onChange={handleChange(setSalaryData)} />
+                                        <Select
+                                            label="Designation"
+                                            name="designation"
+                                            value={salaryData.designation}
+                                            options={ROLE_PRESETS.map(r => ({ value: r.designation, label: r.designation }))}
+                                            onChange={handleChange(setSalaryData)}
+                                        />
+                                        <Select
+                                            label="Department"
+                                            name="department"
+                                            value={salaryData.department}
+                                            options={DEPARTMENT_OPTIONS.map(d => ({ value: d, label: d }))}
+                                            onChange={handleChange(setSalaryData)}
+                                        />
+                                        <Input label="PAN Number" name="panNumber" value={salaryData.panNumber} onChange={handleChange(setSalaryData)} placeholder="XXXXX0000X" />
+                                        <Input label="Bank Account" name="bankAccount" value={salaryData.bankAccount} onChange={handleChange(setSalaryData)} placeholder="Account number" />
+                                    </div>
+                                </Card>
+                                <Card title="Period & Attendance">
+                                    <div className="space-y-3">
+                                        <div className="grid grid-cols-2 gap-2">
+                                            <Select label="Month" name="month" value={salaryData.month} options={MONTHS.map(m => ({ value: m, label: m }))} onChange={handleChange(setSalaryData)} />
+                                            <Input label="Year" name="year" value={salaryData.year} onChange={handleChange(setSalaryData)} />
+                                        </div>
+                                        <Input label="LOP Days (Absent)" name="lopDays" type="number" value={salaryData.lopDays} onChange={handleChange(setSalaryData)} />
+                                    </div>
+                                </Card>
+                                <Card title="Earnings" headerClassName="bg-green-50">
+                                    <div className="space-y-3">
+                                        <Input label="Annual CTC (₹)" name="annualCtc" type="number" value={salaryData.annualCtc} onChange={handleChange(setSalaryData)} />
+                                        <Input label="Bonus / Incentive" name="bonus" type="number" value={salaryData.bonus} onChange={handleChange(setSalaryData)} />
+                                    </div>
+                                </Card>
+                                <Card title="Deductions" headerClassName="bg-red-50">
+                                    <div className="grid grid-cols-2 gap-2">
+                                        <Input label="PF (Employee)" name="pfEmployee" type="number" value={salaryData.pfEmployee} onChange={handleChange(setSalaryData)} />
+                                        <Input label="Professional Tax" name="professionalTax" type="number" value={salaryData.professionalTax} onChange={handleChange(setSalaryData)} />
+                                        <Input label="TDS" name="tds" type="number" value={salaryData.tds} onChange={handleChange(setSalaryData)} />
+                                        <Input label="Other Deductions" name="otherDeductions" type="number" value={salaryData.otherDeductions} onChange={handleChange(setSalaryData)} />
+                                    </div>
+                                </Card>
+                            </>
+                        )}
+
+                        {/* ===== INTERNSHIP LETTER FORM ===== */}
+                        {selectedDoc === 'internship-letter' && (
+                            <>
+                                <Card title="🎯 Quick Select Role" headerClassName="bg-gradient-to-r from-purple-500 to-violet-500 text-white">
+                                    <Select
+                                        label="Select Internship Role (Auto-fills details)"
+                                        name="rolePreset"
+                                        value={internshipData.internshipRole}
+                                        options={INTERNSHIP_ROLE_PRESETS.map(r => ({ value: r.role, label: `${r.role} - ₹${r.stipend}/mo` }))}
+                                        onChange={(e) => handleInternshipRoleChange(e.target.value)}
+                                    />
+                                </Card>
+                                <Card title="Intern Details" headerClassName="bg-violet-50">
+                                    <div className="space-y-3">
+                                        <Input label="Intern Name" name="internName" value={internshipData.internName} onChange={handleChange(setInternshipData)} placeholder="Enter intern's full name" />
+                                        <Input label="Address" name="internAddress" value={internshipData.internAddress} onChange={handleChange(setInternshipData)} placeholder="City, State" />
+                                        <Input label="College/University" name="collegeName" value={internshipData.collegeName} onChange={handleChange(setInternshipData)} placeholder="Enter college name" />
+                                        <Input label="Course" name="course" value={internshipData.course} onChange={handleChange(setInternshipData)} placeholder="B.Tech, BCA, MBA, etc." />
+                                    </div>
+                                </Card>
+                                <Card title="Internship Details">
+                                    <div className="space-y-3">
+                                        <Select
+                                            label="Internship Role"
+                                            name="internshipRole"
+                                            value={internshipData.internshipRole}
+                                            options={INTERNSHIP_ROLE_PRESETS.map(r => ({ value: r.role, label: r.role }))}
+                                            onChange={(e) => handleInternshipRoleChange(e.target.value)}
+                                        />
+                                        <Select
+                                            label="Department"
+                                            name="department"
+                                            value={internshipData.department}
+                                            options={DEPARTMENT_OPTIONS.map(d => ({ value: d, label: d }))}
+                                            onChange={handleChange(setInternshipData)}
+                                        />
+                                        <div className="grid grid-cols-2 gap-2">
+                                            <Input label="Start Date" name="startDate" type="date" value={internshipData.startDate} onChange={handleChange(setInternshipData)} />
+                                            <Input label="End Date" name="endDate" type="date" value={internshipData.endDate} onChange={handleChange(setInternshipData)} />
+                                        </div>
+                                        <Select
+                                            label="Duration"
+                                            name="duration"
+                                            value={internshipData.duration}
+                                            options={INTERNSHIP_DURATION_OPTIONS.map(d => ({ value: d, label: d }))}
+                                            onChange={handleChange(setInternshipData)}
+                                        />
+                                        <Input label="Stipend (₹/month)" name="stipend" type="number" value={internshipData.stipend} onChange={handleChange(setInternshipData)} />
+                                        <Select
+                                            label="Working Hours"
+                                            name="workingHours"
+                                            value={internshipData.workingHours}
+                                            options={WORKING_HOURS_OPTIONS.map(w => ({ value: w, label: w }))}
+                                            onChange={handleChange(setInternshipData)}
+                                        />
+                                    </div>
+                                </Card>
+                                <Card title="Mentor & HR">
+                                    <div className="space-y-3">
+                                        <Input label="Mentor Name" name="mentorName" value={internshipData.mentorName} onChange={handleChange(setInternshipData)} placeholder="Assigned mentor name" />
+                                        <Input label="Mentor Designation" name="mentorDesignation" value={internshipData.mentorDesignation} onChange={handleChange(setInternshipData)} />
+                                        <Select
+                                            label="HR Signatory"
+                                            name="hrName"
+                                            value={internshipData.hrName}
+                                            options={HR_SIGNATORY_OPTIONS.map(h => ({ value: h.name, label: `${h.name} - ${h.designation}` }))}
+                                            onChange={(e) => handleHrSignatoryChange(e.target.value, setInternshipData)}
+                                        />
+                                    </div>
+                                </Card>
+                            </>
+                        )}
+
+                        {/* ===== EXPERIENCE CERTIFICATE FORM ===== */}
+                        {selectedDoc === 'experience-certificate' && (
+                            <>
+                                <Card title="🎯 Quick Select Role" headerClassName="bg-gradient-to-r from-amber-500 to-orange-500 text-white">
+                                    <Select
+                                        label="Select Role"
+                                        name="designation"
+                                        value={experienceData.designation}
+                                        options={ROLE_PRESETS.map(r => ({ value: r.designation, label: `${r.designation} - ₹${(r.annualCtc / 100000).toFixed(1)}L` }))}
+                                        onChange={(e) => {
+                                            const preset = ROLE_PRESETS.find(r => r.designation === e.target.value);
+                                            if (preset) {
+                                                setExperienceData(prev => ({
+                                                    ...prev,
+                                                    designation: preset.designation,
+                                                    department: preset.department,
+                                                    lastDrawnSalary: preset.annualCtc,
+                                                }));
+                                            }
+                                        }}
+                                    />
+                                </Card>
+                                <Card title="Employee Details" headerClassName="bg-orange-50">
+                                    <div className="space-y-3">
+                                        <Input label="Employee Name" name="employeeName" value={experienceData.employeeName} onChange={handleChange(setExperienceData)} placeholder="Enter employee name" />
+                                        <Input label="Employee ID" name="employeeId" value={experienceData.employeeId} onChange={handleChange(setExperienceData)} />
+                                        <Select
+                                            label="Designation"
+                                            name="designation"
+                                            value={experienceData.designation}
+                                            options={ROLE_PRESETS.map(r => ({ value: r.designation, label: r.designation }))}
+                                            onChange={handleChange(setExperienceData)}
+                                        />
+                                        <Select
+                                            label="Department"
+                                            name="department"
+                                            value={experienceData.department}
+                                            options={DEPARTMENT_OPTIONS.map(d => ({ value: d, label: d }))}
+                                            onChange={handleChange(setExperienceData)}
+                                        />
+                                    </div>
+                                </Card>
+                                <Card title="Employment Period">
+                                    <div className="space-y-3">
+                                        <Input label="Joining Date" name="joiningDate" value={experienceData.joiningDate} onChange={handleChange(setExperienceData)} placeholder="e.g., 15th March 2020" />
+                                        <Input label="Relieving Date" name="relievingDate" value={experienceData.relievingDate} onChange={handleChange(setExperienceData)} placeholder="e.g., 14th December 2024" />
+                                        <Input label="Last Drawn CTC (₹)" name="lastDrawnSalary" type="number" value={experienceData.lastDrawnSalary} onChange={handleChange(setExperienceData)} />
+                                    </div>
+                                </Card>
+                                <Card title="Performance">
+                                    <div className="space-y-3">
+                                        <TextArea label="Key Responsibilities" name="responsibilities" value={experienceData.responsibilities} onChange={handleChange(setExperienceData)} rows={3} />
+                                        <Select
+                                            label="Conduct"
+                                            name="conduct"
+                                            value={experienceData.conduct}
+                                            options={CONDUCT_OPTIONS}
+                                            onChange={handleChange(setExperienceData)}
+                                        />
+                                    </div>
+                                </Card>
+                                <Card title="HR Signatory">
+                                    <Select
+                                        label="HR Signatory"
+                                        name="hrName"
+                                        value={experienceData.hrName}
+                                        options={HR_SIGNATORY_OPTIONS.map(h => ({ value: h.name, label: `${h.name} - ${h.designation}` }))}
+                                        onChange={(e) => handleHrSignatoryChange(e.target.value, setExperienceData)}
+                                    />
+                                </Card>
+                            </>
+                        )}
+
+                        {/* ===== RELIEVING LETTER FORM ===== */}
+                        {selectedDoc === 'relieving-letter' && (
+                            <>
+                                <Card title="🎯 Quick Select Role" headerClassName="bg-gradient-to-r from-rose-500 to-pink-500 text-white">
+                                    <Select
+                                        label="Select Role"
+                                        name="designation"
+                                        value={relievingData.designation}
+                                        options={ROLE_PRESETS.map(r => ({ value: r.designation, label: r.designation }))}
+                                        onChange={(e) => {
+                                            const preset = ROLE_PRESETS.find(r => r.designation === e.target.value);
+                                            if (preset) {
+                                                setRelievingData(prev => ({
+                                                    ...prev,
+                                                    designation: preset.designation,
+                                                    department: preset.department,
+                                                }));
+                                            }
+                                        }}
+                                    />
+                                </Card>
+                                <Card title="Employee Details" headerClassName="bg-pink-50">
+                                    <div className="space-y-3">
+                                        <Input label="Employee Name" name="employeeName" value={relievingData.employeeName} onChange={handleChange(setRelievingData)} placeholder="Enter employee name" />
+                                        <Input label="Employee ID" name="employeeId" value={relievingData.employeeId} onChange={handleChange(setRelievingData)} />
+                                        <Select
+                                            label="Designation"
+                                            name="designation"
+                                            value={relievingData.designation}
+                                            options={ROLE_PRESETS.map(r => ({ value: r.designation, label: r.designation }))}
+                                            onChange={handleChange(setRelievingData)}
+                                        />
+                                        <Select
+                                            label="Department"
+                                            name="department"
+                                            value={relievingData.department}
+                                            options={DEPARTMENT_OPTIONS.map(d => ({ value: d, label: d }))}
+                                            onChange={handleChange(setRelievingData)}
+                                        />
+                                    </div>
+                                </Card>
+                                <Card title="Important Dates">
+                                    <div className="space-y-3">
+                                        <Input label="Date of Joining" name="joiningDate" value={relievingData.joiningDate} onChange={handleChange(setRelievingData)} placeholder="e.g., 15th March 2020" />
+                                        <Input label="Resignation Date" name="resignationDate" value={relievingData.resignationDate} onChange={handleChange(setRelievingData)} placeholder="e.g., 14th November 2024" />
+                                        <Input label="Last Working Date" name="lastWorkingDate" value={relievingData.lastWorkingDate} onChange={handleChange(setRelievingData)} placeholder="e.g., 14th December 2024" />
+                                    </div>
+                                </Card>
+                                <Card title="HR Signatory">
+                                    <Select
+                                        label="HR Signatory"
+                                        name="hrName"
+                                        value={relievingData.hrName}
+                                        options={HR_SIGNATORY_OPTIONS.map(h => ({ value: h.name, label: `${h.name} - ${h.designation}` }))}
+                                        onChange={(e) => handleHrSignatoryChange(e.target.value, setRelievingData)}
+                                    />
+                                </Card>
+                            </>
+                        )}
+
+                        {/* ===== APPRAISAL LETTER FORM ===== */}
+                        {selectedDoc === 'appraisal-letter' && (
+                            <>
+                                <Card title="Employee Details" headerClassName="bg-teal-50">
+                                    <div className="space-y-3">
+                                        <Input label="Employee Name" name="employeeName" value={appraisalData.employeeName} onChange={handleChange(setAppraisalData)} placeholder="Enter employee name" />
+                                        <Input label="Employee ID" name="employeeId" value={appraisalData.employeeId} onChange={handleChange(setAppraisalData)} />
+                                        <Select
+                                            label="Department"
+                                            name="department"
+                                            value={appraisalData.department}
+                                            options={DEPARTMENT_OPTIONS.map(d => ({ value: d, label: d }))}
+                                            onChange={handleChange(setAppraisalData)}
+                                        />
+                                    </div>
+                                </Card>
+                                <Card title="Promotion" headerClassName="bg-emerald-50">
+                                    <div className="space-y-3">
+                                        <Select
+                                            label="Current Designation"
+                                            name="designation"
+                                            value={appraisalData.designation}
+                                            options={ROLE_PRESETS.map(r => ({ value: r.designation, label: r.designation }))}
+                                            onChange={(e) => {
+                                                const preset = ROLE_PRESETS.find(r => r.designation === e.target.value);
+                                                if (preset) {
+                                                    setAppraisalData(prev => ({
+                                                        ...prev,
+                                                        designation: preset.designation,
+                                                        currentCtc: preset.annualCtc,
+                                                    }));
+                                                }
+                                            }}
+                                        />
+                                        <Select
+                                            label="New Designation"
+                                            name="newDesignation"
+                                            value={appraisalData.newDesignation}
+                                            options={ROLE_PRESETS.map(r => ({ value: r.designation, label: r.designation }))}
+                                            onChange={(e) => {
+                                                const preset = ROLE_PRESETS.find(r => r.designation === e.target.value);
+                                                if (preset) {
+                                                    setAppraisalData(prev => ({
+                                                        ...prev,
+                                                        newDesignation: preset.designation,
+                                                        newCtc: preset.annualCtc,
+                                                    }));
+                                                }
+                                            }}
+                                        />
+                                    </div>
+                                </Card>
+                                <Card title="Compensation Revision" headerClassName="bg-green-50">
+                                    <div className="space-y-3">
+                                        <div className="grid grid-cols-2 gap-2">
+                                            <Input label="Current CTC (₹)" name="currentCtc" type="number" value={appraisalData.currentCtc} onChange={handleChange(setAppraisalData)} />
+                                            <Input label="New CTC (₹)" name="newCtc" type="number" value={appraisalData.newCtc} onChange={handleChange(setAppraisalData)} />
+                                        </div>
+                                        <div className="bg-green-100 rounded-lg p-3 text-center">
+                                            <span className="text-green-800 font-bold text-lg">+{appraisalData.incrementPercentage}% Increment</span>
+                                        </div>
+                                        <Input label="Effective From" name="effectiveDate" value={appraisalData.effectiveDate} onChange={handleChange(setAppraisalData)} placeholder="e.g., 1st January 2025" />
+                                    </div>
+                                </Card>
+                                <Card title="Performance">
+                                    <div className="space-y-3">
+                                        <Select
+                                            label="Performance Rating"
+                                            name="performanceRating"
+                                            value={appraisalData.performanceRating}
+                                            options={PERFORMANCE_RATING_OPTIONS}
+                                            onChange={handleChange(setAppraisalData)}
+                                        />
+                                        <TextArea label="Key Achievements" name="achievements" value={appraisalData.achievements} onChange={handleChange(setAppraisalData)} rows={3} />
+                                    </div>
+                                </Card>
+                                <Card title="HR Signatory">
+                                    <Select
+                                        label="HR Signatory"
+                                        name="hrName"
+                                        value={appraisalData.hrName}
+                                        options={HR_SIGNATORY_OPTIONS.map(h => ({ value: h.name, label: `${h.name} - ${h.designation}` }))}
+                                        onChange={(e) => handleHrSignatoryChange(e.target.value, setAppraisalData)}
+                                    />
+                                </Card>
+                            </>
+                        )}
+                    </div>
+                </div>
+
+                {/* Preview Panel */}
+                <div className="flex-1 bg-slate-200 overflow-auto p-6 flex justify-center print:p-0 print:bg-white print:block">
+                    <div className="print:w-full" id="print-content">
+                        {selectedDoc === 'offer-letter' && <OfferLetterTemplate ref={previewRef} data={offerData} showSeal={showSeal} />}
+                        {selectedDoc === 'salary-slip' && <SalarySlipTemplate ref={previewRef} data={salaryData} />}
+                        {selectedDoc === 'internship-letter' && <InternshipLetterTemplate ref={previewRef} data={internshipData} />}
+                        {selectedDoc === 'experience-certificate' && <ExperienceCertificateTemplate ref={previewRef} data={experienceData} />}
+                        {selectedDoc === 'relieving-letter' && <RelievingLetterTemplate ref={previewRef} data={relievingData} />}
+                        {selectedDoc === 'appraisal-letter' && <AppraisalLetterTemplate ref={previewRef} data={appraisalData} />}
+                    </div>
+                </div>
+            </div>
+
+            {/* Print Styles */}
+            <style>{`
+        @media print {
+          body { margin: 0; padding: 0; }
+          .print\\:hidden { display: none !important; }
+          #print-content { 
+            width: 100% !important;
+            max-width: none !important;
+          }
+          #print-content > div {
+            width: 100% !important;
+            max-width: 100% !important;
+            box-shadow: none !important;
+            margin: 0 !important;
+          }
+        }
+      `}</style>
+        </div>
+    );
+}
+
+export default App;

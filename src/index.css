@@ -1,0 +1,310 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+    --color-primary: #3b82f6;
+    --color-primary-dark: #2563eb;
+    --color-accent: #8b5cf6;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+@layer utilities {
+    .animate-fadeIn {
+        animation: fadeIn 0.3s ease-out;
+    }
+
+    .animate-slideIn {
+        animation: slideIn 0.3s ease-out;
+    }
+
+    .glass {
+        background: rgba(255, 255, 255, 0.8);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+    }
+
+    .glass-dark {
+        background: rgba(30, 41, 59, 0.9);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+    }
+
+    .gradient-text {
+        background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    .card-hover {
+        transition: all 0.2s ease;
+    }
+
+    .card-hover:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.1);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(-20px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* Print styles - comprehensive print support */
+@media print {
+
+    /* Hide non-printable elements */
+    .no-print,
+    aside,
+    nav,
+    button,
+    .sidebar {
+        display: none !important;
+    }
+
+    /* Show print-only elements */
+    .print-only {
+        display: block !important;
+    }
+
+    /* Reset page */
+    html,
+    body {
+        width: 210mm !important;
+        height: auto !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        background: white !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+        color-adjust: exact !important;
+    }
+
+    /* Page setup */
+    @page {
+        size: A4;
+        margin: 0;
+    }
+
+    /* Main container */
+    #root {
+        width: 100% !important;
+        height: auto !important;
+        display: block !important;
+    }
+
+    /* Document template - make it full page */
+    [data-print="document"] {
+        width: 210mm !important;
+        min-height: auto !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        box-shadow: none !important;
+        page-break-after: always;
+    }
+
+    /* Preserve gradients and backgrounds */
+    * {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+        color-adjust: exact !important;
+    }
+
+    /* Ensure shadows are removed */
+    .shadow-2xl,
+    .shadow-lg,
+    .shadow-md,
+    .shadow {
+        box-shadow: none !important;
+    }
+
+    /* Ensure images print */
+    img {
+        max-width: 100% !important;
+        page-break-inside: avoid;
+    }
+
+    /* Avoid page breaks inside elements */
+    .rounded-xl,
+    .rounded-2xl,
+    .rounded-3xl {
+        page-break-inside: avoid;
+    }
+
+    /* ===== B&W PRINT OPTIMIZATION ===== */
+    /* Convert light colored backgrounds to white with visible border */
+    .bg-blue-50,
+    .bg-blue-100,
+    .bg-green-50,
+    .bg-amber-50,
+    .bg-red-50,
+    .bg-slate-50,
+    .bg-emerald-50,
+    .bg-purple-50,
+    .bg-indigo-50 {
+        background-color: white !important;
+        border: 1px solid #333 !important;
+    }
+
+    /* Ensure all text is dark for readability */
+    .text-blue-600,
+    .text-blue-700,
+    .text-blue-800,
+    .text-green-600,
+    .text-green-700,
+    .text-emerald-600,
+    .text-purple-600,
+    .text-indigo-600,
+    .text-amber-600,
+    .text-red-600,
+    .text-red-700,
+    .text-red-800 {
+        color: #000 !important;
+    }
+
+    /* Lighter colored text should be gray */
+    .text-blue-300,
+    .text-blue-200,
+    .text-blue-400,
+    .text-slate-400,
+    .text-slate-500,
+    .text-amber-300 {
+        color: #444 !important;
+    }
+
+    /* Dark backgrounds stay dark for header contrast */
+    .bg-slate-900,
+    .bg-slate-800,
+    .bg-blue-900,
+    .from-slate-900,
+    .to-slate-900,
+    .from-blue-900 {
+        background-color: #1a1a1a !important;
+    }
+
+    /* Gradient backgrounds - simplify to solid */
+    .bg-gradient-to-r {
+        background: #1a1a1a !important;
+    }
+
+    /* Colored borders should be dark */
+    .border-blue-600,
+    .border-blue-500,
+    .border-blue-100,
+    .border-green-600,
+    .border-green-500,
+    .border-emerald-600,
+    .border-purple-600,
+    .border-amber-500,
+    .border-red-600,
+    .border-red-500,
+    .border-red-100 {
+        border-color: #333 !important;
+    }
+
+    /* Table styling for print */
+    table {
+        border-collapse: collapse !important;
+    }
+
+    th,
+    td {
+        border: 1px solid #ccc !important;
+    }
+
+    /* Prevent page breaks inside content blocks */
+    .border-l-4,
+    .rounded-xl,
+    .rounded-2xl,
+    .bg-blue-50,
+    .bg-slate-50,
+    .bg-amber-50,
+    .bg-red-50,
+    .bg-green-50,
+    table,
+    .grid {
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+    }
+
+    /* Section headers should not break from content */
+    h3,
+    h4 {
+        page-break-after: avoid !important;
+        break-after: avoid !important;
+    }
+
+    /* Keep paragraphs together */
+    p {
+        orphans: 3;
+        widows: 3;
+    }
+
+    /* Force page break before element */
+    .page-break-before {
+        page-break-before: always !important;
+        break-before: page !important;
+        padding-top: 10mm !important;
+        margin-top: 0 !important;
+    }
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f5f9;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}
+
+/* Input focus ring */
+input:focus,
+select:focus,
+textarea:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+}

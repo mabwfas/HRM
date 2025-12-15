@@ -629,6 +629,7 @@ function App() {
                                             label="Custom Signature (Optional)"
                                             value={offerData.hrSignature || ''}
                                             onChange={(sig) => setOfferData(prev => ({ ...prev, hrSignature: sig }))}
+                                            signatoryName={offerData.hrName}
                                         />
                                     </div>
                                 </Card>

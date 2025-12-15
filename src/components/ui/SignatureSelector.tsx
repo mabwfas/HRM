@@ -1,10 +1,11 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 
 interface SignatureSelectorProps {
     name: string;
     value: string;
     onChange: (signature: string) => void;
     label?: string;
+    signatoryName?: string; // HR signatory name to auto-extract initials
 }
 
 // Preset signature styles (cursive fonts rendered as SVG text)
@@ -14,16 +15,34 @@ const SIGNATURE_PRESETS = [
     { id: 'style3', name: 'Modern', fontFamily: 'Brush Script MT, cursive', style: 'normal' },
 ];
 
+// Extract initials from a full name (e.g., "Anurag Singh" -> "AS")
+const extractInitials = (name: string): string => {
+    if (!name) return '';
+    return name
+        .split(' ')
+        .filter(word => word.length > 0)
+        .map(word => word[0].toUpperCase())
+        .join('');
+};
+
 export const SignatureSelector: React.FC<SignatureSelectorProps> = ({
     value,
     onChange,
     label = 'Signature',
+    signatoryName = '',
 }) => {
     const [mode, setMode] = useState<'initials' | 'preset' | 'upload'>('initials');
-    const [initialsText, setInitialsText] = useState('');
+    const [initialsText, setInitialsText] = useState(() => extractInitials(signatoryName));
     const [selectedPreset, setSelectedPreset] = useState(SIGNATURE_PRESETS[0].id);
     const [uploadedImage, setUploadedImage] = useState<string | null>(null);
     const fileInputRef = useRef<HTMLInputElement>(null);
+
+    // Auto-update initials when signatory name changes
+    useEffect(() => {
+        if (signatoryName) {
+            setInitialsText(extractInitials(signatoryName));
+        }
+    }, [signatoryName]);
 
     // Generate initials-based signature (cursive capitals)
     const generateInitialsSignature = (text: string) => {

@@ -620,9 +620,38 @@ function App() {
                                         label="HR Signatory"
                                         name="hrName"
                                         value={offerData.hrName}
-                                        options={HR_SIGNATORY_OPTIONS.map(h => ({ value: h.name, label: `${h.name} - ${h.designation}` }))}
-                                        onChange={(e) => handleHrSignatoryChange(e.target.value, setOfferData)}
+                                        options={[
+                                            ...HR_SIGNATORY_OPTIONS.map(h => ({ value: h.name, label: `${h.name} - ${h.designation}` })),
+                                            { value: '__custom__', label: '✏️ Custom (Enter manually)' }
+                                        ]}
+                                        onChange={(e) => {
+                                            if (e.target.value === '__custom__') {
+                                                setOfferData(prev => ({ ...prev, hrName: '', hrDesignation: '', hrSignature: '' }));
+                                            } else {
+                                                handleHrSignatoryChange(e.target.value, setOfferData);
+                                            }
+                                        }}
                                     />
+                                    {/* Custom HR Input Fields */}
+                                    {!HR_SIGNATORY_OPTIONS.find(h => h.name === offerData.hrName) && (
+                                        <div className="mt-3 space-y-3 p-3 bg-slate-50 dark:bg-slate-700 rounded-lg border border-slate-200 dark:border-slate-600">
+                                            <p className="text-xs text-slate-500 dark:text-slate-400 font-medium">✏️ Enter Custom HR Details:</p>
+                                            <Input
+                                                label="HR Name"
+                                                name="hrName"
+                                                value={offerData.hrName}
+                                                onChange={(e) => setOfferData(prev => ({ ...prev, hrName: e.target.value }))}
+                                                placeholder="Enter HR name"
+                                            />
+                                            <Input
+                                                label="HR Designation"
+                                                name="hrDesignation"
+                                                value={offerData.hrDesignation}
+                                                onChange={(e) => setOfferData(prev => ({ ...prev, hrDesignation: e.target.value }))}
+                                                placeholder="Enter designation"
+                                            />
+                                        </div>
+                                    )}
                                     <div className="mt-4">
                                         <SignatureSelector
                                             name="customSignature"

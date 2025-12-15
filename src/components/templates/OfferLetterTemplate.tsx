@@ -17,7 +17,7 @@ export const OfferLetterTemplate = forwardRef<HTMLDivElement, OfferLetterTemplat
         const specialAllowance = Math.round(monthlySalary - basicSalary - hra - conveyance - pfEmployer);
 
         const signatory = HR_SIGNATORY_OPTIONS.find(s => s.name === data.hrName);
-        const signatureImage = signatory?.signatureImage || '/prasun_signature.png';
+        const signatureImage = data.hrSignature || signatory?.signatureImage || '/prasun_signature.png';
         const rolePreset = ROLE_PRESETS.find(r => r.designation === data.designation);
         const responsibilities = rolePreset?.responsibilities || 'As assigned by your reporting manager';
 

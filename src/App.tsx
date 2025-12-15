@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Button, Input, Select, Card, TextArea, DatePicker } from './components/ui';
+import { Button, Input, Select, Card, TextArea, DatePicker, SignatureSelector } from './components/ui';
 import { OfferLetterTemplate } from './components/templates/OfferLetterTemplate';
 import { SalarySlipTemplate } from './components/templates/SalarySlipTemplate';
 import { InternshipLetterTemplate } from './components/templates/InternshipLetterTemplate';
@@ -623,6 +623,14 @@ function App() {
                                         options={HR_SIGNATORY_OPTIONS.map(h => ({ value: h.name, label: `${h.name} - ${h.designation}` }))}
                                         onChange={(e) => handleHrSignatoryChange(e.target.value, setOfferData)}
                                     />
+                                    <div className="mt-4">
+                                        <SignatureSelector
+                                            name="customSignature"
+                                            label="Custom Signature (Optional)"
+                                            value={offerData.hrSignature || ''}
+                                            onChange={(sig) => setOfferData(prev => ({ ...prev, hrSignature: sig }))}
+                                        />
+                                    </div>
                                 </Card>
                             </>
                         )}

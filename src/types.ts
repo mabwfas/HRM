@@ -270,6 +270,7 @@ export interface OfferLetterData {
     noticePeriod: string;
     hrName: string;
     hrDesignation: string;
+    hrSignature?: string;
 }
 
 export const initialOfferLetterData: OfferLetterData = {
@@ -297,6 +298,7 @@ export const initialOfferLetterData: OfferLetterData = {
     noticePeriod: '30 days',
     hrName: 'Prasun Anand',
     hrDesignation: 'Co-Founder',
+    hrSignature: '',
 };
 
 // ============================================

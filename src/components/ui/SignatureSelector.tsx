@@ -25,19 +25,22 @@ export const SignatureSelector: React.FC<SignatureSelectorProps> = ({
     const [uploadedImage, setUploadedImage] = useState<string | null>(null);
     const fileInputRef = useRef<HTMLInputElement>(null);
 
-    // Generate initials-based signature
+    // Generate initials-based signature (cursive capitals)
     const generateInitialsSignature = (text: string) => {
         if (!text) return '';
+        // Convert to uppercase for capitals
+        const uppercaseText = text.toUpperCase();
         const canvas = document.createElement('canvas');
-        canvas.width = 200;
-        canvas.height = 60;
+        canvas.width = 280;
+        canvas.height = 80;
         const ctx = canvas.getContext('2d');
         if (ctx) {
-            ctx.font = 'italic 32px cursive';
+            // Use cursive/script font with italic for handwritten look
+            ctx.font = 'italic bold 38px "Brush Script MT", "Segoe Script", cursive';
             ctx.fillStyle = '#1e3a5f';
             ctx.textAlign = 'center';
             ctx.textBaseline = 'middle';
-            ctx.fillText(text, 100, 30);
+            ctx.fillText(uppercaseText, 140, 40);
         }
         return canvas.toDataURL();
     };

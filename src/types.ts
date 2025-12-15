@@ -296,8 +296,8 @@ export const initialOfferLetterData: OfferLetterData = {
     pfEmployer: 1800,
     probationPeriod: '3 months (90 days)',
     noticePeriod: '30 days',
-    hrName: 'Prasun Anand',
-    hrDesignation: 'Co-Founder',
+    hrName: 'Anurag Singh',
+    hrDesignation: 'Director of Operations',
     hrSignature: '',
 };
 

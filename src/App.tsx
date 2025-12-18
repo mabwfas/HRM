@@ -320,6 +320,54 @@ function App() {
         }
     };
 
+    // Reset form to initial values
+    const handleResetForm = () => {
+        if (!confirm('Are you sure you want to reset this form? All entered data will be lost.')) return;
+
+        // Clear localStorage for current document
+        localStorage.removeItem(`hr-docs-${selectedDoc}`);
+
+        // Reset to initial values based on selected document
+        switch (selectedDoc) {
+            case 'offer-letter':
+                setOfferData(initialOfferLetterData);
+                break;
+            case 'salary-slip':
+                setSalaryData(initialSalarySlipData);
+                break;
+            case 'internship-letter':
+                setInternshipData(initialInternshipLetterData);
+                break;
+            case 'experience-certificate':
+                setExperienceData(initialExperienceCertificateData);
+                break;
+            case 'relieving-letter':
+                setRelievingData(initialRelievingLetterData);
+                break;
+            case 'appraisal-letter':
+                setAppraisalData(initialAppraisalLetterData);
+                break;
+            case 'internship-completion':
+                setInternshipCompletionData(initialInternshipCompletionData);
+                break;
+            case 'promotion-letter':
+                setPromotionData(initialPromotionLetterData);
+                break;
+            case 'warning-letter':
+                setWarningData(initialWarningLetterData);
+                break;
+            case 'termination-letter':
+                setTerminationData(initialTerminationLetterData);
+                break;
+            case 'joining-letter':
+                setJoiningData(initialJoiningLetterData);
+                break;
+            case 'address-proof':
+                setAddressProofData(initialAddressProofLetterData);
+                break;
+        }
+    };
+
     const currentDocOption = DOCUMENT_OPTIONS.find(d => d.id === selectedDoc);
 
     // Generic change handler
@@ -471,6 +519,12 @@ function App() {
                     >
                         👥 Employee Database
                     </button>
+                    <button
+                        onClick={handleResetForm}
+                        className="w-full flex items-center justify-center gap-2 px-4 py-2 rounded-lg text-sm font-medium bg-orange-100 text-orange-700 border border-orange-300 hover:bg-orange-200 transition-all"
+                    >
+                        🔄 Reset Form
+                    </button>
                     <Button onClick={handleDownloadPDF} className="w-full" size="lg">
                         📥 Download PDF
                     </Button>
@@ -581,7 +635,7 @@ function App() {
                                             options={LOCATION_OPTIONS.map(l => ({ value: l, label: l }))}
                                             onChange={handleChange(setOfferData)}
                                         />
-                                        <Input label="Joining Date" name="joiningDate" type="date" value={offerData.joiningDate} onChange={handleChange(setOfferData)} />
+                                        <DatePicker label="Joining Date" name="joiningDate" value={offerData.joiningDate} onChange={handleChange(setOfferData)} />
                                     </div>
                                 </Card>
                                 <Card title="Compensation" headerClassName="bg-green-50">
@@ -772,8 +826,8 @@ function App() {
                                             onChange={handleChange(setInternshipData)}
                                         />
                                         <div className="grid grid-cols-2 gap-2">
-                                            <Input label="Start Date" name="startDate" type="date" value={internshipData.startDate} onChange={handleChange(setInternshipData)} />
-                                            <Input label="End Date" name="endDate" type="date" value={internshipData.endDate} onChange={handleChange(setInternshipData)} />
+                                            <DatePicker label="Start Date" name="startDate" value={internshipData.startDate} onChange={handleChange(setInternshipData)} />
+                                            <DatePicker label="End Date" name="endDate" value={internshipData.endDate} onChange={handleChange(setInternshipData)} />
                                         </div>
                                         <Select
                                             label="Duration"

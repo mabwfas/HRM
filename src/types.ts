@@ -222,6 +222,7 @@ export interface SignatoryOption {
 export const HR_SIGNATORY_OPTIONS: SignatoryOption[] = [
     { name: 'Prasun Anand', designation: 'Co-Founder', initials: 'PA', signatureImage: '/prasun_signature.png' },
     { name: 'Shreyansh Singh', designation: 'Managing Director', initials: 'SS', signatureImage: '/shreyansh_signature.png' },
+    { name: 'Agrima Sahu', designation: 'HR Manager', initials: 'AS', signatureImage: '/agrima_signature.png' },
     { name: 'Anurag Singh', designation: 'Director of Operations', initials: 'AS', signatureImage: '/anurag_signature.png' },
     { name: 'Priya Singh', designation: 'Finance Manager', initials: 'PS', signatureImage: '/priya_signature.png' },
     { name: 'Amit Kumar', designation: 'CEO & Founder', initials: 'AK', signatureImage: '/amit_signature.png' },

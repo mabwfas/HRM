@@ -15,8 +15,8 @@ export const RelievingLetterTemplate = forwardRef<HTMLDivElement, RelievingLette
         return (
             <div
                 ref={ref}
-                className="bg-white shadow-2xl print:shadow-none text-[11px] flex flex-col"
-                style={{ width: '210mm', minHeight: '297mm', pageBreakAfter: 'avoid', pageBreakInside: 'avoid' }}
+                className="bg-white shadow-2xl print:shadow-none text-[11px] flex flex-col overflow-hidden"
+                style={{ width: '210mm', height: '297mm', maxHeight: '297mm' }}
             >
                 {/* Header */}
                 <div className="bg-gradient-to-r from-rose-600 via-pink-600 to-fuchsia-700 px-8 py-4">

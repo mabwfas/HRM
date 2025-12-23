@@ -15,8 +15,8 @@ export const InternshipLetterTemplate = forwardRef<HTMLDivElement, InternshipLet
         return (
             <div
                 ref={ref}
-                className="bg-white shadow-2xl print:shadow-none text-[11px] flex flex-col"
-                style={{ width: '210mm', minHeight: '297mm', pageBreakAfter: 'avoid', pageBreakInside: 'avoid' }}
+                className="bg-white shadow-2xl print:shadow-none text-[11px] flex flex-col overflow-hidden"
+                style={{ width: '210mm', height: '297mm', maxHeight: '297mm' }}
             >
                 {/* Header */}
                 <div className="bg-gradient-to-r from-purple-700 via-violet-700 to-indigo-800 px-8 py-4">

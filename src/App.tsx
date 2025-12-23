@@ -398,11 +398,11 @@ function App() {
                 <div className="flex justify-center p-6">
                     <div id="print-content">
                         {selectedDoc === 'offer-letter' && <OfferLetterTemplate ref={previewRef} data={offerData} showSeal={showSeal} />}
-                        {selectedDoc === 'salary-slip' && <SalarySlipTemplate ref={previewRef} data={salaryData} />}
-                        {selectedDoc === 'internship-letter' && <InternshipLetterTemplate ref={previewRef} data={internshipData} />}
-                        {selectedDoc === 'experience-certificate' && <ExperienceCertificateTemplate ref={previewRef} data={experienceData} />}
-                        {selectedDoc === 'relieving-letter' && <RelievingLetterTemplate ref={previewRef} data={relievingData} />}
-                        {selectedDoc === 'appraisal-letter' && <AppraisalLetterTemplate ref={previewRef} data={appraisalData} />}
+                        {selectedDoc === 'salary-slip' && <SalarySlipTemplate ref={previewRef} data={salaryData} showSeal={showSeal} />}
+                        {selectedDoc === 'internship-letter' && <InternshipLetterTemplate ref={previewRef} data={internshipData} showSeal={showSeal} />}
+                        {selectedDoc === 'experience-certificate' && <ExperienceCertificateTemplate ref={previewRef} data={experienceData} showSeal={showSeal} />}
+                        {selectedDoc === 'relieving-letter' && <RelievingLetterTemplate ref={previewRef} data={relievingData} showSeal={showSeal} />}
+                        {selectedDoc === 'appraisal-letter' && <AppraisalLetterTemplate ref={previewRef} data={appraisalData} showSeal={showSeal} />}
                         {selectedDoc === 'internship-completion' && <InternshipCompletionTemplate ref={previewRef} data={internshipCompletionData} />}
                         {selectedDoc === 'training-certificate' && <TrainingCertificateTemplate ref={previewRef} data={trainingCertificateData} />}
                         {selectedDoc === 'promotion-letter' && <PromotionLetterTemplate ref={previewRef} data={promotionData} />}
@@ -879,6 +879,7 @@ function App() {
                                                     designation: preset.designation,
                                                     department: preset.department,
                                                     lastDrawnSalary: preset.annualCtc,
+                                                    responsibilities: preset.responsibilities,
                                                 }));
                                             }
                                         }}
@@ -1304,11 +1305,11 @@ function App() {
                     <div className="print:w-full w-full md:w-auto overflow-x-auto" id="print-content">
                         <div className="min-w-[210mm] md:min-w-0 transform scale-[0.5] md:scale-100 origin-top-left md:origin-center">
                             {selectedDoc === 'offer-letter' && <OfferLetterTemplate ref={previewRef} data={offerData} showSeal={showSeal} />}
-                            {selectedDoc === 'salary-slip' && <SalarySlipTemplate ref={previewRef} data={salaryData} />}
-                            {selectedDoc === 'internship-letter' && <InternshipLetterTemplate ref={previewRef} data={internshipData} />}
-                            {selectedDoc === 'experience-certificate' && <ExperienceCertificateTemplate ref={previewRef} data={experienceData} />}
-                            {selectedDoc === 'relieving-letter' && <RelievingLetterTemplate ref={previewRef} data={relievingData} />}
-                            {selectedDoc === 'appraisal-letter' && <AppraisalLetterTemplate ref={previewRef} data={appraisalData} />}
+                            {selectedDoc === 'salary-slip' && <SalarySlipTemplate ref={previewRef} data={salaryData} showSeal={showSeal} />}
+                            {selectedDoc === 'internship-letter' && <InternshipLetterTemplate ref={previewRef} data={internshipData} showSeal={showSeal} />}
+                            {selectedDoc === 'experience-certificate' && <ExperienceCertificateTemplate ref={previewRef} data={experienceData} showSeal={showSeal} />}
+                            {selectedDoc === 'relieving-letter' && <RelievingLetterTemplate ref={previewRef} data={relievingData} showSeal={showSeal} />}
+                            {selectedDoc === 'appraisal-letter' && <AppraisalLetterTemplate ref={previewRef} data={appraisalData} showSeal={showSeal} />}
                             {selectedDoc === 'internship-completion' && <InternshipCompletionTemplate ref={previewRef} data={internshipCompletionData} />}
                             {selectedDoc === 'training-certificate' && <TrainingCertificateTemplate ref={previewRef} data={trainingCertificateData} />}
                             {selectedDoc === 'promotion-letter' && <PromotionLetterTemplate ref={previewRef} data={promotionData} />}

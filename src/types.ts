@@ -221,6 +221,7 @@ export interface SignatoryOption {
 
 export const HR_SIGNATORY_OPTIONS: SignatoryOption[] = [
     { name: 'Prasun Anand', designation: 'Co-Founder', initials: 'PA', signatureImage: '/prasun_signature.png' },
+    { name: 'Shreyansh Singh', designation: 'Managing Director', initials: 'SS', signatureImage: '/shreyansh_signature.png' },
     { name: 'Anurag Singh', designation: 'Director of Operations', initials: 'AS', signatureImage: '/anurag_signature.png' },
     { name: 'Priya Singh', designation: 'Finance Manager', initials: 'PS', signatureImage: '/priya_signature.png' },
     { name: 'Amit Kumar', designation: 'CEO & Founder', initials: 'AK', signatureImage: '/amit_signature.png' },
@@ -346,7 +347,7 @@ export const initialSalarySlipData: SalarySlipData = {
     companyName: COMPANY_PRESETS.name,
     companyTagline: COMPANY_PRESETS.tagline,
     employeeName: '',
-    employeeId: 'EMP-',
+    employeeId: 'DH' + String(Math.floor(Math.random() * 9000) + 1000),
     designation: 'Developer + Client Success',
     department: 'Engineering',
     panNumber: '',
@@ -371,7 +372,7 @@ export const initialSalarySlipData: SalarySlipData = {
     netPay: 46200,
     netPayInWords: 'Rupees Forty Six Thousand Two Hundred Only',
     signatoryName: 'Prasun Anand',
-    signatoryDesignation: 'HR Manager',
+    signatoryDesignation: 'Co-Founder',
     signatoryInitials: 'PA',
 };
 
@@ -412,7 +413,7 @@ export const INTERNSHIP_ROLE_PRESETS = [
 export const initialInternshipLetterData: InternshipLetterData = {
     companyName: COMPANY_PRESETS.name,
     companyTagline: COMPANY_PRESETS.tagline,
-    refNumber: 'DH/HR/INT/' + new Date().getFullYear() + '/001',
+    refNumber: 'DH/HR/INT/' + new Date().getFullYear() + '/' + String(Math.floor(Math.random() * 900) + 100),
     date: new Date().toLocaleDateString('en-IN', { year: 'numeric', month: 'long', day: 'numeric' }),
     internName: '',
     internAddress: '',
@@ -428,7 +429,7 @@ export const initialInternshipLetterData: InternshipLetterData = {
     mentorName: '',
     mentorDesignation: 'Senior Developer',
     hrName: 'Prasun Anand',
-    hrDesignation: 'HR Manager',
+    hrDesignation: 'Co-Founder',
 };
 
 // ============================================
@@ -455,10 +456,10 @@ export interface ExperienceCertificateData {
 export const initialExperienceCertificateData: ExperienceCertificateData = {
     companyName: COMPANY_PRESETS.name,
     companyTagline: COMPANY_PRESETS.tagline,
-    refNumber: 'DH/HR/EXP/' + new Date().getFullYear() + '/001',
+    refNumber: 'DH/HR/EXP/' + new Date().getFullYear() + '/' + String(Math.floor(Math.random() * 900) + 100),
     date: new Date().toLocaleDateString('en-IN', { year: 'numeric', month: 'long', day: 'numeric' }),
     employeeName: '',
-    employeeId: 'EMP-',
+    employeeId: 'DH' + String(Math.floor(Math.random() * 9000) + 1000),
     designation: 'Developer + Client Success',
     department: 'Engineering',
     joiningDate: '',
@@ -467,7 +468,7 @@ export const initialExperienceCertificateData: ExperienceCertificateData = {
     responsibilities: 'Built conversion-optimized web applications, handled client communication, achieved quality deliverables on time',
     conduct: 'exemplary',
     hrName: 'Prasun Anand',
-    hrDesignation: 'HR Manager',
+    hrDesignation: 'Co-Founder',
 };
 
 // ============================================
@@ -492,17 +493,17 @@ export interface RelievingLetterData {
 export const initialRelievingLetterData: RelievingLetterData = {
     companyName: COMPANY_PRESETS.name,
     companyTagline: COMPANY_PRESETS.tagline,
-    refNumber: 'DH/HR/REL/' + new Date().getFullYear() + '/001',
+    refNumber: 'DH/HR/REL/' + new Date().getFullYear() + '/' + String(Math.floor(Math.random() * 900) + 100),
     date: new Date().toLocaleDateString('en-IN', { year: 'numeric', month: 'long', day: 'numeric' }),
     employeeName: '',
-    employeeId: 'EMP-',
+    employeeId: 'DH' + String(Math.floor(Math.random() * 9000) + 1000),
     designation: 'Developer + Client Success',
     department: 'Engineering',
     joiningDate: '',
     resignationDate: '',
     lastWorkingDate: '',
     hrName: 'Prasun Anand',
-    hrDesignation: 'HR Manager',
+    hrDesignation: 'Co-Founder',
 };
 
 // ============================================
@@ -531,10 +532,10 @@ export interface AppraisalLetterData {
 export const initialAppraisalLetterData: AppraisalLetterData = {
     companyName: COMPANY_PRESETS.name,
     companyTagline: COMPANY_PRESETS.tagline,
-    refNumber: 'DH/HR/APR/' + new Date().getFullYear() + '/001',
+    refNumber: 'DH/HR/APR/' + new Date().getFullYear() + '/' + String(Math.floor(Math.random() * 900) + 100),
     date: new Date().toLocaleDateString('en-IN', { year: 'numeric', month: 'long', day: 'numeric' }),
     employeeName: '',
-    employeeId: 'EMP-',
+    employeeId: 'DH' + String(Math.floor(Math.random() * 9000) + 1000),
     designation: 'Junior Web Developer',
     newDesignation: 'Developer + Client Success',
     department: 'Engineering',
@@ -545,7 +546,7 @@ export const initialAppraisalLetterData: AppraisalLetterData = {
     performanceRating: 'Exceeds Expectations',
     achievements: 'Delivered 10+ web projects, achieved 90+ PageSpeed scores, maintained 4.8+ client satisfaction',
     hrName: 'Prasun Anand',
-    hrDesignation: 'HR Manager',
+    hrDesignation: 'Co-Founder',
 };
 
 // ============================================

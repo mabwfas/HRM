@@ -124,21 +124,18 @@ export const SalarySlipTemplate = forwardRef<HTMLDivElement, SalarySlipTemplateP
                     </div>
 
                     {/* Signature Section */}
-                    <div className="flex justify-between items-end">
-                        <div className="text-xs text-slate-400">
-                            <p>This is a computer-generated payslip.</p>
-                            <p>No signature required.</p>
-                        </div>
-                        <div className="flex items-end gap-6">
+                    <div className="flex flex-col items-center">
+                        <div className="flex items-end gap-6 justify-center">
                             {showSeal && <CompanySeal companyName={data.companyName} size="sm" />}
                             <div className="text-center">
-                                <img src={signatureImage} alt="Signature" className="h-10 object-contain mb-1" />
-                                <div className="border-t border-slate-300 pt-1 w-36">
+                                <img src={signatureImage} alt="Signature" className="h-12 object-contain mb-1 mx-auto" />
+                                <div className="border-t border-slate-300 pt-1 w-40 mx-auto">
                                     <p className="font-bold text-slate-800 text-xs">{data.signatoryName}</p>
                                     <p className="text-[10px] text-slate-500">{data.signatoryDesignation}</p>
                                 </div>
                             </div>
                         </div>
+                        <p className="text-xs text-slate-400 mt-3">This is a computer-generated payslip. No signature required.</p>
                     </div>
                 </div>
 

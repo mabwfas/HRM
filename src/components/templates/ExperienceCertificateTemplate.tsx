@@ -107,10 +107,10 @@ export const ExperienceCertificateTemplate = forwardRef<HTMLDivElement, Experien
                 <div className="mt-auto px-8 pt-4">
                     <div className="flex justify-between items-end">
                         {showSeal && <CompanySeal companyName={data.companyName} size="md" />}
-                        <div className="text-right">
+                        <div className="text-center">
                             <p className="text-xs text-slate-500 mb-1">For {data.companyName}</p>
-                            <img src={signatureImage} alt="Signature" className="h-10 object-contain mb-1 ml-auto" />
-                            <div className="border-t border-slate-400 pt-1 w-48 text-center">
+                            <img src={signatureImage} alt="Signature" className="h-12 object-contain mb-1 mx-auto" />
+                            <div className="border-t border-slate-400 pt-1 w-48 mx-auto">
                                 <p className="font-bold text-slate-800 text-xs">{data.hrName}</p>
                                 <p className="text-[10px] text-slate-600">{data.hrDesignation}</p>
                                 <p className="text-[10px] text-slate-400">{data.companyName}</p>

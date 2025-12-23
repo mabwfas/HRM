@@ -786,6 +786,25 @@ function App() {
                                         <Input label="Other Deductions" name="otherDeductions" type="number" value={salaryData.otherDeductions} onChange={handleChange(setSalaryData)} />
                                     </div>
                                 </Card>
+                                <Card title="HR Signatory">
+                                    <Select
+                                        label="Signatory"
+                                        name="signatoryName"
+                                        value={salaryData.signatoryName}
+                                        options={HR_SIGNATORY_OPTIONS.map(h => ({ value: h.name, label: `${h.name} - ${h.designation}` }))}
+                                        onChange={(e) => {
+                                            const signatory = HR_SIGNATORY_OPTIONS.find(h => h.name === e.target.value);
+                                            if (signatory) {
+                                                setSalaryData(prev => ({
+                                                    ...prev,
+                                                    signatoryName: signatory.name,
+                                                    signatoryDesignation: signatory.designation,
+                                                    signatoryInitials: signatory.initials,
+                                                }));
+                                            }
+                                        }}
+                                    />
+                                </Card>
                             </>
                         )}
 

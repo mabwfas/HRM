@@ -597,20 +597,48 @@ interface OnboardingSubmission {
     totalQuestions: number;
 }
 
-// Storage functions
-const getSubmissions = (): OnboardingSubmission[] => {
+// API Base URL - uses relative path on Vercel
+const API_BASE = '/api';
+
+// Storage functions using Vercel API
+const getSubmissions = async (): Promise<OnboardingSubmission[]> => {
     try {
+        const response = await fetch(`${API_BASE}/onboarding-submissions`);
+        if (response.ok) {
+            return await response.json();
+        }
+        // Fallback to localStorage if API fails
         const data = localStorage.getItem('onboarding_submissions');
         return data ? JSON.parse(data) : [];
     } catch {
-        return [];
+        // Fallback to localStorage
+        const data = localStorage.getItem('onboarding_submissions');
+        return data ? JSON.parse(data) : [];
     }
 };
 
-const saveSubmission = (submission: OnboardingSubmission) => {
-    const submissions = getSubmissions();
-    submissions.unshift(submission);
-    localStorage.setItem('onboarding_submissions', JSON.stringify(submissions));
+const saveSubmission = async (submission: OnboardingSubmission): Promise<boolean> => {
+    try {
+        const response = await fetch(`${API_BASE}/onboarding-submissions`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(submission),
+        });
+        if (response.ok) {
+            return true;
+        }
+        // Fallback to localStorage
+        const submissions = JSON.parse(localStorage.getItem('onboarding_submissions') || '[]');
+        submissions.unshift(submission);
+        localStorage.setItem('onboarding_submissions', JSON.stringify(submissions));
+        return true;
+    } catch {
+        // Fallback to localStorage
+        const submissions = JSON.parse(localStorage.getItem('onboarding_submissions') || '[]');
+        submissions.unshift(submission);
+        localStorage.setItem('onboarding_submissions', JSON.stringify(submissions));
+        return true;
+    }
 };
 
 // Main Onboarding Component
@@ -656,7 +684,7 @@ export default function OnboardingManual() {
         setAnswers(newAnswers);
     };
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         if (!name.trim() || !email.trim() || !phone.trim()) {
             alert('Please enter your name, email, and phone number.');
             return;
@@ -694,7 +722,7 @@ export default function OnboardingManual() {
             totalQuestions: QUIZ_QUESTIONS.length
         };
 
-        saveSubmission(submission);
+        await saveSubmission(submission);
         setShowSuccess(true);
     };
 
@@ -984,7 +1012,11 @@ export function OnboardingSubmissions() {
     const [submissions, setSubmissions] = useState<OnboardingSubmission[]>([]);
 
     useEffect(() => {
-        setSubmissions(getSubmissions());
+        const loadSubmissions = async () => {
+            const data = await getSubmissions();
+            setSubmissions(data);
+        };
+        loadSubmissions();
     }, []);
 
     const formatDate = (dateString: string) => {

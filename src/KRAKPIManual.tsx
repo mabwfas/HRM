@@ -474,20 +474,48 @@ interface KRASubmission {
     totalQuestions: number;
 }
 
-// Storage functions
-const getKRASubmissions = (): KRASubmission[] => {
+// API Base URL - uses relative path on Vercel
+const API_BASE = '/api';
+
+// Storage functions using Vercel API
+const getKRASubmissions = async (): Promise<KRASubmission[]> => {
     try {
+        const response = await fetch(`${API_BASE}/kra-submissions`);
+        if (response.ok) {
+            return await response.json();
+        }
+        // Fallback to localStorage if API fails
         const data = localStorage.getItem('kra_submissions');
         return data ? JSON.parse(data) : [];
     } catch {
-        return [];
+        // Fallback to localStorage
+        const data = localStorage.getItem('kra_submissions');
+        return data ? JSON.parse(data) : [];
     }
 };
 
-const saveKRASubmission = (submission: KRASubmission) => {
-    const submissions = getKRASubmissions();
-    submissions.unshift(submission);
-    localStorage.setItem('kra_submissions', JSON.stringify(submissions));
+const saveKRASubmission = async (submission: KRASubmission): Promise<boolean> => {
+    try {
+        const response = await fetch(`${API_BASE}/kra-submissions`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(submission),
+        });
+        if (response.ok) {
+            return true;
+        }
+        // Fallback to localStorage
+        const submissions = JSON.parse(localStorage.getItem('kra_submissions') || '[]');
+        submissions.unshift(submission);
+        localStorage.setItem('kra_submissions', JSON.stringify(submissions));
+        return true;
+    } catch {
+        // Fallback to localStorage
+        const submissions = JSON.parse(localStorage.getItem('kra_submissions') || '[]');
+        submissions.unshift(submission);
+        localStorage.setItem('kra_submissions', JSON.stringify(submissions));
+        return true;
+    }
 };
 
 export default function KRAKPIManual() {
@@ -548,7 +576,7 @@ export default function KRAKPIManual() {
         setAnswers(newAnswers);
     };
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         if (!name.trim() || !email.trim() || !phone.trim()) {
             alert('Please enter your name, email, and phone number.');
             return;
@@ -578,7 +606,7 @@ export default function KRAKPIManual() {
             totalQuestions: roleData!.questions.length
         };
 
-        saveKRASubmission(submission);
+        await saveKRASubmission(submission);
         setShowSuccess(true);
     };
 
@@ -878,7 +906,11 @@ export function KRASubmissions() {
     const [submissions, setSubmissions] = useState<KRASubmission[]>([]);
 
     useEffect(() => {
-        setSubmissions(getKRASubmissions());
+        const loadSubmissions = async () => {
+            const data = await getKRASubmissions();
+            setSubmissions(data);
+        };
+        loadSubmissions();
     }, []);
 
     const formatDate = (dateString: string) => {

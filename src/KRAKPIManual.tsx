@@ -466,13 +466,6 @@ interface KRASubmission {
     name: string;
     email: string;
     phone: string;
-    // Bank Details
-    bankName: string;
-    accountNumber: string;
-    ifscCode: string;
-    branchName: string;
-    upiId: string;
-    // Role & Quiz
     role: string;
     roleTitle: string;
     submittedAt: string;
@@ -505,12 +498,6 @@ export default function KRAKPIManual() {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [phone, setPhone] = useState('');
-    // Bank Details
-    const [bankName, setBankName] = useState('');
-    const [accountNumber, setAccountNumber] = useState('');
-    const [ifscCode, setIfscCode] = useState('');
-    const [branchName, setBranchName] = useState('');
-    const [upiId, setUpiId] = useState('');
     const [answers, setAnswers] = useState<number[]>([]);
 
     const roles = Object.entries(ROLE_DATA).map(([key, data]) => ({
@@ -566,10 +553,6 @@ export default function KRAKPIManual() {
             alert('Please enter your name, email, and phone number.');
             return;
         }
-        if (!bankName.trim() || !accountNumber.trim() || !ifscCode.trim()) {
-            alert('Please fill in all bank details (Bank Name, Account Number, IFSC Code).');
-            return;
-        }
         if (answers.includes(-1)) {
             alert('Please answer all questions before submitting.');
             return;
@@ -587,11 +570,6 @@ export default function KRAKPIManual() {
             name: name.trim(),
             email: email.trim(),
             phone: phone.trim(),
-            bankName: bankName.trim(),
-            accountNumber: accountNumber.trim(),
-            ifscCode: ifscCode.trim().toUpperCase(),
-            branchName: branchName.trim(),
-            upiId: upiId.trim(),
             role: selectedRole!,
             roleTitle: roleData!.title,
             submittedAt: new Date().toISOString(),
@@ -742,87 +720,6 @@ export default function KRAKPIManual() {
                                     onChange={(e) => setPhone(e.target.value)}
                                     className="w-full border border-slate-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-indigo-500 outline-none"
                                     placeholder="+91 XXXXX XXXXX"
-                                />
-                            </div>
-                        </div>
-                    </div>
-
-                    {/* Bank Details */}
-                    <div className="bg-white rounded-xl shadow-lg p-6 mb-6">
-                        <h3 className="text-lg font-bold text-slate-800 mb-4">🏦 Bank Account Details</h3>
-                        <p className="text-sm text-slate-500 mb-4">Required for salary transfer. Please ensure details are correct.</p>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <div>
-                                <label className="block text-sm font-medium text-slate-600 mb-1">Bank Name *</label>
-                                <select
-                                    value={bankName}
-                                    onChange={(e) => setBankName(e.target.value)}
-                                    className="w-full border border-slate-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-indigo-500 outline-none"
-                                >
-                                    <option value="">Select your bank</option>
-                                    <option value="State Bank of India">State Bank of India (SBI)</option>
-                                    <option value="HDFC Bank">HDFC Bank</option>
-                                    <option value="ICICI Bank">ICICI Bank</option>
-                                    <option value="Axis Bank">Axis Bank</option>
-                                    <option value="Kotak Mahindra Bank">Kotak Mahindra Bank</option>
-                                    <option value="Punjab National Bank">Punjab National Bank (PNB)</option>
-                                    <option value="Bank of Baroda">Bank of Baroda</option>
-                                    <option value="Canara Bank">Canara Bank</option>
-                                    <option value="Union Bank of India">Union Bank of India</option>
-                                    <option value="Bank of India">Bank of India</option>
-                                    <option value="Indian Bank">Indian Bank</option>
-                                    <option value="Central Bank of India">Central Bank of India</option>
-                                    <option value="IDBI Bank">IDBI Bank</option>
-                                    <option value="Yes Bank">Yes Bank</option>
-                                    <option value="IndusInd Bank">IndusInd Bank</option>
-                                    <option value="Federal Bank">Federal Bank</option>
-                                    <option value="South Indian Bank">South Indian Bank</option>
-                                    <option value="Bandhan Bank">Bandhan Bank</option>
-                                    <option value="RBL Bank">RBL Bank</option>
-                                    <option value="UCO Bank">UCO Bank</option>
-                                    <option value="Other">Other</option>
-                                </select>
-                            </div>
-                            <div>
-                                <label className="block text-sm font-medium text-slate-600 mb-1">Account Number *</label>
-                                <input
-                                    type="text"
-                                    value={accountNumber}
-                                    onChange={(e) => setAccountNumber(e.target.value.replace(/\D/g, ''))}
-                                    className="w-full border border-slate-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-indigo-500 outline-none"
-                                    placeholder="Enter account number"
-                                    maxLength={18}
-                                />
-                            </div>
-                            <div>
-                                <label className="block text-sm font-medium text-slate-600 mb-1">IFSC Code *</label>
-                                <input
-                                    type="text"
-                                    value={ifscCode}
-                                    onChange={(e) => setIfscCode(e.target.value.toUpperCase())}
-                                    className="w-full border border-slate-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-indigo-500 outline-none uppercase"
-                                    placeholder="e.g., SBIN0001234"
-                                    maxLength={11}
-                                />
-                            </div>
-                            <div>
-                                <label className="block text-sm font-medium text-slate-600 mb-1">Branch Name</label>
-                                <input
-                                    type="text"
-                                    value={branchName}
-                                    onChange={(e) => setBranchName(e.target.value)}
-                                    className="w-full border border-slate-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-indigo-500 outline-none"
-                                    placeholder="Enter branch name"
-                                />
-                            </div>
-                            <div className="md:col-span-2">
-                                <label className="block text-sm font-medium text-slate-600 mb-1">UPI ID (Optional)</label>
-                                <input
-                                    type="text"
-                                    value={upiId}
-                                    onChange={(e) => setUpiId(e.target.value)}
-                                    className="w-full border border-slate-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-indigo-500 outline-none"
-                                    placeholder="e.g., yourname@upi or 9876543210@paytm"
                                 />
                             </div>
                         </div>
@@ -1019,10 +916,6 @@ export function KRASubmissions() {
                                     <th className="px-3 py-3 text-left text-xs font-semibold">Name</th>
                                     <th className="px-3 py-3 text-left text-xs font-semibold">Email</th>
                                     <th className="px-3 py-3 text-left text-xs font-semibold">Phone</th>
-                                    <th className="px-3 py-3 text-left text-xs font-semibold">Bank</th>
-                                    <th className="px-3 py-3 text-left text-xs font-semibold">Account No.</th>
-                                    <th className="px-3 py-3 text-left text-xs font-semibold">IFSC</th>
-                                    <th className="px-3 py-3 text-left text-xs font-semibold">UPI</th>
                                     <th className="px-3 py-3 text-left text-xs font-semibold">Role</th>
                                     <th className="px-3 py-3 text-left text-xs font-semibold">Score</th>
                                     <th className="px-3 py-3 text-left text-xs font-semibold">Date</th>
@@ -1034,7 +927,7 @@ export function KRASubmissions() {
                             <tbody className="divide-y divide-slate-200">
                                 {submissions.length === 0 ? (
                                     <tr>
-                                        <td colSpan={21} className="px-4 py-8 text-center text-slate-500">
+                                        <td colSpan={17} className="px-4 py-8 text-center text-slate-500">
                                             No submissions yet
                                         </td>
                                     </tr>
@@ -1045,10 +938,6 @@ export function KRASubmissions() {
                                             <td className="px-3 py-2 text-xs font-medium text-slate-800">{sub.name}</td>
                                             <td className="px-3 py-2 text-xs text-slate-600">{sub.email}</td>
                                             <td className="px-3 py-2 text-xs text-slate-600">{sub.phone || '-'}</td>
-                                            <td className="px-3 py-2 text-xs text-slate-600">{sub.bankName || '-'}</td>
-                                            <td className="px-3 py-2 text-xs text-slate-600 font-mono">{sub.accountNumber || '-'}</td>
-                                            <td className="px-3 py-2 text-xs text-slate-600 font-mono">{sub.ifscCode || '-'}</td>
-                                            <td className="px-3 py-2 text-xs text-slate-600">{sub.upiId || '-'}</td>
                                             <td className="px-3 py-2">
                                                 <span className="inline-flex items-center px-1.5 py-0.5 rounded-full text-xs font-bold bg-indigo-100 text-indigo-800">
                                                     {sub.roleTitle}

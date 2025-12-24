@@ -486,45 +486,88 @@ function App() {
                 </div>
 
                 {/* Print and Options */}
-                <div className="p-4 border-t border-slate-200 bg-slate-50 dark:bg-slate-800 dark:border-slate-700 space-y-2">
-                    <div className="grid grid-cols-2 gap-2">
+                <div className="p-3 border-t border-slate-200 bg-slate-50 dark:bg-slate-800 dark:border-slate-700 space-y-2">
+                    {/* Icon buttons row - Seal, Dark, Fullscreen, Employee DB, Reset */}
+                    <div className="grid grid-cols-5 gap-1">
                         <button
                             onClick={() => setShowSeal(!showSeal)}
-                            className={`flex items-center justify-center gap-1 px-3 py-2 rounded-lg text-xs font-medium transition-all ${showSeal
+                            title={showSeal ? 'Hide Seal' : 'Show Seal'}
+                            className={`flex items-center justify-center p-2 rounded-lg text-lg transition-all ${showSeal
                                 ? 'bg-blue-100 text-blue-700 border border-blue-300'
-                                : 'bg-slate-100 text-slate-600 border border-slate-300'
+                                : 'bg-slate-100 text-slate-500 border border-slate-200'
                                 }`}
                         >
-                            {showSeal ? '⭕ Seal' : '⚪ Seal'}
+                            {showSeal ? '⭕' : '⚪'}
                         </button>
                         <button
                             onClick={() => setDarkMode(!darkMode)}
-                            className={`flex items-center justify-center gap-1 px-3 py-2 rounded-lg text-xs font-medium transition-all ${darkMode
+                            title={darkMode ? 'Light Mode' : 'Dark Mode'}
+                            className={`flex items-center justify-center p-2 rounded-lg text-lg transition-all ${darkMode
                                 ? 'bg-indigo-100 text-indigo-700 border border-indigo-300'
-                                : 'bg-slate-100 text-slate-600 border border-slate-300'
+                                : 'bg-slate-100 text-slate-500 border border-slate-200'
                                 }`}
                         >
-                            {darkMode ? '☀️ Light' : '🌙 Dark'}
+                            {darkMode ? '☀️' : '🌙'}
+                        </button>
+                        <button
+                            onClick={() => setFullscreenPreview(true)}
+                            title="Fullscreen Preview"
+                            className="flex items-center justify-center p-2 rounded-lg text-lg bg-slate-100 text-slate-500 border border-slate-200 hover:bg-slate-200 transition-all"
+                        >
+                            🔍
+                        </button>
+                        <button
+                            onClick={() => setShowEmployeeModal(true)}
+                            title="Employee Database"
+                            className="flex items-center justify-center p-2 rounded-lg text-lg bg-green-50 text-green-600 border border-green-200 hover:bg-green-100 transition-all"
+                        >
+                            👥
+                        </button>
+                        <button
+                            onClick={handleResetForm}
+                            title="Reset Form"
+                            className="flex items-center justify-center p-2 rounded-lg text-lg bg-orange-50 text-orange-600 border border-orange-200 hover:bg-orange-100 transition-all"
+                        >
+                            🔄
                         </button>
                     </div>
-                    <button
-                        onClick={() => setFullscreenPreview(true)}
-                        className="w-full flex items-center justify-center gap-2 px-4 py-2 rounded-lg text-sm font-medium bg-slate-100 text-slate-700 border border-slate-300 hover:bg-slate-200 transition-all"
-                    >
-                        🔍 Fullscreen Preview
-                    </button>
-                    <button
-                        onClick={() => setShowEmployeeModal(true)}
-                        className="w-full flex items-center justify-center gap-2 px-4 py-2 rounded-lg text-sm font-medium bg-green-100 text-green-700 border border-green-300 hover:bg-green-200 transition-all"
-                    >
-                        👥 Employee Database
-                    </button>
-                    <button
-                        onClick={handleResetForm}
-                        className="w-full flex items-center justify-center gap-2 px-4 py-2 rounded-lg text-sm font-medium bg-orange-100 text-orange-700 border border-orange-300 hover:bg-orange-200 transition-all"
-                    >
-                        🔄 Reset Form
-                    </button>
+
+                    {/* Training Links - Compact 2-column */}
+                    <div className="grid grid-cols-2 gap-1">
+                        <a
+                            href="/onboarding"
+                            target="_blank"
+                            className="flex items-center justify-center gap-1 px-2 py-1.5 rounded-lg text-xs font-medium bg-purple-50 text-purple-700 border border-purple-200 hover:bg-purple-100 transition-all"
+                        >
+                            📚 Onboarding
+                        </a>
+                        <a
+                            href="/kra-kpi"
+                            target="_blank"
+                            className="flex items-center justify-center gap-1 px-2 py-1.5 rounded-lg text-xs font-medium bg-indigo-50 text-indigo-700 border border-indigo-200 hover:bg-indigo-100 transition-all"
+                        >
+                            📊 KRA/KPI
+                        </a>
+                    </div>
+
+                    {/* Submissions - Compact 2-column */}
+                    <div className="grid grid-cols-2 gap-1">
+                        <a
+                            href="/onboarding-submissions"
+                            target="_blank"
+                            className="flex items-center justify-center gap-1 px-2 py-1.5 rounded-lg text-xs font-medium bg-slate-100 text-slate-600 border border-slate-200 hover:bg-slate-200 transition-all"
+                        >
+                            📋 Submissions
+                        </a>
+                        <a
+                            href="/kra-submissions"
+                            target="_blank"
+                            className="flex items-center justify-center gap-1 px-2 py-1.5 rounded-lg text-xs font-medium bg-slate-100 text-slate-600 border border-slate-200 hover:bg-slate-200 transition-all"
+                        >
+                            📈 KRA Subs
+                        </a>
+                    </div>
+
                     <Button onClick={handleDownloadPDF} className="w-full" size="lg">
                         📥 Download PDF
                     </Button>

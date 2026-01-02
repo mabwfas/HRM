@@ -5,7 +5,7 @@ const ROLE_DATA = {
     'project-manager': {
         title: 'Project Manager',
         icon: '👨‍💼',
-        reportsTo: 'Shreyansh / GM',
+        reportsTo: 'General Manager',
         kras: [
             {
                 title: 'PROJECT DELIVERY EXCELLENCE',
@@ -81,7 +81,7 @@ const ROLE_DATA = {
     'senior-developer': {
         title: 'Senior Developer',
         icon: '👨‍💻',
-        reportsTo: 'Parth (GM) / Tech Lead',
+        reportsTo: 'General Manager / Tech Lead',
         kras: [
             {
                 title: 'TECHNICAL DELIVERY & DEVELOPMENT',
@@ -233,7 +233,7 @@ const ROLE_DATA = {
     'designer': {
         title: 'Designer',
         icon: '🎨',
-        reportsTo: 'Parth (GM)',
+        reportsTo: 'General Manager',
         kras: [
             {
                 title: 'DESIGN DELIVERY & CREATIVITY',
@@ -309,7 +309,7 @@ const ROLE_DATA = {
     'sales-executive': {
         title: 'Sales Executive',
         icon: '💰',
-        reportsTo: 'Parth (GM)',
+        reportsTo: 'General Manager',
         commission: '5% of order value',
         kras: [
             {
@@ -386,7 +386,7 @@ const ROLE_DATA = {
     'hr-manager': {
         title: 'HR Manager',
         icon: '👥',
-        reportsTo: 'Shreyansh / Parth',
+        reportsTo: 'Managing Director / General Manager',
         kras: [
             {
                 title: 'RECRUITMENT & HIRING',

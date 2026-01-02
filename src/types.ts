@@ -410,13 +410,23 @@ export interface InternshipLetterData {
     hrDesignation: string;
 }
 
-export const INTERNSHIP_ROLE_PRESETS = [
-    { role: 'Web Development Intern', department: 'Engineering', stipend: 10000, mentorDesignation: 'Senior Developer' },
-    { role: 'Sales Intern', department: 'Sales', stipend: 8000, mentorDesignation: 'Sales Manager' },
-    { role: 'Design Intern', department: 'Design', stipend: 8000, mentorDesignation: 'Design Lead' },
-    { role: 'Marketing Intern', department: 'Marketing', stipend: 8000, mentorDesignation: 'Marketing Manager' },
-    { role: 'HR Intern', department: 'HR', stipend: 6000, mentorDesignation: 'HR Manager' },
-    { role: 'Content Writing Intern', department: 'Marketing', stipend: 6000, mentorDesignation: 'Content Lead' },
+export const INTERNSHIP_LETTER_ROLE_PRESETS = [
+    { role: 'Web Development Intern', department: 'Engineering', stipend: 10000, mentorDesignation: 'Senior Developer', skills: 'HTML5, CSS3, JavaScript, React, Node.js, Git, Responsive Design, REST APIs' },
+    { role: 'Full Stack Developer Intern', department: 'Engineering', stipend: 12000, mentorDesignation: 'Tech Lead', skills: 'React, Node.js, MongoDB, Express.js, PostgreSQL, Git, AWS, Docker' },
+    { role: 'Frontend Developer Intern', department: 'Engineering', stipend: 10000, mentorDesignation: 'Senior Developer', skills: 'HTML5, CSS3, JavaScript, React, TypeScript, Tailwind CSS, UI/UX Implementation' },
+    { role: 'Backend Developer Intern', department: 'Engineering', stipend: 10000, mentorDesignation: 'Senior Developer', skills: 'Node.js, Python, PostgreSQL, MongoDB, REST APIs, GraphQL, Authentication, Cloud Services' },
+    { role: 'Mobile App Developer Intern', department: 'Engineering', stipend: 10000, mentorDesignation: 'Senior Developer', skills: 'React Native, Flutter, iOS/Android Development, Mobile UI Design, App Store Deployment' },
+    { role: 'UI/UX Design Intern', department: 'Design', stipend: 8000, mentorDesignation: 'Design Lead', skills: 'Figma, Adobe XD, User Research, Wireframing, Prototyping, Design Systems, Usability Testing' },
+    { role: 'Graphic Design Intern', department: 'Design', stipend: 8000, mentorDesignation: 'Design Lead', skills: 'Adobe Photoshop, Illustrator, InDesign, Canva, Brand Identity, Print Design, Social Media Graphics' },
+    { role: 'Motion Graphics Intern', department: 'Design', stipend: 8000, mentorDesignation: 'Design Lead', skills: 'After Effects, Premiere Pro, Animation, Video Editing, Motion Design, Visual Storytelling' },
+    { role: 'Digital Marketing Intern', department: 'Marketing', stipend: 8000, mentorDesignation: 'Marketing Manager', skills: 'SEO, SEM, Google Analytics, Social Media Marketing, Content Strategy, Email Marketing, Campaign Management' },
+    { role: 'Content Writing Intern', department: 'Marketing', stipend: 6000, mentorDesignation: 'Content Lead', skills: 'Blog Writing, Copywriting, SEO Content, Social Media Content, Brand Voice, Research, Editing' },
+    { role: 'Social Media Intern', department: 'Marketing', stipend: 6000, mentorDesignation: 'Marketing Manager', skills: 'Social Media Management, Content Creation, Community Engagement, Analytics, Trend Analysis, Scheduling Tools' },
+    { role: 'Sales Intern', department: 'Sales', stipend: 8000, mentorDesignation: 'Sales Manager', skills: 'Lead Generation, Client Communication, CRM Tools, Proposal Writing, Negotiation, Sales Pitch, Market Research (5% Commission)' },
+    { role: 'Business Development Intern', department: 'Sales', stipend: 8000, mentorDesignation: 'Sales Manager', skills: 'Client Acquisition, Partnership Development, Market Analysis, Proposal Creation, Networking, Strategic Planning (5% Commission)' },
+    { role: 'HR Intern', department: 'Human Resources', stipend: 6000, mentorDesignation: 'HR Manager', skills: 'Recruitment, Onboarding, Employee Relations, HR Documentation, Attendance Management, Policy Implementation' },
+    { role: 'Finance Intern', department: 'Finance', stipend: 8000, mentorDesignation: 'Finance Manager', skills: 'Financial Analysis, Bookkeeping, Excel, Tally, Invoice Management, Budgeting, Financial Reporting' },
+    { role: 'Operations Intern', department: 'Operations', stipend: 8000, mentorDesignation: 'Operations Manager', skills: 'Process Optimization, Project Coordination, Documentation, Quality Assurance, Vendor Management, Reporting' },
 ];
 
 export const initialInternshipLetterData: InternshipLetterData = {

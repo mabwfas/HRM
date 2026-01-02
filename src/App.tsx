@@ -49,7 +49,7 @@ import {
     PROBATION_OPTIONS,
     NOTICE_PERIOD_OPTIONS,
     HR_SIGNATORY_OPTIONS,
-    INTERNSHIP_ROLE_PRESETS,
+    INTERNSHIP_LETTER_ROLE_PRESETS,
     INTERNSHIP_DURATION_OPTIONS,
     WORKING_HOURS_OPTIONS,
     CONDUCT_OPTIONS,
@@ -181,7 +181,7 @@ function App() {
 
     // Handle internship role preset selection
     const handleInternshipRoleChange = (role: string) => {
-        const preset = INTERNSHIP_ROLE_PRESETS.find(r => r.role === role);
+        const preset = INTERNSHIP_LETTER_ROLE_PRESETS.find(r => r.role === role);
         if (preset) {
             setInternshipData(prev => ({
                 ...prev,
@@ -887,7 +887,7 @@ function App() {
                                         label="Select Internship Role (Auto-fills details)"
                                         name="rolePreset"
                                         value={internshipData.internshipRole}
-                                        options={INTERNSHIP_ROLE_PRESETS.map(r => ({ value: r.role, label: `${r.role} - ₹${r.stipend}/mo` }))}
+                                        options={INTERNSHIP_LETTER_ROLE_PRESETS.map(r => ({ value: r.role, label: `${r.role} - ₹${r.stipend}/mo` }))}
                                         onChange={(e) => handleInternshipRoleChange(e.target.value)}
                                     />
                                 </Card>
@@ -905,7 +905,7 @@ function App() {
                                             label="Internship Role"
                                             name="internshipRole"
                                             value={internshipData.internshipRole}
-                                            options={INTERNSHIP_ROLE_PRESETS.map(r => ({ value: r.role, label: r.role }))}
+                                            options={INTERNSHIP_LETTER_ROLE_PRESETS.map(r => ({ value: r.role, label: r.role }))}
                                             onChange={(e) => handleInternshipRoleChange(e.target.value)}
                                         />
                                         <Select
@@ -1222,7 +1222,38 @@ function App() {
                                 <Card title="Intern Details" headerClassName="bg-violet-50">
                                     <div className="space-y-3">
                                         <Input label="Intern Name" name="internName" value={internshipCompletionData.internName} onChange={handleChange(setInternshipCompletionData)} />
-                                        <Input label="Internship Role" name="internshipRole" value={internshipCompletionData.internshipRole} onChange={handleChange(setInternshipCompletionData)} />
+                                        <Select
+                                            label="Internship Role (Auto-fills Skills)"
+                                            name="internshipRole"
+                                            value={internshipCompletionData.internshipRole}
+                                            options={[
+                                                ...INTERNSHIP_LETTER_ROLE_PRESETS.map(r => ({ value: r.role, label: r.role })),
+                                                { value: 'custom', label: '➕ Custom Role (Type Below)' }
+                                            ]}
+                                            onChange={(e) => {
+                                                const selectedRole = e.target.value;
+                                                if (selectedRole === 'custom') {
+                                                    setInternshipCompletionData(prev => ({ ...prev, internshipRole: '' }));
+                                                } else {
+                                                    const preset = INTERNSHIP_LETTER_ROLE_PRESETS.find(r => r.role === selectedRole);
+                                                    if (preset) {
+                                                        setInternshipCompletionData(prev => ({
+                                                            ...prev,
+                                                            internshipRole: preset.role,
+                                                            department: preset.department,
+                                                            skills: preset.skills
+                                                        }));
+                                                    }
+                                                }
+                                            }}
+                                        />
+                                        <Input
+                                            label="Custom Internship Role (if not in list)"
+                                            name="internshipRole"
+                                            value={internshipCompletionData.internshipRole}
+                                            onChange={handleChange(setInternshipCompletionData)}
+                                            placeholder="Type custom role here..."
+                                        />
                                         <Select label="Department" name="department" value={internshipCompletionData.department} options={DEPARTMENT_OPTIONS.map(d => ({ value: d, label: d }))} onChange={handleChange(setInternshipCompletionData)} />
                                     </div>
                                 </Card>
@@ -1236,7 +1267,7 @@ function App() {
                                 <Card title="Performance">
                                     <div className="space-y-3">
                                         <Select label="Performance Rating" name="performanceRating" value={internshipCompletionData.performanceRating} options={CONDUCT_OPTIONS.map(c => ({ value: c.label.split(' - ')[0], label: c.label }))} onChange={handleChange(setInternshipCompletionData)} />
-                                        <TextArea label="Skills Demonstrated" name="skills" value={internshipCompletionData.skills} onChange={handleChange(setInternshipCompletionData)} rows={2} />
+                                        <TextArea label="Skills Demonstrated (Auto-filled by role, editable)" name="skills" value={internshipCompletionData.skills} onChange={handleChange(setInternshipCompletionData)} rows={3} />
                                     </div>
                                 </Card>
                                 <Card title="Signatory">

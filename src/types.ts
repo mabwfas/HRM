@@ -657,6 +657,8 @@ export interface PromotionLetterData {
     employeeName: string;
     employeeId: string;
     currentDesignation: string;
+    customRole1: string;
+    customRole2: string;
     newDesignation: string;
     department: string;
     effectiveDate: string;
@@ -675,6 +677,8 @@ export const initialPromotionLetterData: PromotionLetterData = {
     employeeName: '',
     employeeId: 'EMP-',
     currentDesignation: 'Junior Web Developer',
+    customRole1: '',
+    customRole2: '',
     newDesignation: 'Web Developer',
     department: 'Engineering',
     effectiveDate: '',
@@ -696,6 +700,8 @@ export interface WarningLetterData {
     employeeName: string;
     employeeId: string;
     designation: string;
+    customRole1: string;
+    customRole2: string;
     department: string;
     warningType: string;
     incidentDate: string;
@@ -715,6 +721,8 @@ export const initialWarningLetterData: WarningLetterData = {
     employeeName: '',
     employeeId: 'EMP-',
     designation: '',
+    customRole1: '',
+    customRole2: '',
     department: '',
     warningType: 'First Written Warning',
     incidentDate: '',
@@ -737,6 +745,8 @@ export interface TerminationLetterData {
     employeeName: string;
     employeeId: string;
     designation: string;
+    customRole1: string;
+    customRole2: string;
     department: string;
     terminationType: string;
     terminationReason: string;
@@ -755,6 +765,8 @@ export const initialTerminationLetterData: TerminationLetterData = {
     employeeName: '',
     employeeId: 'EMP-',
     designation: '',
+    customRole1: '',
+    customRole2: '',
     department: '',
     terminationType: 'Termination with Notice',
     terminationReason: '',
@@ -777,6 +789,8 @@ export interface JoiningLetterData {
     employeeName: string;
     employeeId: string;
     designation: string;
+    customRole1: string;
+    customRole2: string;
     department: string;
     joiningDate: string;
     reportingTo: string;
@@ -796,6 +810,8 @@ export const initialJoiningLetterData: JoiningLetterData = {
     employeeName: '',
     employeeId: 'EMP-',
     designation: 'Junior Web Developer',
+    customRole1: '',
+    customRole2: '',
     department: 'Engineering',
     joiningDate: '',
     reportingTo: 'Project Manager',

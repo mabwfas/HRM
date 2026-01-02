@@ -1283,6 +1283,20 @@ function App() {
                                 <Card title="Promotion Details">
                                     <div className="space-y-3">
                                         <Input label="Current Designation" name="currentDesignation" value={promotionData.currentDesignation} onChange={handleChange(setPromotionData)} />
+                                        <Input
+                                            label="Additional Role 1 (Optional)"
+                                            name="customRole1"
+                                            value={promotionData.customRole1}
+                                            onChange={handleChange(setPromotionData)}
+                                            placeholder="e.g., Team Lead"
+                                        />
+                                        <Input
+                                            label="Additional Role 2 (Optional)"
+                                            name="customRole2"
+                                            value={promotionData.customRole2}
+                                            onChange={handleChange(setPromotionData)}
+                                            placeholder="e.g., Client Success"
+                                        />
                                         <Input label="New Designation" name="newDesignation" value={promotionData.newDesignation} onChange={handleChange(setPromotionData)} />
                                         <Input label="Effective Date" name="effectiveDate" value={promotionData.effectiveDate} onChange={handleChange(setPromotionData)} />
                                     </div>
@@ -1310,6 +1324,20 @@ function App() {
                                         <Input label="Employee Name" name="employeeName" value={warningData.employeeName} onChange={handleChange(setWarningData)} />
                                         <Input label="Employee ID" name="employeeId" value={warningData.employeeId} onChange={handleChange(setWarningData)} />
                                         <Input label="Designation" name="designation" value={warningData.designation} onChange={handleChange(setWarningData)} />
+                                        <Input
+                                            label="Additional Role 1 (Optional)"
+                                            name="customRole1"
+                                            value={warningData.customRole1}
+                                            onChange={handleChange(setWarningData)}
+                                            placeholder="e.g., Team Lead"
+                                        />
+                                        <Input
+                                            label="Additional Role 2 (Optional)"
+                                            name="customRole2"
+                                            value={warningData.customRole2}
+                                            onChange={handleChange(setWarningData)}
+                                            placeholder="e.g., Client Success"
+                                        />
                                         <Select label="Department" name="department" value={warningData.department} options={DEPARTMENT_OPTIONS.map(d => ({ value: d, label: d }))} onChange={handleChange(setWarningData)} />
                                     </div>
                                 </Card>
@@ -1345,6 +1373,20 @@ function App() {
                                         <Input label="Employee Name" name="employeeName" value={terminationData.employeeName} onChange={handleChange(setTerminationData)} />
                                         <Input label="Employee ID" name="employeeId" value={terminationData.employeeId} onChange={handleChange(setTerminationData)} />
                                         <Input label="Designation" name="designation" value={terminationData.designation} onChange={handleChange(setTerminationData)} />
+                                        <Input
+                                            label="Additional Role 1 (Optional)"
+                                            name="customRole1"
+                                            value={terminationData.customRole1}
+                                            onChange={handleChange(setTerminationData)}
+                                            placeholder="e.g., Team Lead"
+                                        />
+                                        <Input
+                                            label="Additional Role 2 (Optional)"
+                                            name="customRole2"
+                                            value={terminationData.customRole2}
+                                            onChange={handleChange(setTerminationData)}
+                                            placeholder="e.g., Client Success"
+                                        />
                                         <Select label="Department" name="department" value={terminationData.department} options={DEPARTMENT_OPTIONS.map(d => ({ value: d, label: d }))} onChange={handleChange(setTerminationData)} />
                                     </div>
                                 </Card>
@@ -1379,6 +1421,20 @@ function App() {
                                         <Input label="Employee Name" name="employeeName" value={joiningData.employeeName} onChange={handleChange(setJoiningData)} />
                                         <Input label="Employee ID" name="employeeId" value={joiningData.employeeId} onChange={handleChange(setJoiningData)} />
                                         <Input label="Designation" name="designation" value={joiningData.designation} onChange={handleChange(setJoiningData)} />
+                                        <Input
+                                            label="Additional Role 1 (Optional)"
+                                            name="customRole1"
+                                            value={joiningData.customRole1}
+                                            onChange={handleChange(setJoiningData)}
+                                            placeholder="e.g., Team Lead"
+                                        />
+                                        <Input
+                                            label="Additional Role 2 (Optional)"
+                                            name="customRole2"
+                                            value={joiningData.customRole2}
+                                            onChange={handleChange(setJoiningData)}
+                                            placeholder="e.g., Client Success"
+                                        />
                                         <Select label="Department" name="department" value={joiningData.department} options={DEPARTMENT_OPTIONS.map(d => ({ value: d, label: d }))} onChange={handleChange(setJoiningData)} />
                                     </div>
                                 </Card>

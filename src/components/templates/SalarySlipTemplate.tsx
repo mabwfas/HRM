@@ -7,6 +7,14 @@ interface SalarySlipTemplateProps {
     showSeal?: boolean;
 }
 
+// Helper function to build full role string with custom roles
+const getFullRoleTitle = (designation: string, customRole1?: string, customRole2?: string): string => {
+    const roles = [designation];
+    if (customRole1?.trim()) roles.push(customRole1.trim());
+    if (customRole2?.trim()) roles.push(customRole2.trim());
+    return roles.join(' + ');
+};
+
 export const SalarySlipTemplate = forwardRef<HTMLDivElement, SalarySlipTemplateProps>(
     ({ data, showSeal = true }, ref) => {
         const earnings = [
@@ -26,6 +34,7 @@ export const SalarySlipTemplate = forwardRef<HTMLDivElement, SalarySlipTemplateP
 
         const signatory = HR_SIGNATORY_OPTIONS.find(s => s.name === data.signatoryName);
         const signatureImage = signatory?.signatureImage || '/prasun_signature.png';
+        const fullRoleTitle = getFullRoleTitle(data.designation, data.customRole1, data.customRole2);
 
         return (
             <div
@@ -53,7 +62,7 @@ export const SalarySlipTemplate = forwardRef<HTMLDivElement, SalarySlipTemplateP
                         {[
                             ['Employee Name', data.employeeName || '—'],
                             ['Employee ID', data.employeeId],
-                            ['Designation', data.designation],
+                            ['Designation', fullRoleTitle],
                             ['Department', data.department],
                             ['PAN Number', data.panNumber || '—'],
                             ['Bank Account', data.bankAccount || '—'],

@@ -258,6 +258,8 @@ export interface OfferLetterData {
     candidateName: string;
     candidateAddress: string;
     designation: string;
+    customRole1: string;  // Additional custom role 1
+    customRole2: string;  // Additional custom role 2
     department: string;
     reportingTo: string;
     location: string;
@@ -286,6 +288,8 @@ export const initialOfferLetterData: OfferLetterData = {
     candidateName: '',
     candidateAddress: '',
     designation: 'Developer + Client Success',
+    customRole1: '',
+    customRole2: '',
     department: 'Engineering',
     reportingTo: 'Project Manager',
     location: 'Lucknow, Uttar Pradesh (Hybrid)',
@@ -312,6 +316,8 @@ export interface SalarySlipData {
     employeeName: string;
     employeeId: string;
     designation: string;
+    customRole1: string;
+    customRole2: string;
     department: string;
     panNumber: string;
     bankAccount: string;
@@ -350,6 +356,8 @@ export const initialSalarySlipData: SalarySlipData = {
     employeeName: '',
     employeeId: 'DH' + String(Math.floor(Math.random() * 9000) + 1000),
     designation: 'Developer + Client Success',
+    customRole1: '',
+    customRole2: '',
     department: 'Engineering',
     panNumber: '',
     bankAccount: '',
@@ -444,6 +452,8 @@ export interface ExperienceCertificateData {
     employeeName: string;
     employeeId: string;
     designation: string;
+    customRole1: string;
+    customRole2: string;
     department: string;
     joiningDate: string;
     relievingDate: string;
@@ -462,6 +472,8 @@ export const initialExperienceCertificateData: ExperienceCertificateData = {
     employeeName: '',
     employeeId: 'DH' + String(Math.floor(Math.random() * 9000) + 1000),
     designation: 'Developer + Client Success',
+    customRole1: '',
+    customRole2: '',
     department: 'Engineering',
     joiningDate: '',
     relievingDate: '',
@@ -483,6 +495,8 @@ export interface RelievingLetterData {
     employeeName: string;
     employeeId: string;
     designation: string;
+    customRole1: string;
+    customRole2: string;
     department: string;
     joiningDate: string;
     resignationDate: string;
@@ -499,6 +513,8 @@ export const initialRelievingLetterData: RelievingLetterData = {
     employeeName: '',
     employeeId: 'DH' + String(Math.floor(Math.random() * 9000) + 1000),
     designation: 'Developer + Client Success',
+    customRole1: '',
+    customRole2: '',
     department: 'Engineering',
     joiningDate: '',
     resignationDate: '',
@@ -518,6 +534,8 @@ export interface AppraisalLetterData {
     employeeName: string;
     employeeId: string;
     designation: string;
+    customRole1: string;
+    customRole2: string;
     newDesignation: string;
     department: string;
     currentCtc: number;
@@ -538,6 +556,8 @@ export const initialAppraisalLetterData: AppraisalLetterData = {
     employeeName: '',
     employeeId: 'DH' + String(Math.floor(Math.random() * 9000) + 1000),
     designation: 'Junior Web Developer',
+    customRole1: '',
+    customRole2: '',
     newDesignation: 'Developer + Client Success',
     department: 'Engineering',
     currentCtc: 360000,

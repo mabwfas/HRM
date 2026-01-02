@@ -7,10 +7,19 @@ interface AppraisalLetterTemplateProps {
     showSeal?: boolean;
 }
 
+// Helper function to build full role string with custom roles
+const getFullRoleTitle = (designation: string, customRole1?: string, customRole2?: string): string => {
+    const roles = [designation];
+    if (customRole1?.trim()) roles.push(customRole1.trim());
+    if (customRole2?.trim()) roles.push(customRole2.trim());
+    return roles.join(' + ');
+};
+
 export const AppraisalLetterTemplate = forwardRef<HTMLDivElement, AppraisalLetterTemplateProps>(
     ({ data, showSeal = true }, ref) => {
         const signatory = HR_SIGNATORY_OPTIONS.find(s => s.name === data.hrName);
         const signatureImage = signatory?.signatureImage || '/prasun_signature.png';
+        const fullRoleTitle = getFullRoleTitle(data.designation, data.customRole1, data.customRole2);
 
         const formatCurrency = (amount: number) => `₹${amount.toLocaleString('en-IN')}`;
 
@@ -48,7 +57,7 @@ export const AppraisalLetterTemplate = forwardRef<HTMLDivElement, AppraisalLette
                         </div>
                         <div>
                             <p className="text-lg font-bold text-cyan-800">{data.employeeName || '[Employee Name]'}</p>
-                            <p className="text-sm text-slate-600">{data.designation} • {data.department}</p>
+                            <p className="text-sm text-slate-600">{fullRoleTitle} • {data.department}</p>
                             <p className="text-xs text-slate-400">ID: {data.employeeId}</p>
                         </div>
                     </div>
@@ -71,7 +80,7 @@ export const AppraisalLetterTemplate = forwardRef<HTMLDivElement, AppraisalLette
                         <div className="flex items-center justify-between gap-4">
                             <div className="text-center flex-1 bg-white rounded-lg p-2">
                                 <p className="text-[10px] text-slate-500 uppercase">Previous</p>
-                                <p className="font-semibold text-slate-700 text-xs">{data.designation}</p>
+                                <p className="font-semibold text-slate-700 text-xs">{fullRoleTitle}</p>
                             </div>
                             <div className="text-2xl text-purple-500">→</div>
                             <div className="text-center flex-1 bg-purple-100 rounded-lg p-2 border border-purple-300">

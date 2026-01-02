@@ -7,10 +7,19 @@ interface RelievingLetterTemplateProps {
     showSeal?: boolean;
 }
 
+// Helper function to build full role string with custom roles
+const getFullRoleTitle = (designation: string, customRole1?: string, customRole2?: string): string => {
+    const roles = [designation];
+    if (customRole1?.trim()) roles.push(customRole1.trim());
+    if (customRole2?.trim()) roles.push(customRole2.trim());
+    return roles.join(' + ');
+};
+
 export const RelievingLetterTemplate = forwardRef<HTMLDivElement, RelievingLetterTemplateProps>(
     ({ data, showSeal = true }, ref) => {
         const signatory = HR_SIGNATORY_OPTIONS.find(s => s.name === data.hrName);
         const signatureImage = signatory?.signatureImage || '/prasun_signature.png';
+        const fullRoleTitle = getFullRoleTitle(data.designation, data.customRole1, data.customRole2);
 
         return (
             <div
@@ -46,7 +55,7 @@ export const RelievingLetterTemplate = forwardRef<HTMLDivElement, RelievingLette
                         </div>
                         <div>
                             <p className="text-lg font-bold text-rose-800">{data.employeeName || '[Employee Name]'}</p>
-                            <p className="text-sm text-slate-600">{data.designation} • {data.department}</p>
+                            <p className="text-sm text-slate-600">{fullRoleTitle} • {data.department}</p>
                             <p className="text-xs text-slate-400">ID: {data.employeeId}</p>
                         </div>
                     </div>
@@ -59,7 +68,7 @@ export const RelievingLetterTemplate = forwardRef<HTMLDivElement, RelievingLette
                         <p>
                             This is to certify that <strong className="text-rose-700">{data.employeeName || '[Employee Name]'}</strong>
                             (Employee ID: <strong>{data.employeeId}</strong>) was employed with <strong>{data.companyName}</strong> as
-                            a <strong>{data.designation}</strong> in the <strong>{data.department}</strong> department.
+                            a <strong>{fullRoleTitle}</strong> in the <strong>{data.department}</strong> department.
                         </p>
 
                         {/* Timeline */}

@@ -7,6 +7,14 @@ interface ExperienceCertificateTemplateProps {
     showSeal?: boolean;
 }
 
+// Helper function to build full role string with custom roles
+const getFullRoleTitle = (designation: string, customRole1?: string, customRole2?: string): string => {
+    const roles = [designation];
+    if (customRole1?.trim()) roles.push(customRole1.trim());
+    if (customRole2?.trim()) roles.push(customRole2.trim());
+    return roles.join(' + ');
+};
+
 export const ExperienceCertificateTemplate = forwardRef<HTMLDivElement, ExperienceCertificateTemplateProps>(
     ({ data, showSeal = true }, ref) => {
         const conductText = {
@@ -18,6 +26,7 @@ export const ExperienceCertificateTemplate = forwardRef<HTMLDivElement, Experien
 
         const signatory = HR_SIGNATORY_OPTIONS.find(s => s.name === data.hrName);
         const signatureImage = signatory?.signatureImage || '/prasun_signature.png';
+        const fullRoleTitle = getFullRoleTitle(data.designation, data.customRole1, data.customRole2);
 
         return (
             <div
@@ -59,7 +68,7 @@ export const ExperienceCertificateTemplate = forwardRef<HTMLDivElement, Experien
                         </div>
                         <div>
                             <p className="text-lg font-bold text-amber-800">{data.employeeName || '[Employee Name]'}</p>
-                            <p className="text-amber-600 text-sm">{data.designation}</p>
+                            <p className="text-amber-600 text-sm">{fullRoleTitle}</p>
                             <p className="text-slate-500 text-xs">{data.department} • ID: {data.employeeId}</p>
                         </div>
                     </div>
@@ -68,7 +77,7 @@ export const ExperienceCertificateTemplate = forwardRef<HTMLDivElement, Experien
                     <div className="text-slate-700 leading-relaxed space-y-3 text-justify">
                         <p>
                             This is to certify that <strong className="text-amber-700">{data.employeeName || '[Employee Name]'}</strong> was
-                            employed with <strong>{data.companyName}</strong> as a <strong>{data.designation}</strong> in
+                            employed with <strong>{data.companyName}</strong> as a <strong>{fullRoleTitle}</strong> in
                             the <strong>{data.department}</strong> department from <strong>{data.joiningDate || '[Joining Date]'}</strong> to
                             <strong> {data.relievingDate || '[Relieving Date]'}</strong>.
                         </p>

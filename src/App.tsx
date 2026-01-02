@@ -663,6 +663,20 @@ function App() {
                                             options={ROLE_PRESETS.map(r => ({ value: r.designation, label: r.designation }))}
                                             onChange={(e) => handleRolePresetChange(e.target.value)}
                                         />
+                                        <Input
+                                            label="Additional Role 1 (Optional)"
+                                            name="customRole1"
+                                            value={offerData.customRole1}
+                                            onChange={handleChange(setOfferData)}
+                                            placeholder="e.g., Team Lead, Client Success"
+                                        />
+                                        <Input
+                                            label="Additional Role 2 (Optional)"
+                                            name="customRole2"
+                                            value={offerData.customRole2}
+                                            onChange={handleChange(setOfferData)}
+                                            placeholder="e.g., Project Coordinator"
+                                        />
                                         <Select
                                             label="Department"
                                             name="department"
@@ -794,6 +808,20 @@ function App() {
                                             value={salaryData.designation}
                                             options={ROLE_PRESETS.map(r => ({ value: r.designation, label: r.designation }))}
                                             onChange={handleChange(setSalaryData)}
+                                        />
+                                        <Input
+                                            label="Additional Role 1 (Optional)"
+                                            name="customRole1"
+                                            value={salaryData.customRole1}
+                                            onChange={handleChange(setSalaryData)}
+                                            placeholder="e.g., Team Lead"
+                                        />
+                                        <Input
+                                            label="Additional Role 2 (Optional)"
+                                            name="customRole2"
+                                            value={salaryData.customRole2}
+                                            onChange={handleChange(setSalaryData)}
+                                            placeholder="e.g., Client Success"
                                         />
                                         <Select
                                             label="Department"
@@ -958,6 +986,20 @@ function App() {
                                             options={ROLE_PRESETS.map(r => ({ value: r.designation, label: r.designation }))}
                                             onChange={handleChange(setExperienceData)}
                                         />
+                                        <Input
+                                            label="Additional Role 1 (Optional)"
+                                            name="customRole1"
+                                            value={experienceData.customRole1}
+                                            onChange={handleChange(setExperienceData)}
+                                            placeholder="e.g., Team Lead"
+                                        />
+                                        <Input
+                                            label="Additional Role 2 (Optional)"
+                                            name="customRole2"
+                                            value={experienceData.customRole2}
+                                            onChange={handleChange(setExperienceData)}
+                                            placeholder="e.g., Client Success"
+                                        />
                                         <Select
                                             label="Department"
                                             name="department"
@@ -1030,6 +1072,20 @@ function App() {
                                             options={ROLE_PRESETS.map(r => ({ value: r.designation, label: r.designation }))}
                                             onChange={handleChange(setRelievingData)}
                                         />
+                                        <Input
+                                            label="Additional Role 1 (Optional)"
+                                            name="customRole1"
+                                            value={relievingData.customRole1}
+                                            onChange={handleChange(setRelievingData)}
+                                            placeholder="e.g., Team Lead"
+                                        />
+                                        <Input
+                                            label="Additional Role 2 (Optional)"
+                                            name="customRole2"
+                                            value={relievingData.customRole2}
+                                            onChange={handleChange(setRelievingData)}
+                                            placeholder="e.g., Client Success"
+                                        />
                                         <Select
                                             label="Department"
                                             name="department"
@@ -1091,6 +1147,20 @@ function App() {
                                                     }));
                                                 }
                                             }}
+                                        />
+                                        <Input
+                                            label="Additional Role 1 (Optional)"
+                                            name="customRole1"
+                                            value={appraisalData.customRole1}
+                                            onChange={handleChange(setAppraisalData)}
+                                            placeholder="e.g., Team Lead"
+                                        />
+                                        <Input
+                                            label="Additional Role 2 (Optional)"
+                                            name="customRole2"
+                                            value={appraisalData.customRole2}
+                                            onChange={handleChange(setAppraisalData)}
+                                            placeholder="e.g., Client Success"
                                         />
                                         <Select
                                             label="New Designation"

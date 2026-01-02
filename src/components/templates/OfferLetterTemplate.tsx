@@ -7,6 +7,14 @@ interface OfferLetterTemplateProps {
     showSeal?: boolean;
 }
 
+// Helper function to build full role string with custom roles
+const getFullRoleTitle = (designation: string, customRole1?: string, customRole2?: string): string => {
+    const roles = [designation];
+    if (customRole1?.trim()) roles.push(customRole1.trim());
+    if (customRole2?.trim()) roles.push(customRole2.trim());
+    return roles.join(' + ');
+};
+
 export const OfferLetterTemplate = forwardRef<HTMLDivElement, OfferLetterTemplateProps>(
     ({ data, showSeal = true }, ref) => {
         const monthlySalary = Math.round(data.annualCtc / 12);
@@ -20,6 +28,7 @@ export const OfferLetterTemplate = forwardRef<HTMLDivElement, OfferLetterTemplat
         const signatureImage = data.hrSignature || signatory?.signatureImage || '/prasun_signature.png';
         const rolePreset = ROLE_PRESETS.find(r => r.designation === data.designation);
         const responsibilities = rolePreset?.responsibilities || 'As assigned by your reporting manager';
+        const fullRoleTitle = getFullRoleTitle(data.designation, data.customRole1, data.customRole2);
 
         return (
             <div
@@ -99,7 +108,7 @@ export const OfferLetterTemplate = forwardRef<HTMLDivElement, OfferLetterTemplat
                         </div>
                         <div className="grid grid-cols-1 gap-2">
                             {[
-                                ['Position Title', data.designation],
+                                ['Position Title', fullRoleTitle],
                                 ['Department', data.department],
                                 ['Employment Type', 'Full-time'],
                                 ['Work Location', data.location],
@@ -269,7 +278,7 @@ export const OfferLetterTemplate = forwardRef<HTMLDivElement, OfferLetterTemplat
                     </div>
                     <p className="text-xs text-slate-700 mb-2">Your KRAs will be based on your assigned role. Below is a summary of expectations:</p>
                     <div className="bg-gradient-to-r from-cyan-50 to-blue-50 p-3 rounded-xl border border-cyan-200 mb-3">
-                        <p className="font-bold text-cyan-800 text-xs mb-1">Your Role: {data.designation}</p>
+                        <p className="font-bold text-cyan-800 text-xs mb-1">Your Role: {fullRoleTitle}</p>
                         <p className="text-slate-700 text-xs">{responsibilities}</p>
                     </div>
                     <table className="w-full text-xs border-collapse rounded-lg overflow-hidden shadow-sm">

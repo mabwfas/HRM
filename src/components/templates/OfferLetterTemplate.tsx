@@ -169,7 +169,7 @@ export const OfferLetterTemplate = forwardRef<HTMLDivElement, OfferLetterTemplat
                                 </tr>
                                 <tr className="bg-slate-50">
                                     <td className="p-2">Commission (Sales Roles Only)</td>
-                                    <td className="p-2 text-right text-slate-500">20-30% of sales</td>
+                                    <td className="p-2 text-right text-slate-500">5% of order value</td>
                                     <td className="p-2 text-right text-emerald-600 font-semibold">Uncapped</td>
                                 </tr>
                                 <tr className="bg-gradient-to-r from-emerald-600 to-teal-600 text-white font-bold">

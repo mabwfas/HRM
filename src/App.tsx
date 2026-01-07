@@ -891,6 +891,12 @@ function App() {
                                         onChange={(e) => handleInternshipRoleChange(e.target.value)}
                                     />
                                 </Card>
+                                <Card title="Document Details" headerClassName="bg-slate-50">
+                                    <div className="space-y-3">
+                                        <Input label="Reference Number" name="refNumber" value={internshipData.refNumber} onChange={handleChange(setInternshipData)} placeholder="DH/HR/INT/2026/XXX" />
+                                        <Input label="Date" name="date" value={internshipData.date} onChange={handleChange(setInternshipData)} placeholder="e.g., 7th January 2026" />
+                                    </div>
+                                </Card>
                                 <Card title="Intern Details" headerClassName="bg-violet-50">
                                     <div className="space-y-3">
                                         <Input label="Intern Name" name="internName" value={internshipData.internName} onChange={handleChange(setInternshipData)} placeholder="Enter intern's full name" />
@@ -974,6 +980,12 @@ function App() {
                                             }
                                         }}
                                     />
+                                </Card>
+                                <Card title="Document Details" headerClassName="bg-slate-50">
+                                    <div className="space-y-3">
+                                        <Input label="Reference Number" name="refNumber" value={experienceData.refNumber} onChange={handleChange(setExperienceData)} placeholder="DH/HR/EXP/2026/XXX" />
+                                        <Input label="Date" name="date" value={experienceData.date} onChange={handleChange(setExperienceData)} placeholder="e.g., 7th January 2026" />
+                                    </div>
                                 </Card>
                                 <Card title="Employee Details" headerClassName="bg-orange-50">
                                     <div className="space-y-3">
@@ -1061,6 +1073,12 @@ function App() {
                                         }}
                                     />
                                 </Card>
+                                <Card title="Document Details" headerClassName="bg-slate-50">
+                                    <div className="space-y-3">
+                                        <Input label="Reference Number" name="refNumber" value={relievingData.refNumber} onChange={handleChange(setRelievingData)} placeholder="DH/HR/REL/2026/XXX" />
+                                        <Input label="Date" name="date" value={relievingData.date} onChange={handleChange(setRelievingData)} placeholder="e.g., 7th January 2026" />
+                                    </div>
+                                </Card>
                                 <Card title="Employee Details" headerClassName="bg-pink-50">
                                     <div className="space-y-3">
                                         <Input label="Employee Name" name="employeeName" value={relievingData.employeeName} onChange={handleChange(setRelievingData)} placeholder="Enter employee name" />
@@ -1117,6 +1135,12 @@ function App() {
                         {/* ===== APPRAISAL LETTER FORM ===== */}
                         {selectedDoc === 'appraisal-letter' && (
                             <>
+                                <Card title="Document Details" headerClassName="bg-slate-50">
+                                    <div className="space-y-3">
+                                        <Input label="Reference Number" name="refNumber" value={appraisalData.refNumber} onChange={handleChange(setAppraisalData)} placeholder="DH/HR/APR/2026/XXX" />
+                                        <Input label="Date" name="date" value={appraisalData.date} onChange={handleChange(setAppraisalData)} placeholder="e.g., 7th January 2026" />
+                                    </div>
+                                </Card>
                                 <Card title="Employee Details" headerClassName="bg-teal-50">
                                     <div className="space-y-3">
                                         <Input label="Employee Name" name="employeeName" value={appraisalData.employeeName} onChange={handleChange(setAppraisalData)} placeholder="Enter employee name" />
@@ -1219,6 +1243,12 @@ function App() {
                         {/* ===== INTERNSHIP COMPLETION FORM ===== */}
                         {selectedDoc === 'internship-completion' && (
                             <>
+                                <Card title="Document Details" headerClassName="bg-slate-50">
+                                    <div className="space-y-3">
+                                        <Input label="Reference Number" name="refNumber" value={internshipCompletionData.refNumber} onChange={handleChange(setInternshipCompletionData)} placeholder="DH/HR/IC/2026/XXX" />
+                                        <Input label="Date" name="date" value={internshipCompletionData.date} onChange={handleChange(setInternshipCompletionData)} placeholder="e.g., 7th January 2026" />
+                                    </div>
+                                </Card>
                                 <Card title="Intern Details" headerClassName="bg-violet-50">
                                     <div className="space-y-3">
                                         <Input label="Intern Name" name="internName" value={internshipCompletionData.internName} onChange={handleChange(setInternshipCompletionData)} />
@@ -1304,6 +1334,12 @@ function App() {
                         {/* ===== PROMOTION LETTER FORM ===== */}
                         {selectedDoc === 'promotion-letter' && (
                             <>
+                                <Card title="Document Details" headerClassName="bg-slate-50">
+                                    <div className="space-y-3">
+                                        <Input label="Reference Number" name="refNumber" value={promotionData.refNumber} onChange={handleChange(setPromotionData)} placeholder="DH/HR/PROM/2026/XXX" />
+                                        <Input label="Date" name="date" value={promotionData.date} onChange={handleChange(setPromotionData)} placeholder="e.g., 7th January 2026" />
+                                    </div>
+                                </Card>
                                 <Card title="Employee Details" headerClassName="bg-sky-50">
                                     <div className="space-y-3">
                                         <Input label="Employee Name" name="employeeName" value={promotionData.employeeName} onChange={handleChange(setPromotionData)} />
@@ -1350,6 +1386,12 @@ function App() {
                         {/* ===== WARNING LETTER FORM ===== */}
                         {selectedDoc === 'warning-letter' && (
                             <>
+                                <Card title="Document Details" headerClassName="bg-slate-50">
+                                    <div className="space-y-3">
+                                        <Input label="Reference Number" name="refNumber" value={warningData.refNumber} onChange={handleChange(setWarningData)} placeholder="DH/HR/WARN/2026/XXX" />
+                                        <Input label="Date" name="date" value={warningData.date} onChange={handleChange(setWarningData)} placeholder="e.g., 7th January 2026" />
+                                    </div>
+                                </Card>
                                 <Card title="Employee Details" headerClassName="bg-orange-50">
                                     <div className="space-y-3">
                                         <Input label="Employee Name" name="employeeName" value={warningData.employeeName} onChange={handleChange(setWarningData)} />
@@ -1399,6 +1441,12 @@ function App() {
                         {/* ===== TERMINATION LETTER FORM ===== */}
                         {selectedDoc === 'termination-letter' && (
                             <>
+                                <Card title="Document Details" headerClassName="bg-slate-50">
+                                    <div className="space-y-3">
+                                        <Input label="Reference Number" name="refNumber" value={terminationData.refNumber} onChange={handleChange(setTerminationData)} placeholder="DH/HR/TERM/2026/XXX" />
+                                        <Input label="Date" name="date" value={terminationData.date} onChange={handleChange(setTerminationData)} placeholder="e.g., 7th January 2026" />
+                                    </div>
+                                </Card>
                                 <Card title="Employee Details" headerClassName="bg-red-50">
                                     <div className="space-y-3">
                                         <Input label="Employee Name" name="employeeName" value={terminationData.employeeName} onChange={handleChange(setTerminationData)} />
@@ -1447,6 +1495,12 @@ function App() {
                         {/* ===== JOINING LETTER FORM ===== */}
                         {selectedDoc === 'joining-letter' && (
                             <>
+                                <Card title="Document Details" headerClassName="bg-slate-50">
+                                    <div className="space-y-3">
+                                        <Input label="Reference Number" name="refNumber" value={joiningData.refNumber} onChange={handleChange(setJoiningData)} placeholder="DH/HR/JOIN/2026/XXX" />
+                                        <Input label="Date" name="date" value={joiningData.date} onChange={handleChange(setJoiningData)} placeholder="e.g., 7th January 2026" />
+                                    </div>
+                                </Card>
                                 <Card title="Employee Details" headerClassName="bg-green-50">
                                     <div className="space-y-3">
                                         <Input label="Employee Name" name="employeeName" value={joiningData.employeeName} onChange={handleChange(setJoiningData)} />

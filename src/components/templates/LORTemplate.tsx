@@ -1,23 +1,11 @@
 import { forwardRef, useMemo } from 'react';
 import { InternshipCompletionData, HR_SIGNATORY_OPTIONS } from '../../types';
 import { CompanySeal } from '../ui/CompanySeal';
+import { generateRefNumber, DOC_TYPES } from '../../utils/refGenerator';
 
 interface LORTemplateProps {
     data: InternshipCompletionData;
 }
-
-// Generate unique certificate code based on name and random numbers
-const generateCertificateCode = (name: string): string => {
-    const nameCode = (name || 'INTERN')
-        .toUpperCase()
-        .replace(/[^A-Z]/g, '')
-        .substring(0, 3)
-        .padEnd(3, 'X');
-    const year = new Date().getFullYear();
-    const randomNum = Math.floor(1000 + Math.random() * 9000);
-    const suffix = Math.floor(10 + Math.random() * 90);
-    return `DMH/LOR/${year}/${nameCode}${randomNum}-${suffix}`;
-};
 
 export const LORTemplate = forwardRef<HTMLDivElement, LORTemplateProps>(
     ({ data }, ref) => {
@@ -25,21 +13,14 @@ export const LORTemplate = forwardRef<HTMLDivElement, LORTemplateProps>(
         const signatureImage = signatory?.signatureImage || '/prasun_signature.png';
 
         const certificateCode = useMemo(() =>
-            generateCertificateCode(data.internName || ''),
+            generateRefNumber(data.internName || '', DOC_TYPES.LOR),
             [data.internName]
         );
 
-        const uniqueRefNumber = useMemo(() => {
-            // Get employee initials (first letter of each word in name)
-            const initials = (data.internName || 'XX')
-                .split(' ')
-                .map(word => word.charAt(0).toUpperCase())
-                .join('')
-                .substring(0, 3);
-            const year = new Date().getFullYear();
-            const randomNum = Math.floor(1000 + Math.random() * 9000);
-            return `DMH/LOR/${year}/${initials}-${randomNum}`;
-        }, [data.internName, data.date]);
+        const uniqueRefNumber = useMemo(() =>
+            generateRefNumber(data.internName || '', DOC_TYPES.LOR),
+            [data.internName]
+        );
 
         return (
             <div

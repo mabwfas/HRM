@@ -74,7 +74,7 @@ export const JoiningLetterTemplate = forwardRef<HTMLDivElement, JoiningLetterTem
 
                     {/* Welcome Banner */}
                     <div className="bg-gradient-to-r from-green-500 to-emerald-500 rounded-2xl p-6 text-center">
-                        <p className="text-white text-2xl font-black">✅ WELCOME TO THE TEAM! ✅</p>
+                        <p className="text-white text-2xl font-black">WELCOME TO THE TEAM!</p>
                         <p className="text-white/90 mt-1">Your joining has been confirmed</p>
                     </div>
 

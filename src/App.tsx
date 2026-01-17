@@ -1579,7 +1579,7 @@ function App() {
                 {/* Preview Panel - Hidden on mobile unless preview view, visible on md+ */}
                 <div className={`${mobileView === 'preview' ? 'flex' : 'hidden'} md:flex flex-1 bg-slate-200 overflow-auto p-2 md:p-6 justify-center print:p-0 print:bg-white print:block`}>
                     <div className="print:w-full w-full md:w-auto overflow-x-auto" id="print-content">
-                        <div className="min-w-[210mm] md:min-w-0 transform scale-[0.5] md:scale-100 origin-top-left md:origin-center">
+                        <div className="transform scale-[0.7] md:scale-[0.85] origin-top">
                             {selectedDoc === 'offer-letter' && <OfferLetterTemplate ref={previewRef} data={offerData} showSeal={showSeal} />}
                             {selectedDoc === 'salary-slip' && <SalarySlipTemplate ref={previewRef} data={salaryData} showSeal={showSeal} />}
                             {selectedDoc === 'internship-letter' && <InternshipLetterTemplate ref={previewRef} data={internshipData} showSeal={showSeal} />}
@@ -1647,14 +1647,20 @@ function App() {
             transform: none !important;
             transform-origin: top left !important;
           }
-          /* Override any mobile scaling */
-          .scale-\\[0\\.5\\] {
+          /* Override any scaling */
+          .scale-\\[0\\.7\\], .scale-\\[0\\.85\\], .scale-\\[0\\.5\\] {
             transform: none !important;
           }
-          /* Ensure templates render at full size */
+          /* Ensure templates render at full size without overflow hidden */
           #print-content > div > div {
             width: 210mm !important;
-            min-height: 297mm !important;
+            min-height: auto !important;
+            overflow: visible !important;
+          }
+          /* Page breaks between multi-page documents */
+          [data-print="document"] {
+            page-break-after: always;
+            overflow: visible !important;
           }
         }
       `}</style>

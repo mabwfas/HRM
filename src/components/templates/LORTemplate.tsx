@@ -30,6 +30,15 @@ export const LORTemplate = forwardRef<HTMLDivElement, LORTemplateProps>(
             [data.internName]
         );
 
+        // Generate unique reference number based on name and date
+        const uniqueRefNumber = useMemo(() => {
+            const nameCode = (data.internName || 'INT').toUpperCase().replace(/[^A-Z]/g, '').substring(0, 3);
+            const dateObj = new Date();
+            const dateString = dateObj.toISOString().split('T')[0].replace(/-/g, ''); // YYYYMMDD
+            const randomSuffix = Math.floor(1000 + Math.random() * 9000);
+            return `DH/LOR/${dateObj.getFullYear()}/${nameCode}-${dateString}-${randomSuffix}`;
+        }, [data.internName, data.date]);
+
         return (
             <div
                 ref={ref}
@@ -64,7 +73,7 @@ export const LORTemplate = forwardRef<HTMLDivElement, LORTemplateProps>(
                 {/* Date & Reference */}
                 <div className="px-10 py-3 bg-gradient-to-r from-amber-50 to-yellow-50 border-b border-amber-100">
                     <div className="flex justify-between text-sm">
-                        <span className="text-slate-600"><strong>Ref:</strong> {data.refNumber}</span>
+                        <span className="text-slate-600"><strong>Ref:</strong> {uniqueRefNumber}</span>
                         <span className="text-slate-600"><strong>Date:</strong> {data.date}</span>
                     </div>
                 </div>

@@ -19,7 +19,7 @@ export const TerminationLetterTemplate = forwardRef<HTMLDivElement, TerminationL
                 ref={ref}
                 data-print="document"
                 className="bg-white shadow-2xl print:shadow-none flex flex-col"
-                style={{ width: '210mm', minHeight: '270mm', maxHeight: '270mm', overflow: 'hidden' }}
+                style={{ width: '210mm' }}
             >
                 {/* Header */}
                 <div className="bg-gradient-to-r from-red-600 via-rose-600 to-pink-700 px-6 py-3">
@@ -41,7 +41,7 @@ export const TerminationLetterTemplate = forwardRef<HTMLDivElement, TerminationL
                 </div>
 
                 {/* Main Content */}
-                <div className="flex-1 px-6 py-3 flex flex-col">
+                <div className="px-6 py-3 flex flex-col">
                     {/* Employee Info */}
                     <div className="bg-slate-50 rounded-lg p-2 border border-slate-200 flex items-center gap-2 mb-2">
                         <div className="w-8 h-8 rounded-full bg-slate-500 flex items-center justify-center text-white text-sm font-bold">
@@ -92,7 +92,7 @@ export const TerminationLetterTemplate = forwardRef<HTMLDivElement, TerminationL
                     <p className="text-xs text-slate-600 mb-2">Please return all company property. We wish you the best.</p>
 
                     {/* Signatures */}
-                    <div className="mt-auto pt-2 border-t border-slate-200 flex justify-between items-end">
+                    <div className="pt-2 border-t border-slate-200 flex justify-between items-end">
                         <div className="text-center">
                             <img src={signatureImage} alt="Signature" className="h-8 object-contain mx-auto" />
                             <div className="border-t border-slate-400 pt-1 w-28">

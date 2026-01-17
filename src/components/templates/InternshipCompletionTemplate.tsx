@@ -27,7 +27,7 @@ export const InternshipCompletionTemplate = forwardRef<HTMLDivElement, Internshi
                 ref={ref}
                 data-print="document"
                 className="bg-white shadow-2xl print:shadow-none flex flex-col"
-                style={{ width: '210mm', minHeight: '270mm', maxHeight: '270mm', overflow: 'hidden' }}
+                style={{ width: '210mm' }}
             >
                 {/* Header */}
                 <div className="bg-gradient-to-r from-violet-600 via-purple-600 to-fuchsia-700 px-6 py-3">
@@ -49,7 +49,7 @@ export const InternshipCompletionTemplate = forwardRef<HTMLDivElement, Internshi
                 </div>
 
                 {/* Main Content */}
-                <div className="flex-1 px-6 py-3 flex flex-col">
+                <div className="px-6 py-3 flex flex-col">
                     {/* Title */}
                     <div className="text-center mb-3">
                         <h2 className="text-lg font-black text-slate-800 uppercase">Certificate of Completion</h2>
@@ -98,7 +98,7 @@ export const InternshipCompletionTemplate = forwardRef<HTMLDivElement, Internshi
                     <p className="text-slate-600 text-center text-xs mb-2">We wish them all the best in their future endeavors.</p>
 
                     {/* Signature */}
-                    <div className="mt-auto pt-2 border-t border-slate-200 flex items-end justify-between">
+                    <div className="pt-2 border-t border-slate-200 flex items-end justify-between">
                         <div className="text-center">
                             <img src={signatureImage} alt="Signature" className="h-8 object-contain mx-auto" />
                             <div className="border-t border-slate-400 pt-1 w-32">

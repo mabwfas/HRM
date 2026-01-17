@@ -19,7 +19,7 @@ export const AddressProofLetterTemplate = forwardRef<HTMLDivElement, AddressProo
                 ref={ref}
                 data-print="document"
                 className="bg-white shadow-2xl print:shadow-none flex flex-col"
-                style={{ width: '210mm', minHeight: '270mm', maxHeight: '270mm', overflow: 'hidden' }}
+                style={{ width: '210mm' }}
             >
                 {/* Header */}
                 <div className="bg-gradient-to-r from-slate-600 via-slate-700 to-slate-800 px-6 py-3">
@@ -41,7 +41,7 @@ export const AddressProofLetterTemplate = forwardRef<HTMLDivElement, AddressProo
                 </div>
 
                 {/* Main Content */}
-                <div className="flex-1 px-6 py-3 flex flex-col">
+                <div className="px-6 py-3 flex flex-col">
                     {/* Title */}
                     <div className="text-center mb-3">
                         <h2 className="text-lg font-black text-slate-800 uppercase">To Whom It May Concern</h2>
@@ -85,7 +85,7 @@ export const AddressProofLetterTemplate = forwardRef<HTMLDivElement, AddressProo
                     <p className="text-xs text-slate-600 mb-2">This certificate is issued upon request. For verification, contact HR.</p>
 
                     {/* Signature */}
-                    <div className="mt-auto pt-2 border-t border-slate-200 flex items-end justify-between">
+                    <div className="pt-2 border-t border-slate-200 flex items-end justify-between">
                         <div className="text-center">
                             <img src={signatureImage} alt="Signature" className="h-8 object-contain mx-auto" />
                             <div className="border-t border-slate-400 pt-1 w-32">

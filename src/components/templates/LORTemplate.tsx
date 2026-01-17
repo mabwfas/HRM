@@ -27,7 +27,7 @@ export const LORTemplate = forwardRef<HTMLDivElement, LORTemplateProps>(
                 ref={ref}
                 data-print="document"
                 className="bg-white shadow-2xl print:shadow-none flex flex-col"
-                style={{ width: '210mm', minHeight: '270mm', maxHeight: '270mm', overflow: 'hidden' }}
+                style={{ width: '210mm' }}
             >
                 {/* Header */}
                 <div className="bg-gradient-to-r from-amber-600 via-yellow-600 to-orange-600 px-6 py-3">
@@ -49,7 +49,7 @@ export const LORTemplate = forwardRef<HTMLDivElement, LORTemplateProps>(
                 </div>
 
                 {/* Main Content Area */}
-                <div className="flex-1 px-6 py-3 flex flex-col">
+                <div className="px-6 py-3 flex flex-col">
                     {/* Intern Info */}
                     <div className="bg-amber-50 rounded-lg p-2 border border-amber-200 mb-3 flex items-center gap-2">
                         <div className="w-8 h-8 rounded-full bg-amber-500 flex items-center justify-center text-white text-sm font-bold">
@@ -63,7 +63,7 @@ export const LORTemplate = forwardRef<HTMLDivElement, LORTemplateProps>(
                     </div>
 
                     {/* LOR Body Text */}
-                    <div className="text-slate-700 leading-relaxed space-y-2 text-justify flex-1 text-xs">
+                    <div className="text-slate-700 leading-relaxed space-y-2 text-justify text-xs">
                         <p><strong>To Whom It May Concern,</strong></p>
 
                         <p>

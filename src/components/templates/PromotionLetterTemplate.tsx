@@ -23,7 +23,7 @@ export const PromotionLetterTemplate = forwardRef<HTMLDivElement, PromotionLette
                 ref={ref}
                 data-print="document"
                 className="bg-white shadow-2xl print:shadow-none flex flex-col"
-                style={{ width: '210mm', minHeight: '270mm', maxHeight: '270mm', overflow: 'hidden' }}
+                style={{ width: '210mm' }}
             >
                 {/* Header */}
                 <div className="bg-gradient-to-r from-sky-500 via-blue-500 to-indigo-600 px-6 py-3">
@@ -45,7 +45,7 @@ export const PromotionLetterTemplate = forwardRef<HTMLDivElement, PromotionLette
                 </div>
 
                 {/* Main Content */}
-                <div className="flex-1 px-6 py-3 flex flex-col">
+                <div className="px-6 py-3 flex flex-col">
                     {/* Employee Info */}
                     <div className="bg-sky-50 rounded-lg p-2 border border-sky-200 flex items-center gap-2 mb-2">
                         <div className="w-8 h-8 rounded-full bg-sky-500 flex items-center justify-center text-white text-sm font-bold">
@@ -103,7 +103,7 @@ export const PromotionLetterTemplate = forwardRef<HTMLDivElement, PromotionLette
                     </div>
 
                     {/* Signature */}
-                    <div className="mt-auto pt-2 border-t border-slate-200 flex items-end justify-between">
+                    <div className="pt-2 border-t border-slate-200 flex items-end justify-between">
                         <div className="text-center">
                             <img src={signatureImage} alt="Signature" className="h-8 object-contain mx-auto" />
                             <div className="border-t border-slate-400 pt-1 w-32">

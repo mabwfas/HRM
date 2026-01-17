@@ -1,7 +1,7 @@
 import { forwardRef, useMemo } from 'react';
 import { TrainingCertificateData, HR_SIGNATORY_OPTIONS } from '../../types';
 import { CompanySeal } from '../ui/CompanySeal';
-import { generateRefNumber, DOC_TYPES } from '../../utils/refGenerator';
+import { generateRefNumber, generateEmployeeId, DOC_TYPES } from '../../utils/refGenerator';
 
 interface TrainingCertificateTemplateProps {
     data: TrainingCertificateData;
@@ -14,6 +14,7 @@ export const TrainingCertificateTemplate = forwardRef<HTMLDivElement, TrainingCe
 
         const refNumber = useMemo(() => generateRefNumber(data.employeeName || '', DOC_TYPES.TRN), [data.employeeName]);
         const certificateCode = useMemo(() => generateRefNumber(data.employeeName || '', DOC_TYPES.TRN), [data.employeeName]);
+        const employeeId = useMemo(() => generateEmployeeId(data.employeeName || ''), [data.employeeName]);
 
         return (
             <div
@@ -58,7 +59,7 @@ export const TrainingCertificateTemplate = forwardRef<HTMLDivElement, TrainingCe
                         <div>
                             <p className="text-2xl font-bold text-indigo-800">{data.employeeName || '[Employee Name]'}</p>
                             <p className="text-lg text-slate-600">{data.designation} • {data.department}</p>
-                            <p className="text-base text-slate-400">ID: {data.employeeId}</p>
+                            <p className="text-base text-slate-400">ID: {employeeId}</p>
                         </div>
                     </div>
 

@@ -1,7 +1,7 @@
 import { forwardRef, useMemo } from 'react';
 import { PromotionLetterData, HR_SIGNATORY_OPTIONS } from '../../types';
 import { CompanySeal } from '../ui/CompanySeal';
-import { generateRefNumber, DOC_TYPES } from '../../utils/refGenerator';
+import { generateRefNumber, generateEmployeeId, DOC_TYPES } from '../../utils/refGenerator';
 
 interface PromotionLetterTemplateProps {
     data: PromotionLetterData;
@@ -12,6 +12,7 @@ export const PromotionLetterTemplate = forwardRef<HTMLDivElement, PromotionLette
         const signatory = HR_SIGNATORY_OPTIONS.find(s => s.name === data.hrName);
         const signatureImage = signatory?.signatureImage || '/prasun_signature.png';
         const refNumber = useMemo(() => generateRefNumber(data.employeeName || '', DOC_TYPES.PRM), [data.employeeName]);
+        const employeeId = useMemo(() => generateEmployeeId(data.employeeName || ''), [data.employeeName]);
 
         const formatCurrency = (amount: number): string => {
             return new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 }).format(amount);
@@ -53,7 +54,7 @@ export const PromotionLetterTemplate = forwardRef<HTMLDivElement, PromotionLette
                         </div>
                         <div className="flex-1">
                             <p className="font-bold text-sky-800 text-xl">{data.employeeName || '[Employee Name]'}</p>
-                            <p className="text-base text-slate-600">{data.currentDesignation} • {data.department} • ID: {data.employeeId}</p>
+                            <p className="text-base text-slate-600">{data.currentDesignation} • {data.department} • ID: {employeeId}</p>
                         </div>
                         <div className="bg-green-500 text-white px-5 py-2 rounded-full text-base font-bold">
                             PROMOTED

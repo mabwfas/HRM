@@ -1,7 +1,7 @@
 import { forwardRef, useMemo } from 'react';
 import { AddressProofLetterData, HR_SIGNATORY_OPTIONS } from '../../types';
 import { CompanySeal } from '../ui/CompanySeal';
-import { generateRefNumber, DOC_TYPES } from '../../utils/refGenerator';
+import { generateRefNumber, generateEmployeeId, DOC_TYPES } from '../../utils/refGenerator';
 
 interface AddressProofLetterTemplateProps {
     data: AddressProofLetterData;
@@ -12,6 +12,7 @@ export const AddressProofLetterTemplate = forwardRef<HTMLDivElement, AddressProo
         const signatory = HR_SIGNATORY_OPTIONS.find(s => s.name === data.hrName);
         const signatureImage = signatory?.signatureImage || '/prasun_signature.png';
         const refNumber = useMemo(() => generateRefNumber(data.employeeName || '', DOC_TYPES.ADR), [data.employeeName]);
+        const employeeId = useMemo(() => generateEmployeeId(data.employeeName || ''), [data.employeeName]);
 
         return (
             <div
@@ -56,13 +57,13 @@ export const AddressProofLetterTemplate = forwardRef<HTMLDivElement, AddressProo
                         <div>
                             <p className="font-bold text-slate-800 text-2xl">{data.employeeName || '[Employee Name]'}</p>
                             <p className="text-lg text-slate-600">{data.designation} • {data.department}</p>
-                            <p className="text-base text-slate-400">ID: {data.employeeId}</p>
+                            <p className="text-base text-slate-400">ID: {employeeId}</p>
                         </div>
                     </div>
 
                     {/* Main Content */}
                     <p className="text-slate-700 text-lg mb-8 leading-relaxed">
-                        This is to certify that <strong>{data.employeeName || '[Employee Name]'}</strong> (Employee ID: <strong>{data.employeeId}</strong>) is employed with <strong>{data.companyName}</strong> as a <strong>{data.designation}</strong> in the <strong>{data.department}</strong> department since <strong>{data.joiningDate || '[Joining Date]'}</strong>.
+                        This is to certify that <strong>{data.employeeName || '[Employee Name]'}</strong> (Employee ID: <strong>{employeeId}</strong>) is employed with <strong>{data.companyName}</strong> as a <strong>{data.designation}</strong> in the <strong>{data.department}</strong> department since <strong>{data.joiningDate || '[Joining Date]'}</strong>.
                     </p>
 
                     {/* Address Card */}

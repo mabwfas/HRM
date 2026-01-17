@@ -20,6 +20,20 @@ export const generateRefNumber = (name: string, type: string): string => {
     return `DMH/${type}/${dateStr}/${initials}-${randomNum}`;
 };
 
+// Generate Employee ID based on name
+// Format: DMH{INITIALS}{RANDOM}
+export const generateEmployeeId = (name: string): string => {
+    const initials = (name || 'XX')
+        .split(' ')
+        .map(word => word.charAt(0).toUpperCase())
+        .join('')
+        .substring(0, 3)
+        .padEnd(2, 'X');
+
+    const randomNum = Math.floor(100 + Math.random() * 900);
+    return `DMH${initials}${randomNum}`;
+};
+
 // Document type codes
 export const DOC_TYPES = {
     LOR: 'LOR',           // Letter of Recommendation
@@ -37,3 +51,4 @@ export const DOC_TYPES = {
     INT: 'INT',           // Internship Offer Letter
     SAL: 'SAL',           // Salary Slip
 } as const;
+

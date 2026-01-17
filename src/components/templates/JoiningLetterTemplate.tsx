@@ -1,6 +1,7 @@
-import { forwardRef } from 'react';
+import { forwardRef, useMemo } from 'react';
 import { JoiningLetterData, HR_SIGNATORY_OPTIONS } from '../../types';
 import { CompanySeal } from '../ui/CompanySeal';
+import { generateEmployeeId } from '../../utils/refGenerator';
 
 interface JoiningLetterTemplateProps {
     data: JoiningLetterData;
@@ -10,6 +11,7 @@ export const JoiningLetterTemplate = forwardRef<HTMLDivElement, JoiningLetterTem
     ({ data }, ref) => {
         const signatory = HR_SIGNATORY_OPTIONS.find(s => s.name === data.hrName);
         const signatureImage = signatory?.signatureImage || '/prasun_signature.png';
+        const employeeId = useMemo(() => generateEmployeeId(data.employeeName || ''), [data.employeeName]);
 
         const formatCurrency = (amount: number): string => {
             return new Intl.NumberFormat('en-IN', {
@@ -67,7 +69,7 @@ export const JoiningLetterTemplate = forwardRef<HTMLDivElement, JoiningLetterTem
                             <div>
                                 <p className="text-xl font-bold text-green-800">{data.employeeName || '[Employee Name]'}</p>
                                 <p className="text-sm text-slate-600">{data.designation} • {data.department}</p>
-                                <p className="text-xs text-slate-400">ID: {data.employeeId}</p>
+                                <p className="text-xs text-slate-400">ID: {employeeId}</p>
                             </div>
                         </div>
                     </div>

@@ -1,6 +1,7 @@
-import { forwardRef } from 'react';
+import { forwardRef, useMemo } from 'react';
 import { AppraisalLetterData, HR_SIGNATORY_OPTIONS } from '../../types';
 import { CompanySeal } from '../ui/CompanySeal';
+import { generateEmployeeId } from '../../utils/refGenerator';
 
 interface AppraisalLetterTemplateProps {
     data: AppraisalLetterData;
@@ -18,6 +19,7 @@ const getFullRoleTitle = (designation: string, customRole1?: string, customRole2
 export const AppraisalLetterTemplate = forwardRef<HTMLDivElement, AppraisalLetterTemplateProps>(
     ({ data, showSeal = true }, ref) => {
         const signatory = HR_SIGNATORY_OPTIONS.find(s => s.name === data.hrName);
+        const employeeId = useMemo(() => generateEmployeeId(data.employeeName || ''), [data.employeeName]);
         const signatureImage = signatory?.signatureImage || '/prasun_signature.png';
         const fullRoleTitle = getFullRoleTitle(data.designation, data.customRole1, data.customRole2);
 
@@ -58,7 +60,7 @@ export const AppraisalLetterTemplate = forwardRef<HTMLDivElement, AppraisalLette
                         <div>
                             <p className="text-lg font-bold text-cyan-800">{data.employeeName || '[Employee Name]'}</p>
                             <p className="text-sm text-slate-600">{fullRoleTitle} • {data.department}</p>
-                            <p className="text-xs text-slate-400">ID: {data.employeeId}</p>
+                            <p className="text-xs text-slate-400">ID: {employeeId}</p>
                         </div>
                     </div>
 

@@ -1,6 +1,7 @@
 import { forwardRef, useMemo } from 'react';
 import { ExperienceCertificateData, HR_SIGNATORY_OPTIONS } from '../../types';
 import { CompanySeal } from '../ui/CompanySeal';
+import { generateRefNumber, generateEmployeeId, DOC_TYPES } from '../../utils/refGenerator';
 
 interface ExperienceCertificateTemplateProps {
     data: ExperienceCertificateData;

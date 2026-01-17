@@ -1,7 +1,7 @@
 import { forwardRef, useMemo } from 'react';
 import { WarningLetterData, HR_SIGNATORY_OPTIONS } from '../../types';
 import { CompanySeal } from '../ui/CompanySeal';
-import { generateRefNumber, DOC_TYPES } from '../../utils/refGenerator';
+import { generateRefNumber, generateEmployeeId, DOC_TYPES } from '../../utils/refGenerator';
 
 interface WarningLetterTemplateProps {
     data: WarningLetterData;
@@ -12,6 +12,7 @@ export const WarningLetterTemplate = forwardRef<HTMLDivElement, WarningLetterTem
         const signatory = HR_SIGNATORY_OPTIONS.find(s => s.name === data.hrName);
         const signatureImage = signatory?.signatureImage || '/prasun_signature.png';
         const refNumber = useMemo(() => generateRefNumber(data.employeeName || '', DOC_TYPES.WRN), [data.employeeName]);
+        const employeeId = useMemo(() => generateEmployeeId(data.employeeName || ''), [data.employeeName]);
 
         return (
             <div
@@ -49,7 +50,7 @@ export const WarningLetterTemplate = forwardRef<HTMLDivElement, WarningLetterTem
                         </div>
                         <div className="flex-1">
                             <p className="font-bold text-slate-800 text-xl">{data.employeeName || '[Employee Name]'}</p>
-                            <p className="text-base text-slate-600">{data.designation} • {data.department} • ID: {data.employeeId}</p>
+                            <p className="text-base text-slate-600">{data.designation} • {data.department} • ID: {employeeId}</p>
                         </div>
                         <div className="bg-red-500 text-white px-5 py-2 rounded-full text-base font-bold">
                             {data.warningType?.toUpperCase() || 'WARNING'}

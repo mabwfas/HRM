@@ -17,7 +17,7 @@ export const InternshipLetterTemplate = forwardRef<HTMLDivElement, InternshipLet
                 {/* ===== PAGE 1: MAIN OFFER LETTER ===== */}
                 <div
                     className="bg-white shadow-2xl print:shadow-none text-[11px] flex flex-col"
-                    style={{ width: '210mm', minHeight: '297mm' }}
+                    style={{ width: '210mm', height: '297mm', maxHeight: '297mm', overflow: 'hidden' }}
                 >
                     {/* Header */}
                     <div className="bg-gradient-to-r from-purple-700 via-violet-700 to-indigo-800 px-8 py-4">
@@ -136,7 +136,7 @@ export const InternshipLetterTemplate = forwardRef<HTMLDivElement, InternshipLet
                 {/* ===== PAGE 2: ANNEXURE A - PART 1 ===== */}
                 <div
                     className="bg-white shadow-2xl print:shadow-none text-[10px] flex flex-col"
-                    style={{ width: '210mm', minHeight: '297mm' }}
+                    style={{ width: '210mm', height: '297mm', maxHeight: '297mm', overflow: 'hidden' }}
                 >
                     {/* Header */}
                     <div className="bg-gradient-to-r from-purple-700 via-violet-700 to-indigo-800 px-8 py-3">
@@ -241,7 +241,7 @@ export const InternshipLetterTemplate = forwardRef<HTMLDivElement, InternshipLet
                 {/* ===== PAGE 3: ANNEXURE A - PART 2 (Termination & Suspension) ===== */}
                 <div
                     className="bg-white shadow-2xl print:shadow-none text-[10px] flex flex-col"
-                    style={{ width: '210mm', minHeight: '297mm' }}
+                    style={{ width: '210mm', height: '297mm', maxHeight: '297mm', overflow: 'hidden' }}
                 >
                     {/* Header */}
                     <div className="bg-gradient-to-r from-purple-700 via-violet-700 to-indigo-800 px-8 py-3">

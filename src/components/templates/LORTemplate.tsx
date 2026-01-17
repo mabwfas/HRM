@@ -30,89 +30,86 @@ export const LORTemplate = forwardRef<HTMLDivElement, LORTemplateProps>(
                 style={{ width: '210mm', height: '297mm', maxHeight: '297mm', overflow: 'hidden' }}
             >
                 {/* Header */}
-                <div className="bg-gradient-to-r from-amber-600 via-yellow-600 to-orange-600 px-10 py-6">
+                <div className="bg-gradient-to-r from-amber-600 via-yellow-600 to-orange-600 px-12 py-8">
                     <div className="flex justify-between items-center">
                         <div>
-                            <h1 className="text-3xl font-black text-white">{data.companyName}</h1>
-                            <p className="text-amber-100 text-sm italic mt-1">{data.companyTagline}</p>
+                            <h1 className="text-4xl font-black text-white">{data.companyName}</h1>
+                            <p className="text-amber-100 text-base italic mt-2">{data.companyTagline}</p>
                         </div>
-                        <div className="bg-white/20 rounded-xl px-5 py-3 text-center">
-                            <p className="text-base font-black text-white">LETTER OF</p>
-                            <p className="text-sm font-bold text-amber-100">RECOMMENDATION</p>
-                            <p className="text-xs text-amber-200 mt-1">★ TOP PERFORMER ★</p>
+                        <div className="bg-white/20 rounded-2xl px-6 py-4 text-center">
+                            <p className="text-lg font-black text-white">LETTER OF</p>
+                            <p className="text-base font-bold text-amber-100">RECOMMENDATION</p>
+                            <p className="text-sm text-amber-200 mt-1">★ TOP PERFORMER ★</p>
                         </div>
                     </div>
                 </div>
 
                 {/* Reference & Date Bar */}
-                <div className="px-10 py-3 bg-amber-50 border-b border-amber-200 flex justify-between text-sm">
+                <div className="px-12 py-4 bg-amber-50 border-b border-amber-200 flex justify-between text-base">
                     <span><strong>Ref:</strong> {uniqueRefNumber}</span>
                     <span><strong>Date:</strong> {data.date}</span>
                 </div>
 
                 {/* Main Content Area */}
-                <div className="flex-1 px-10 py-6 flex flex-col">
+                <div className="flex-1 px-12 py-8 flex flex-col">
                     {/* Intern Info */}
-                    <div className="bg-gradient-to-r from-amber-50 to-yellow-50 rounded-2xl p-5 border border-amber-200 mb-5 flex items-center gap-5">
-                        <div className="w-16 h-16 rounded-full bg-gradient-to-br from-amber-500 to-yellow-600 flex items-center justify-center flex-shrink-0 shadow-lg">
-                            <span className="text-2xl font-bold text-white">{data.internName?.charAt(0) || 'I'}</span>
+                    <div className="bg-gradient-to-r from-amber-50 to-yellow-50 rounded-2xl p-6 border border-amber-200 mb-6 flex items-center gap-6">
+                        <div className="w-18 h-18 rounded-full bg-gradient-to-br from-amber-500 to-yellow-600 flex items-center justify-center flex-shrink-0 shadow-lg" style={{ width: '72px', height: '72px' }}>
+                            <span className="text-3xl font-bold text-white">{data.internName?.charAt(0) || 'I'}</span>
                         </div>
                         <div className="flex-1">
-                            <p className="text-xl font-black text-amber-800">{data.internName || '[Intern Name]'}</p>
-                            <p className="text-amber-600">{data.internshipRole} • {data.department}</p>
+                            <p className="text-2xl font-black text-amber-800">{data.internName || '[Intern Name]'}</p>
+                            <p className="text-amber-600 text-lg">{data.internshipRole} • {data.department}</p>
                         </div>
-                        <div className="bg-amber-600 text-white px-4 py-2 rounded-full text-sm font-bold">
+                        <div className="bg-amber-600 text-white px-5 py-2 rounded-full text-base font-bold">
                             ⭐ EXCEPTIONAL
                         </div>
                     </div>
 
                     {/* LOR Body Text */}
-                    <div className="text-slate-700 leading-relaxed space-y-4 text-justify flex-1">
-                        <p className="text-base"><strong>To Whom It May Concern,</strong></p>
+                    <div className="text-slate-700 leading-relaxed space-y-5 text-justify flex-1">
+                        <p className="text-lg"><strong>To Whom It May Concern,</strong></p>
 
-                        <p className="text-base">
+                        <p className="text-lg">
                             It gives me great pleasure to recommend <strong className="text-amber-700">{data.internName || '[Intern Name]'}</strong> who
                             completed an internship at <strong>{data.companyName}</strong> as a <strong>{data.internshipRole}</strong> from{' '}
                             <strong>{data.startDate || '[Start Date]'}</strong> to <strong>{data.endDate || '[End Date]'}</strong>.
                         </p>
 
-                        <p className="text-base">
+                        <p className="text-lg">
                             During their tenure, {data.internName?.split(' ')[0] || 'they'} demonstrated exceptional skills in{' '}
                             <strong>{data.skills || 'their respective domain'}</strong>. Their performance was consistently rated as{' '}
                             <strong className="text-emerald-700">{data.performanceRating || 'Excellent'}</strong>, placing them among our{' '}
                             <strong className="text-amber-700">Top 10% performers</strong>.
                         </p>
 
-                        <p className="text-base">{data.internName?.split(' ')[0] || 'They'} exhibited remarkable qualities including strong analytical abilities, excellent communication skills, proactive learning approach, outstanding work ethic, and effective teamwork.</p>
+                        <p className="text-lg">{data.internName?.split(' ')[0] || 'They'} exhibited remarkable qualities including strong analytical abilities, excellent communication skills, proactive learning approach, outstanding work ethic, and effective teamwork.</p>
 
-                        <p className="text-base">
-                            Based on their exceptional performance and professional conduct, I wholeheartedly recommend{' '}
-                            <strong className="text-amber-700">{data.internName || '[Intern Name]'}</strong> for any future academic or
-                            professional endeavors. I am confident they will excel wherever they go.
+                        <p className="text-lg">
+                            Based on their exceptional performance, I wholeheartedly recommend{' '}
+                            <strong className="text-amber-700">{data.internName || '[Intern Name]'}</strong> for any future endeavors.
                         </p>
-
-                        <p className="text-base">Please feel free to contact me for any further information.</p>
                     </div>
 
                     {/* Signature - Horizontal Layout */}
-                    <div className="mt-6 pt-5 border-t border-slate-200">
+                    <div className="mt-8 pt-6 border-t border-slate-200">
                         <div className="flex items-end justify-between">
                             <div className="text-center">
-                                <p className="text-sm text-slate-500 mb-2">With Best Regards, For {data.companyName}</p>
-                                <img src={signatureImage} alt="Signature" className="h-12 object-contain mx-auto" />
-                                <div className="border-t border-slate-400 pt-2 mt-1 w-52">
-                                    <p className="font-bold text-slate-800">{data.hrName}</p>
-                                    <p className="text-sm text-slate-600">{data.hrDesignation}</p>
+                                <p className="text-base text-slate-500 mb-3">With Best Regards, For {data.companyName}</p>
+                                <img src={signatureImage} alt="Signature" className="h-14 object-contain mx-auto" />
+                                <div className="border-t-2 border-slate-400 pt-3 mt-2 w-56">
+                                    <p className="font-bold text-slate-800 text-lg">{data.hrName}</p>
+                                    <p className="text-base text-slate-600">{data.hrDesignation}</p>
                                 </div>
                             </div>
-                            <CompanySeal companyName={data.companyName} size="md" />
+                            <CompanySeal companyName={data.companyName} size="lg" />
                         </div>
                     </div>
                 </div>
 
                 {/* Footer */}
-                <div className="bg-amber-800 px-10 py-3 mt-auto">
-                    <div className="flex justify-between items-center text-sm text-amber-100">
+                <div className="bg-amber-800 px-12 py-4 mt-auto">
+                    <div className="flex justify-between items-center text-base text-amber-100">
                         <p>© {new Date().getFullYear()} {data.companyName}</p>
                         <p className="font-mono font-bold text-amber-50">LOR No: {certificateCode}</p>
                     </div>

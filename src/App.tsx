@@ -421,7 +421,7 @@ function App() {
             {/* Mobile Header - Only visible on mobile */}
             <div className="md:hidden bg-gradient-to-r from-slate-800 to-slate-900 p-4 flex items-center justify-between">
                 <div>
-                    <h1 className="text-lg font-bold text-white">HR Docs Editor</h1>
+                    <h1 className="text-lg font-bold text-white">Digital Heroes</h1>
                     <p className="text-xs text-slate-400">{currentDocOption?.icon} {currentDocOption?.label}</p>
                 </div>
                 <div className="flex gap-2">
@@ -438,8 +438,8 @@ function App() {
             <div className="hidden md:flex w-72 min-w-[288px] bg-white border-r border-slate-200 flex-col print:hidden">
                 {/* Header */}
                 <div className="p-5 border-b border-slate-200 bg-gradient-to-r from-slate-800 to-slate-900">
-                    <h1 className="text-xl font-bold text-white">HR Docs Editor</h1>
-                    <p className="text-sm text-slate-400 mt-1">Generate professional HR documents</p>
+                    <h1 className="text-xl font-bold text-white">Digital Heroes</h1>
+                    <p className="text-sm text-slate-400 mt-1">HR Document Generator</p>
                 </div>
 
                 {/* Document Type Selector */}

@@ -1,4 +1,4 @@
-import { forwardRef } from 'react';
+import { forwardRef, useMemo } from 'react';
 import { TrainingCertificateData, HR_SIGNATORY_OPTIONS } from '../../types';
 import { CompanySeal } from '../ui/CompanySeal';
 
@@ -6,123 +6,121 @@ interface TrainingCertificateTemplateProps {
     data: TrainingCertificateData;
 }
 
+// Generate unique code based on employee initials
+const generateCode = (name: string, type: string): string => {
+    const initials = (name || 'XX')
+        .split(' ')
+        .map(word => word.charAt(0).toUpperCase())
+        .join('')
+        .substring(0, 3)
+        .padEnd(2, 'X');
+    const year = new Date().getFullYear();
+    const randomNum = Math.floor(1000 + Math.random() * 9000);
+    return `DMH/${type}/${year}/${initials}-${randomNum}`;
+};
+
 export const TrainingCertificateTemplate = forwardRef<HTMLDivElement, TrainingCertificateTemplateProps>(
     ({ data }, ref) => {
         const signatory = HR_SIGNATORY_OPTIONS.find(s => s.name === data.hrName);
         const signatureImage = signatory?.signatureImage || '/prasun_signature.png';
 
+        const refNumber = useMemo(() => generateCode(data.employeeName || '', 'TRN'), [data.employeeName]);
+        const certificateCode = useMemo(() => generateCode(data.employeeName || '', 'TRN'), [data.employeeName]);
+
         return (
             <div
                 ref={ref}
                 data-print="document"
-                className="bg-white shadow-2xl print:shadow-none"
-                style={{ width: '210mm', minHeight: '297mm' }}
+                className="bg-white shadow-2xl print:shadow-none text-[11px] flex flex-col"
+                style={{ width: '210mm', height: '297mm', maxHeight: '297mm', overflow: 'hidden' }}
             >
                 {/* Header */}
-                <div className="relative overflow-hidden">
-                    <div className="absolute inset-0 bg-gradient-to-br from-indigo-600 via-blue-600 to-cyan-600"></div>
-                    <div className="absolute inset-0 opacity-10">
-                        <div className="absolute top-0 right-0 w-96 h-96 bg-white rounded-full -translate-y-1/2 translate-x-1/2"></div>
-                    </div>
-                    <div className="relative px-10 py-8">
-                        <div className="flex justify-between items-start">
-                            <div>
-                                <h1 className="text-3xl font-black text-white tracking-tight">{data.companyName}</h1>
-                                <p className="text-indigo-100 mt-1 text-sm italic">{data.companyTagline}</p>
-                            </div>
-                            <div className="text-right">
-                                <div className="bg-white/20 backdrop-blur-sm rounded-2xl px-6 py-4 border border-white/30">
-                                    <p className="text-lg font-black text-white">TRAINING</p>
-                                    <p className="text-base font-bold text-indigo-100">CERTIFICATE</p>
-                                </div>
-                            </div>
+                <div className="bg-gradient-to-r from-indigo-600 via-blue-600 to-cyan-600 px-8 py-4">
+                    <div className="flex justify-between items-center">
+                        <div>
+                            <h1 className="text-2xl font-black text-white">{data.companyName}</h1>
+                            <p className="text-indigo-100 text-xs">{data.companyTagline}</p>
+                        </div>
+                        <div className="bg-white/20 rounded-xl px-4 py-2 text-center">
+                            <p className="text-sm font-black text-white">TRAINING CERTIFICATE</p>
                         </div>
                     </div>
                 </div>
 
-                {/* Date & Reference */}
-                <div className="px-10 py-4 bg-gradient-to-r from-indigo-50 to-blue-50 border-b border-indigo-100">
-                    <div className="flex justify-between text-sm">
-                        <span className="text-slate-600"><strong>Ref:</strong> {data.refNumber}</span>
-                        <span className="text-slate-600"><strong>Date:</strong> {data.date}</span>
-                    </div>
+                {/* Ref & Date */}
+                <div className="px-8 py-2 bg-indigo-50 border-b border-indigo-100 flex justify-between text-xs">
+                    <span><strong>Ref:</strong> {refNumber}</span>
+                    <span><strong>Date:</strong> {data.date}</span>
                 </div>
 
-                {/* Main Title */}
-                <div className="px-10 py-8 text-center">
-                    <div className="inline-block">
-                        <h2 className="text-3xl font-black text-slate-800 tracking-wide">CERTIFICATE OF COMPLETION</h2>
-                        <div className="h-1 bg-gradient-to-r from-indigo-500 to-blue-500 rounded-full mt-2"></div>
+                {/* Main Content */}
+                <div className="flex-1 px-8 py-4 flex flex-col">
+                    {/* Title */}
+                    <div className="text-center mb-4">
+                        <h2 className="text-xl font-black text-slate-800">CERTIFICATE OF COMPLETION</h2>
+                        <div className="w-24 h-1 bg-gradient-to-r from-indigo-500 to-blue-500 mx-auto mt-2 rounded-full"></div>
                     </div>
-                </div>
 
-                {/* Content */}
-                <div className="px-10 space-y-6">
                     {/* Employee Card */}
-                    <div className="bg-gradient-to-br from-indigo-50 to-blue-50 rounded-2xl p-6 border border-indigo-200">
-                        <div className="flex items-center gap-4">
-                            <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-indigo-500 to-blue-600 flex items-center justify-center shadow-lg shadow-indigo-500/30">
-                                <span className="text-2xl font-bold text-white">{data.employeeName?.charAt(0) || 'E'}</span>
-                            </div>
-                            <div>
-                                <p className="text-xl font-bold text-indigo-800">{data.employeeName || '[Employee Name]'}</p>
-                                <p className="text-sm text-slate-600">{data.designation} • {data.department}</p>
-                                <p className="text-xs text-slate-400">ID: {data.employeeId}</p>
-                            </div>
+                    <div className="bg-gradient-to-r from-indigo-50 to-blue-50 rounded-xl p-4 border border-indigo-200 flex items-center gap-4 mb-4">
+                        <div className="w-12 h-12 rounded-full bg-gradient-to-br from-indigo-500 to-blue-600 flex items-center justify-center text-white text-xl font-bold">
+                            {data.employeeName?.charAt(0) || 'E'}
+                        </div>
+                        <div>
+                            <p className="text-lg font-bold text-indigo-800">{data.employeeName || '[Employee Name]'}</p>
+                            <p className="text-sm text-slate-600">{data.designation} • {data.department}</p>
+                            <p className="text-xs text-slate-400">ID: {data.employeeId}</p>
                         </div>
                     </div>
 
                     {/* Certificate Text */}
-                    <div className="text-slate-700 leading-loose text-center">
-                        <p className="text-lg">
-                            This is to certify that the above-named employee has successfully completed the training program:
-                        </p>
-                    </div>
+                    <p className="text-slate-700 text-center mb-4">
+                        This is to certify that the above-named employee has successfully completed the training program:
+                    </p>
 
                     {/* Training Program Card */}
-                    <div className="bg-gradient-to-r from-yellow-50 to-amber-50 rounded-2xl p-8 border border-yellow-200 text-center">
-                        <p className="text-2xl font-black text-amber-800">{data.trainingProgram}</p>
+                    <div className="bg-gradient-to-r from-yellow-50 to-amber-50 rounded-xl p-6 border border-yellow-200 text-center mb-4">
+                        <p className="text-xl font-black text-amber-800">{data.trainingProgram}</p>
                         <p className="text-amber-600 mt-2">Duration: {data.trainingDuration}</p>
                     </div>
 
                     {/* Details Grid */}
-                    <div className="grid grid-cols-2 gap-4">
-                        <div className="bg-slate-50 rounded-xl p-4 border border-slate-200">
+                    <div className="grid grid-cols-3 gap-4 mb-4">
+                        <div className="bg-slate-50 rounded-lg p-3 border border-slate-200 text-center">
                             <p className="text-xs text-slate-500 uppercase">Training Date</p>
                             <p className="font-bold text-slate-800">{data.trainingDate || '—'}</p>
                         </div>
-                        <div className="bg-green-50 rounded-xl p-4 border border-green-200">
+                        <div className="bg-green-50 rounded-lg p-3 border border-green-200 text-center">
                             <p className="text-xs text-green-600 uppercase">Status</p>
                             <p className="font-bold text-green-800">{data.completionStatus}</p>
                         </div>
-                    </div>
-
-                    <div className="bg-slate-50 rounded-xl p-4 border border-slate-200 text-center">
-                        <p className="text-sm text-slate-500">Trainer / Conducted By</p>
-                        <p className="font-bold text-slate-800">{data.trainerName}</p>
-                    </div>
-                </div>
-
-                {/* Signature Section */}
-                <div className="px-10 py-10 mt-8">
-                    <div className="flex flex-col items-center">
-                        <p className="text-sm text-slate-500 mb-2">For {data.companyName}</p>
-                        <img src={signatureImage} alt="Signature" className="h-14 object-contain mb-2" />
-                        <div className="border-t border-slate-400 pt-2 w-56 text-center">
-                            <p className="font-bold text-slate-800">{data.hrName}</p>
-                            <p className="text-sm text-slate-600">{data.hrDesignation}</p>
+                        <div className="bg-blue-50 rounded-lg p-3 border border-blue-200 text-center">
+                            <p className="text-xs text-blue-600 uppercase">Trainer</p>
+                            <p className="font-bold text-blue-800">{data.trainerName}</p>
                         </div>
-                        <div className="mt-4">
-                            <CompanySeal companyName={data.companyName} size="md" />
+                    </div>
+
+                    {/* Signature - Horizontal */}
+                    <div className="mt-auto pt-4 border-t border-slate-200">
+                        <div className="flex items-end justify-between">
+                            <div className="text-center">
+                                <p className="text-xs text-slate-500 mb-1">For {data.companyName}</p>
+                                <img src={signatureImage} alt="Signature" className="h-10 object-contain mx-auto" />
+                                <div className="border-t border-slate-400 pt-1 w-44">
+                                    <p className="font-bold text-slate-800 text-sm">{data.hrName}</p>
+                                    <p className="text-xs text-slate-600">{data.hrDesignation}</p>
+                                </div>
+                            </div>
+                            <CompanySeal companyName={data.companyName} size="sm" />
                         </div>
                     </div>
                 </div>
 
                 {/* Footer */}
-                <div className="bg-indigo-900 px-10 py-4 mt-auto">
-                    <div className="flex justify-between items-center text-xs text-indigo-200">
-                        <p>© {new Date().getFullYear()} {data.companyName}. All Rights Reserved.</p>
-                        <p>{data.companyTagline}</p>
+                <div className="bg-indigo-900 px-8 py-2 mt-auto">
+                    <div className="flex justify-between text-xs text-indigo-200">
+                        <p>© {new Date().getFullYear()} {data.companyName}</p>
+                        <p className="font-mono font-bold text-indigo-100">Certificate No: {certificateCode}</p>
                     </div>
                 </div>
             </div>

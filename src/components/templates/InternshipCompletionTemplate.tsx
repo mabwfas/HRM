@@ -6,17 +6,18 @@ interface InternshipCompletionTemplateProps {
     data: InternshipCompletionData;
 }
 
-// Generate unique certificate code based on name and random numbers
+// Generate unique certificate code based on employee initials and random numbers
 const generateCertificateCode = (name: string, type: 'IC' | 'LOR' = 'IC'): string => {
-    const nameCode = (name || 'INTERN')
-        .toUpperCase()
-        .replace(/[^A-Z]/g, '')
+    // Get employee initials (first letter of each word in name)
+    const initials = (name || 'XX')
+        .split(' ')
+        .map(word => word.charAt(0).toUpperCase())
+        .join('')
         .substring(0, 3)
-        .padEnd(3, 'X');
+        .padEnd(2, 'X');
     const year = new Date().getFullYear();
-    const randomNum = Math.floor(1000 + Math.random() * 9000); // 4-digit random
-    const suffix = Math.floor(10 + Math.random() * 90); // 2-digit random
-    return `DMH/${type}/${year}/${nameCode}${randomNum}-${suffix}`;
+    const randomNum = Math.floor(1000 + Math.random() * 9000);
+    return `DMH/${type}/${year}/${initials}-${randomNum}`;
 };
 
 export const InternshipCompletionTemplate = forwardRef<HTMLDivElement, InternshipCompletionTemplateProps>(
@@ -26,6 +27,12 @@ export const InternshipCompletionTemplate = forwardRef<HTMLDivElement, Internshi
 
         // Generate stable certificate code based on intern name
         const certificateCode = useMemo(() =>
+            generateCertificateCode(data.internName || '', 'IC'),
+            [data.internName]
+        );
+
+        // Generate unique reference number
+        const refNumber = useMemo(() =>
             generateCertificateCode(data.internName || '', 'IC'),
             [data.internName]
         );
@@ -62,7 +69,7 @@ export const InternshipCompletionTemplate = forwardRef<HTMLDivElement, Internshi
                 {/* Date & Reference */}
                 <div className="px-10 py-4 bg-gradient-to-r from-violet-50 to-purple-50 border-b border-violet-100">
                     <div className="flex justify-between text-sm">
-                        <span className="text-slate-600"><strong>Ref:</strong> {data.refNumber}</span>
+                        <span className="text-slate-600"><strong>Ref:</strong> {refNumber}</span>
                         <span className="text-slate-600"><strong>Date:</strong> {data.date}</span>
                     </div>
                 </div>

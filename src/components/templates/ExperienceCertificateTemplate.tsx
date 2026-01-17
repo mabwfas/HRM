@@ -1,4 +1,4 @@
-import { forwardRef } from 'react';
+import { forwardRef, useMemo } from 'react';
 import { ExperienceCertificateData, HR_SIGNATORY_OPTIONS } from '../../types';
 import { CompanySeal } from '../ui/CompanySeal';
 
@@ -15,6 +15,19 @@ const getFullRoleTitle = (designation: string, customRole1?: string, customRole2
     return roles.join(' + ');
 };
 
+// Generate unique certificate code
+const generateCertificateCode = (name: string): string => {
+    const initials = (name || 'XX')
+        .split(' ')
+        .map(word => word.charAt(0).toUpperCase())
+        .join('')
+        .substring(0, 3)
+        .padEnd(2, 'X');
+    const year = new Date().getFullYear();
+    const randomNum = Math.floor(1000 + Math.random() * 9000);
+    return `DMH/EXP/${year}/${initials}-${randomNum}`;
+};
+
 export const ExperienceCertificateTemplate = forwardRef<HTMLDivElement, ExperienceCertificateTemplateProps>(
     ({ data, showSeal = true }, ref) => {
         const conductText = {
@@ -27,6 +40,16 @@ export const ExperienceCertificateTemplate = forwardRef<HTMLDivElement, Experien
         const signatory = HR_SIGNATORY_OPTIONS.find(s => s.name === data.hrName);
         const signatureImage = signatory?.signatureImage || '/prasun_signature.png';
         const fullRoleTitle = getFullRoleTitle(data.designation, data.customRole1, data.customRole2);
+
+        const certificateCode = useMemo(() =>
+            generateCertificateCode(data.employeeName || ''),
+            [data.employeeName]
+        );
+
+        const refNumber = useMemo(() =>
+            generateCertificateCode(data.employeeName || ''),
+            [data.employeeName]
+        );
 
         return (
             <div
@@ -50,7 +73,7 @@ export const ExperienceCertificateTemplate = forwardRef<HTMLDivElement, Experien
 
                 {/* Ref & Date */}
                 <div className="px-8 py-2 bg-amber-50 border-b border-amber-100 flex justify-between text-xs">
-                    <span><strong>Ref:</strong> {data.refNumber}</span>
+                    <span><strong>Ref:</strong> {refNumber}</span>
                     <span><strong>Date:</strong> {data.date}</span>
                 </div>
 
@@ -132,7 +155,7 @@ export const ExperienceCertificateTemplate = forwardRef<HTMLDivElement, Experien
                 <div className="bg-amber-900 px-8 py-2">
                     <div className="flex justify-between text-xs text-amber-200">
                         <p>© {new Date().getFullYear()} {data.companyName}</p>
-                        <p>{data.companyTagline}</p>
+                        <p className="font-mono font-bold text-amber-100">Certificate No: {certificateCode}</p>
                     </div>
                 </div>
             </div>

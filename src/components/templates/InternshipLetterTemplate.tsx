@@ -271,23 +271,23 @@ export const InternshipLetterTemplate = forwardRef<HTMLDivElement, InternshipLet
                         </div>
 
                         {/* Section 8: Grounds for Immediate Termination */}
-                        <div className="mb-4 bg-amber-50 rounded-lg p-3 border-2 border-amber-200">
-                            <h2 className="text-sm font-bold text-amber-800 border-b border-amber-300 pb-1 mb-2">⚠️ 8. GROUNDS FOR IMMEDIATE TERMINATION</h2>
-                            <p className="text-amber-700 mb-2 font-semibold">The internship will be terminated immediately without notice if the intern:</p>
-                            <ul className="list-disc ml-4 space-y-1 text-slate-800">
-                                <li><strong>Theft or fraud:</strong> Stealing company property, data, or committing financial fraud.</li>
-                                <li><strong>Data breach:</strong> Unauthorized sharing of confidential/client information.</li>
-                                <li><strong>Harassment:</strong> Any form of harassment against colleagues, clients, or staff.</li>
-                                <li><strong>Violence:</strong> Physical altercation or threatening behavior.</li>
-                                <li><strong>Substance abuse:</strong> Being under influence of alcohol/drugs at work.</li>
-                                <li><strong>Falsification:</strong> Providing false documents, certificates, or information.</li>
-                                <li><strong>Insubordination:</strong> Refusing to follow reasonable work instructions.</li>
-                                <li><strong>Damage to property:</strong> Intentional damage to company assets.</li>
-                                <li><strong>Absence without leave:</strong> 3+ consecutive days without approval or communication.</li>
-                                <li><strong>Gross negligence:</strong> Actions causing significant harm to company reputation or clients.</li>
-                                <li><strong>Criminal activity:</strong> Involvement in any illegal activities.</li>
-                                <li><strong>Social media misconduct:</strong> Defamatory posts about company, clients, or colleagues.</li>
-                            </ul>
+                        <div className="mb-3 bg-amber-50 rounded-lg p-2 border-2 border-amber-200">
+                            <h2 className="text-[10px] font-bold text-amber-800 border-b border-amber-300 pb-1 mb-1">⚠️ 8. GROUNDS FOR IMMEDIATE TERMINATION</h2>
+                            <p className="text-amber-700 mb-1 font-semibold text-[9px]">The internship will be terminated immediately without notice if the intern:</p>
+                            <div className="grid grid-cols-2 gap-x-3 gap-y-0.5 text-[9px] text-slate-800">
+                                <div>• <strong>Theft/fraud:</strong> Stealing property, data, financial fraud</div>
+                                <div>• <strong>Data breach:</strong> Sharing confidential info</div>
+                                <div>• <strong>Harassment:</strong> Any form against colleagues/clients</div>
+                                <div>• <strong>Violence:</strong> Physical altercation or threats</div>
+                                <div>• <strong>Substance abuse:</strong> Alcohol/drugs at work</div>
+                                <div>• <strong>Falsification:</strong> False documents or info</div>
+                                <div>• <strong>Insubordination:</strong> Refusing work instructions</div>
+                                <div>• <strong>Property damage:</strong> Intentional damage</div>
+                                <div>• <strong>AWOL:</strong> 3+ days absent without approval</div>
+                                <div>• <strong>Gross negligence:</strong> Harming reputation</div>
+                                <div>• <strong>Criminal activity:</strong> Illegal activities</div>
+                                <div>• <strong>Social media misconduct:</strong> Defamatory posts</div>
+                            </div>
                         </div>
 
                         {/* Section 9: Termination by Company */}

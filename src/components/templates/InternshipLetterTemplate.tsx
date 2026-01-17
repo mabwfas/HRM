@@ -135,8 +135,8 @@ export const InternshipLetterTemplate = forwardRef<HTMLDivElement, InternshipLet
 
                 {/* ===== PAGE 2: ANNEXURE A - PART 1 ===== */}
                 <div
-                    className="bg-white shadow-2xl print:shadow-none text-[10px] flex flex-col overflow-hidden"
-                    style={{ width: '210mm', height: '297mm', maxHeight: '297mm', pageBreakBefore: 'always' }}
+                    className="bg-white shadow-2xl print:shadow-none text-[10px] flex flex-col overflow-hidden break-before-page"
+                    style={{ width: '210mm', minHeight: '297mm' }}
                 >
                     {/* Header */}
                     <div className="bg-gradient-to-r from-red-600 to-orange-600 px-8 py-3">
@@ -240,8 +240,8 @@ export const InternshipLetterTemplate = forwardRef<HTMLDivElement, InternshipLet
 
                 {/* ===== PAGE 3: ANNEXURE A - PART 2 (Termination & Suspension) ===== */}
                 <div
-                    className="bg-white shadow-2xl print:shadow-none text-[10px] flex flex-col overflow-hidden"
-                    style={{ width: '210mm', height: '297mm', maxHeight: '297mm', pageBreakBefore: 'always' }}
+                    className="bg-white shadow-2xl print:shadow-none text-[10px] flex flex-col overflow-hidden break-before-page"
+                    style={{ width: '210mm', minHeight: '297mm' }}
                 >
                     {/* Header */}
                     <div className="bg-gradient-to-r from-red-700 to-red-900 px-8 py-3">

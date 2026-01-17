@@ -16,7 +16,7 @@ export const AddressProofLetterTemplate = forwardRef<HTMLDivElement, AddressProo
                 ref={ref}
                 data-print="document"
                 className="bg-white shadow-2xl print:shadow-none"
-                style={{ width: '210mm', minHeight: '297mm' }}
+                style={{ width: '210mm', height: '297mm', maxHeight: '297mm', overflow: 'hidden' }}
             >
                 {/* Header */}
                 <div className="relative overflow-hidden">

@@ -1,6 +1,7 @@
-import { forwardRef } from 'react';
+import { forwardRef, useMemo } from 'react';
 import { AddressProofLetterData, HR_SIGNATORY_OPTIONS } from '../../types';
 import { CompanySeal } from '../ui/CompanySeal';
+import { generateRefNumber, DOC_TYPES } from '../../utils/refGenerator';
 
 interface AddressProofLetterTemplateProps {
     data: AddressProofLetterData;
@@ -10,119 +11,102 @@ export const AddressProofLetterTemplate = forwardRef<HTMLDivElement, AddressProo
     ({ data }, ref) => {
         const signatory = HR_SIGNATORY_OPTIONS.find(s => s.name === data.hrName);
         const signatureImage = signatory?.signatureImage || '/prasun_signature.png';
+        const refNumber = useMemo(() => generateRefNumber(data.employeeName || '', DOC_TYPES.ADR), [data.employeeName]);
 
         return (
             <div
                 ref={ref}
                 data-print="document"
-                className="bg-white shadow-2xl print:shadow-none"
+                className="bg-white shadow-2xl print:shadow-none text-[11px] flex flex-col"
                 style={{ width: '210mm', height: '297mm', maxHeight: '297mm', overflow: 'hidden' }}
             >
-                {/* Header */}
-                <div className="relative overflow-hidden">
-                    <div className="absolute inset-0 bg-gradient-to-br from-slate-600 via-slate-700 to-slate-800"></div>
-                    <div className="absolute inset-0 opacity-10">
-                        <div className="absolute top-0 right-0 w-96 h-96 bg-white rounded-full -translate-y-1/2 translate-x-1/2"></div>
-                    </div>
-                    <div className="relative px-10 py-8">
-                        <div className="flex justify-between items-start">
-                            <div>
-                                <h1 className="text-3xl font-black text-white tracking-tight">{data.companyName}</h1>
-                                <p className="text-slate-300 mt-1 text-sm italic">{data.companyTagline}</p>
-                            </div>
-                            <div className="text-right">
-                                <div className="bg-white/20 backdrop-blur-sm rounded-2xl px-6 py-4 border border-white/30">
-                                    <p className="text-xl font-black text-white">ADDRESS</p>
-                                    <p className="text-lg font-bold text-slate-200">PROOF</p>
-                                </div>
-                            </div>
+                {/* Compact Header */}
+                <div className="bg-gradient-to-r from-slate-600 via-slate-700 to-slate-800 px-8 py-4">
+                    <div className="flex justify-between items-center">
+                        <div>
+                            <h1 className="text-2xl font-black text-white">{data.companyName}</h1>
+                            <p className="text-slate-300 text-xs">{data.companyTagline}</p>
+                        </div>
+                        <div className="bg-white/20 rounded-xl px-4 py-2 text-center">
+                            <p className="text-sm font-black text-white">ADDRESS PROOF</p>
                         </div>
                     </div>
                 </div>
 
-                {/* Date & Reference */}
-                <div className="px-10 py-4 bg-gradient-to-r from-slate-50 to-slate-100 border-b border-slate-200">
-                    <div className="flex justify-between text-sm">
-                        <span className="text-slate-600"><strong>Ref:</strong> {data.refNumber}</span>
-                        <span className="text-slate-600"><strong>Date:</strong> {data.date}</span>
-                    </div>
+                {/* Ref & Date */}
+                <div className="px-8 py-2 bg-slate-50 border-b border-slate-200 flex justify-between text-xs">
+                    <span><strong>Ref:</strong> {refNumber}</span>
+                    <span><strong>Date:</strong> {data.date}</span>
                 </div>
 
-                {/* Main Title */}
-                <div className="px-10 py-8 text-center">
-                    <div className="inline-block">
-                        <h2 className="text-3xl font-black text-slate-800 tracking-wide">TO WHOM IT MAY CONCERN</h2>
-                        <div className="h-1 bg-gradient-to-r from-slate-500 to-slate-600 rounded-full mt-2"></div>
+                {/* Main Content */}
+                <div className="flex-1 px-8 py-4 flex flex-col">
+                    {/* Title */}
+                    <div className="text-center mb-4">
+                        <h2 className="text-xl font-black text-slate-800">TO WHOM IT MAY CONCERN</h2>
+                        <div className="w-24 h-1 bg-gradient-to-r from-slate-500 to-slate-600 mx-auto mt-2 rounded-full"></div>
                     </div>
-                </div>
 
-                {/* Content */}
-                <div className="px-10 space-y-6">
-                    {/* Employee Card */}
-                    <div className="bg-gradient-to-br from-slate-50 to-slate-100 rounded-2xl p-6 border border-slate-200">
-                        <div className="flex items-center gap-4">
-                            <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-slate-500 to-slate-600 flex items-center justify-center shadow-lg">
-                                <span className="text-2xl font-bold text-white">{data.employeeName?.charAt(0) || 'E'}</span>
-                            </div>
-                            <div>
-                                <p className="text-xl font-bold text-slate-800">{data.employeeName || '[Employee Name]'}</p>
-                                <p className="text-sm text-slate-600">{data.designation} • {data.department}</p>
-                                <p className="text-xs text-slate-400">ID: {data.employeeId}</p>
-                            </div>
+                    {/* Employee Info - Compact */}
+                    <div className="bg-slate-50 rounded-xl p-3 border border-slate-200 flex items-center gap-3 mb-4">
+                        <div className="w-10 h-10 rounded-full bg-slate-500 flex items-center justify-center text-white font-bold">
+                            {data.employeeName?.charAt(0) || 'E'}
+                        </div>
+                        <div>
+                            <p className="font-bold text-slate-800">{data.employeeName || '[Employee Name]'}</p>
+                            <p className="text-xs text-slate-600">{data.designation} • {data.department} • ID: {data.employeeId}</p>
                         </div>
                     </div>
 
                     {/* Main Content */}
-                    <div className="text-slate-700 leading-loose space-y-4">
-                        <p>
-                            This is to certify that <strong className="text-slate-900">{data.employeeName || '[Employee Name]'}</strong> (Employee ID: <strong>{data.employeeId}</strong>) is employed with <strong>{data.companyName}</strong> as a <strong>{data.designation}</strong> in the <strong>{data.department}</strong> department since <strong>{data.joiningDate || '[Joining Date]'}</strong>.
-                        </p>
-                    </div>
+                    <p className="text-slate-700 mb-4">
+                        This is to certify that <strong>{data.employeeName || '[Employee Name]'}</strong> (Employee ID: <strong>{data.employeeId}</strong>) is employed with <strong>{data.companyName}</strong> as a <strong>{data.designation}</strong> in the <strong>{data.department}</strong> department since <strong>{data.joiningDate || '[Joining Date]'}</strong>.
+                    </p>
 
                     {/* Address Card */}
-                    <div className="bg-blue-50 rounded-2xl p-6 border border-blue-200">
-                        <h3 className="font-bold text-blue-800 mb-3">🏠 Residential Address (As per records)</h3>
-                        <p className="text-slate-700 text-lg">{data.employeeAddress || '[Employee Address]'}</p>
+                    <div className="bg-blue-50 rounded-lg p-4 border border-blue-200 mb-4">
+                        <h3 className="font-bold text-blue-800 mb-2 text-sm">Residential Address (As per records)</h3>
+                        <p className="text-slate-700">{data.employeeAddress || '[Employee Address]'}</p>
                     </div>
 
-                    {/* Purpose Card */}
-                    <div className="bg-amber-50 rounded-xl p-4 border border-amber-200">
-                        <p className="text-sm text-amber-600 uppercase mb-1">Purpose of Letter</p>
-                        <p className="font-bold text-amber-800">{data.purpose}</p>
+                    {/* Purpose & Company Address */}
+                    <div className="grid grid-cols-2 gap-3 mb-4">
+                        <div className="bg-amber-50 rounded-lg p-3 border border-amber-200">
+                            <p className="text-xs text-amber-600 uppercase mb-1">Purpose</p>
+                            <p className="font-bold text-amber-800 text-sm">{data.purpose}</p>
+                        </div>
+                        <div className="bg-slate-50 rounded-lg p-3 border border-slate-200">
+                            <p className="text-xs text-slate-500 uppercase mb-1">Company Address</p>
+                            <p className="text-xs text-slate-800">{data.companyAddress}</p>
+                        </div>
                     </div>
 
-                    {/* Company Details */}
-                    <div className="bg-slate-50 rounded-xl p-4 border border-slate-200">
-                        <p className="text-sm text-slate-500 uppercase mb-1">Company Address</p>
-                        <p className="font-medium text-slate-800">{data.companyAddress}</p>
-                    </div>
-
-                    <p className="text-slate-700">
+                    <p className="text-slate-700 text-xs mb-3">
                         This certificate is issued upon the request of the employee for the purpose mentioned above.
                         For any verification, please contact the HR department.
                     </p>
-                </div>
 
-                {/* Signature Section */}
-                <div className="px-10 py-10 mt-8">
-                    <div className="flex flex-col items-center">
-                        <p className="text-sm text-slate-500 mb-2">For {data.companyName}</p>
-                        <img src={signatureImage} alt="Signature" className="h-14 object-contain mb-2" />
-                        <div className="border-t border-slate-400 pt-2 w-56 text-center">
-                            <p className="font-bold text-slate-800">{data.hrName}</p>
-                            <p className="text-sm text-slate-600">{data.hrDesignation}</p>
-                        </div>
-                        <div className="mt-4">
-                            <CompanySeal companyName={data.companyName} size="md" />
+                    {/* Signature - Horizontal */}
+                    <div className="mt-auto pt-3 border-t border-slate-200">
+                        <div className="flex items-end justify-between">
+                            <div className="text-center">
+                                <p className="text-xs text-slate-500 mb-1">For {data.companyName}</p>
+                                <img src={signatureImage} alt="Signature" className="h-10 object-contain mx-auto" />
+                                <div className="border-t border-slate-400 pt-1 w-44">
+                                    <p className="font-bold text-slate-800 text-xs">{data.hrName}</p>
+                                    <p className="text-xs text-slate-600">{data.hrDesignation}</p>
+                                </div>
+                            </div>
+                            <CompanySeal companyName={data.companyName} size="sm" />
                         </div>
                     </div>
                 </div>
 
                 {/* Footer */}
-                <div className="bg-slate-900 px-10 py-4 mt-auto">
-                    <div className="flex justify-between items-center text-xs text-slate-400">
-                        <p>© {new Date().getFullYear()} {data.companyName}. All Rights Reserved.</p>
-                        <p>{data.companyTagline}</p>
+                <div className="bg-slate-900 px-8 py-2 mt-auto">
+                    <div className="flex justify-between text-xs text-slate-400">
+                        <p>© {new Date().getFullYear()} {data.companyName}</p>
+                        <p className="font-mono font-bold text-slate-300">Ref: {refNumber}</p>
                     </div>
                 </div>
             </div>

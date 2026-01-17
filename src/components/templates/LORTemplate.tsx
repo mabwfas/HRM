@@ -35,7 +35,7 @@ export const LORTemplate = forwardRef<HTMLDivElement, LORTemplateProps>(
                 ref={ref}
                 data-print="document"
                 className="bg-white shadow-2xl print:shadow-none"
-                style={{ width: '210mm', minHeight: '297mm' }}
+                style={{ width: '210mm', height: '297mm', maxHeight: '297mm', overflow: 'hidden' }}
             >
                 {/* Header - Gold/Premium Theme */}
                 <div className="relative overflow-hidden">
@@ -44,14 +44,14 @@ export const LORTemplate = forwardRef<HTMLDivElement, LORTemplateProps>(
                         <div className="absolute top-0 right-0 w-96 h-96 bg-white rounded-full -translate-y-1/2 translate-x-1/2"></div>
                         <div className="absolute bottom-0 left-0 w-64 h-64 bg-white rounded-full translate-y-1/2 -translate-x-1/2"></div>
                     </div>
-                    <div className="relative px-10 py-8">
+                    <div className="relative px-10 py-6">
                         <div className="flex justify-between items-start">
                             <div>
                                 <h1 className="text-3xl font-black text-white tracking-tight">{data.companyName}</h1>
                                 <p className="text-amber-100 mt-1 text-sm italic">{data.companyTagline}</p>
                             </div>
                             <div className="text-right">
-                                <div className="bg-white/20 backdrop-blur-sm rounded-2xl px-6 py-4 border border-white/30">
+                                <div className="bg-white/20 backdrop-blur-sm rounded-2xl px-6 py-3 border border-white/30">
                                     <p className="text-lg font-black text-white">LETTER OF</p>
                                     <p className="text-base font-bold text-amber-100">RECOMMENDATION</p>
                                     <p className="text-xs text-amber-200 mt-1">★ TOP PERFORMER ★</p>
@@ -62,7 +62,7 @@ export const LORTemplate = forwardRef<HTMLDivElement, LORTemplateProps>(
                 </div>
 
                 {/* Date & Reference */}
-                <div className="px-10 py-4 bg-gradient-to-r from-amber-50 to-yellow-50 border-b border-amber-100">
+                <div className="px-10 py-3 bg-gradient-to-r from-amber-50 to-yellow-50 border-b border-amber-100">
                     <div className="flex justify-between text-sm">
                         <span className="text-slate-600"><strong>Ref:</strong> {data.refNumber}</span>
                         <span className="text-slate-600"><strong>Date:</strong> {data.date}</span>
@@ -70,7 +70,7 @@ export const LORTemplate = forwardRef<HTMLDivElement, LORTemplateProps>(
                 </div>
 
                 {/* Main Title */}
-                <div className="px-10 py-8 text-center">
+                <div className="px-10 py-5 text-center">
                     <div className="inline-block">
                         <h2 className="text-3xl font-black text-slate-800 tracking-wide">LETTER OF RECOMMENDATION</h2>
                         <div className="h-1 bg-gradient-to-r from-amber-500 to-yellow-500 rounded-full mt-2"></div>
@@ -79,10 +79,10 @@ export const LORTemplate = forwardRef<HTMLDivElement, LORTemplateProps>(
                 </div>
 
                 {/* Content */}
-                <div className="px-10 space-y-6">
+                <div className="px-10 space-y-4">
                     {/* Intern Card - Premium Gold */}
-                    <div className="bg-gradient-to-br from-amber-50 to-yellow-50 rounded-2xl p-8 border-2 border-amber-300 text-center shadow-lg">
-                        <div className="w-20 h-20 rounded-full bg-gradient-to-br from-amber-500 to-yellow-600 flex items-center justify-center shadow-lg shadow-amber-500/30 mx-auto mb-4">
+                    <div className="bg-gradient-to-br from-amber-50 to-yellow-50 rounded-2xl p-5 border-2 border-amber-300 text-center shadow-lg">
+                        <div className="w-16 h-16 rounded-full bg-gradient-to-br from-amber-500 to-yellow-600 flex items-center justify-center shadow-lg shadow-amber-500/30 mx-auto mb-3">
                             <span className="text-4xl font-bold text-white">{data.internName?.charAt(0) || 'I'}</span>
                         </div>
                         <p className="text-2xl font-black text-amber-800">{data.internName || '[Intern Name]'}</p>
@@ -135,7 +135,7 @@ export const LORTemplate = forwardRef<HTMLDivElement, LORTemplateProps>(
                 </div>
 
                 {/* Signature Section */}
-                <div className="px-10 py-8 mt-4">
+                <div className="px-10 py-4 mt-2">
                     <div className="flex flex-col items-center">
                         <p className="text-sm text-slate-500 mb-2">With Best Regards,</p>
                         <p className="text-sm text-slate-500 mb-2">For {data.companyName}</p>
@@ -144,7 +144,7 @@ export const LORTemplate = forwardRef<HTMLDivElement, LORTemplateProps>(
                             <p className="font-bold text-slate-800">{data.hrName}</p>
                             <p className="text-sm text-slate-600">{data.hrDesignation}</p>
                         </div>
-                        <div className="mt-4">
+                        <div className="mt-2">
                             <CompanySeal companyName={data.companyName} size="md" />
                         </div>
                     </div>

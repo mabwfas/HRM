@@ -13,8 +13,8 @@ export const InternshipLetterTemplate = forwardRef<HTMLDivElement, InternshipLet
         const signatureImage = signatory?.signatureImage || '/prasun_signature.png';
 
         return (
-            <div ref={ref}>
-                {/* PAGE 1 - Internship Offer Letter */}
+            <div ref={ref} className="bg-white">
+                {/* ===== PAGE 1: MAIN OFFER LETTER ===== */}
                 <div
                     className="bg-white shadow-2xl print:shadow-none text-[11px] flex flex-col overflow-hidden"
                     style={{ width: '210mm', height: '297mm', maxHeight: '297mm' }}
@@ -91,9 +91,10 @@ export const InternshipLetterTemplate = forwardRef<HTMLDivElement, InternshipLet
                             <p className="font-semibold mb-1">Please note:</p>
                             <ul className="list-disc ml-4 space-y-0.5">
                                 <li>This internship is subject to maintaining satisfactory conduct and performance.</li>
-                                <li>You will follow all company policies as outlined in <strong>Annexure A</strong>.</li>
+                                <li>You will follow all company policies and maintain confidentiality.</li>
                                 <li>Upon successful completion, you may be considered for a full-time position.</li>
                                 <li>A certificate of completion will be provided at the end.</li>
+                                <li><strong>Please read and acknowledge Annexure A (attached) carefully.</strong></li>
                             </ul>
                         </div>
 
@@ -127,150 +128,229 @@ export const InternshipLetterTemplate = forwardRef<HTMLDivElement, InternshipLet
                     <div className="bg-purple-900 px-8 py-2">
                         <div className="flex justify-between text-xs text-purple-200">
                             <p>© {new Date().getFullYear()} {data.companyName}</p>
-                            <p>{data.companyTagline}</p>
+                            <p>Page 1 of 3</p>
                         </div>
                     </div>
                 </div>
 
-                {/* PAGE BREAK */}
-                <div className="page-break-before" style={{ pageBreakBefore: 'always' }}></div>
-
-                {/* PAGE 2 - Annexure A: Company Policies */}
+                {/* ===== PAGE 2: ANNEXURE A - PART 1 ===== */}
                 <div
                     className="bg-white shadow-2xl print:shadow-none text-[10px] flex flex-col overflow-hidden"
-                    style={{ width: '210mm', minHeight: '297mm', pageBreakBefore: 'always' }}
+                    style={{ width: '210mm', height: '297mm', maxHeight: '297mm', pageBreakBefore: 'always' }}
                 >
                     {/* Header */}
-                    <div className="bg-gradient-to-r from-purple-700 via-violet-700 to-indigo-800 px-8 py-3">
+                    <div className="bg-gradient-to-r from-red-600 to-orange-600 px-8 py-3">
                         <div className="flex justify-between items-center">
                             <div>
-                                <h1 className="text-xl font-black text-white">{data.companyName}</h1>
-                                <p className="text-purple-200 text-xs">{data.companyTagline}</p>
+                                <h1 className="text-xl font-black text-white">ANNEXURE A</h1>
+                                <p className="text-red-100 text-xs">Internship Terms, Policies & Code of Conduct</p>
                             </div>
-                            <div className="text-right bg-white/20 rounded-lg px-4 py-2">
-                                <p className="text-sm font-bold text-white">ANNEXURE A</p>
-                                <p className="text-purple-200 text-[10px]">Company Policies</p>
+                            <div className="text-right bg-white/20 rounded-lg px-3 py-1">
+                                <p className="text-sm font-bold text-white">{data.companyName}</p>
                             </div>
                         </div>
                     </div>
 
-                    <div className="px-8 py-4 flex-1">
-                        <h2 className="text-lg font-bold text-purple-800 mb-3 text-center border-b-2 border-purple-200 pb-2">
-                            📋 Company Policies & Guidelines for Interns
-                        </h2>
-
-                        {/* Working Hours & Attendance */}
+                    <div className="px-8 py-4 flex-1 overflow-hidden">
+                        {/* Section 1: General Terms */}
                         <div className="mb-4">
-                            <h3 className="font-bold text-purple-700 text-xs mb-1 flex items-center gap-1">
-                                <span className="bg-purple-100 rounded-full w-5 h-5 flex items-center justify-center text-[10px]">1</span>
-                                Working Hours & Attendance
-                            </h3>
-                            <ul className="list-disc ml-6 text-slate-700 space-y-0.5">
-                                <li>Working hours are Monday to Friday, 10:00 AM to 7:00 PM (with 1-hour lunch break).</li>
-                                <li>Interns must mark their attendance daily through the company's attendance system.</li>
-                                <li>Prior approval is required for any leave. Unapproved absences may affect stipend.</li>
-                                <li>Punctuality is mandatory. Repeated late arrivals will be noted in performance review.</li>
+                            <h2 className="text-sm font-bold text-red-700 border-b border-red-200 pb-1 mb-2">1. GENERAL TERMS & CONDITIONS</h2>
+                            <ul className="list-disc ml-4 space-y-1 text-slate-700">
+                                <li>This internship is a <strong>training program</strong> and does not constitute employment.</li>
+                                <li>The internship period is fixed as mentioned in the offer letter and may be extended or shortened at the company's discretion.</li>
+                                <li>The stipend is a <strong>training allowance</strong>, not a salary, and is subject to attendance and performance.</li>
+                                <li>No benefits such as PF, ESI, gratuity, or leave encashment are applicable to interns.</li>
+                                <li>The company reserves the right to modify internship terms with reasonable notice.</li>
                             </ul>
                         </div>
 
-                        {/* Code of Conduct */}
+                        {/* Section 2: Attendance & Punctuality */}
                         <div className="mb-4">
-                            <h3 className="font-bold text-purple-700 text-xs mb-1 flex items-center gap-1">
-                                <span className="bg-purple-100 rounded-full w-5 h-5 flex items-center justify-center text-[10px]">2</span>
-                                Code of Conduct
-                            </h3>
-                            <ul className="list-disc ml-6 text-slate-700 space-y-0.5">
-                                <li>Maintain professional behavior with colleagues, clients, and vendors at all times.</li>
-                                <li>Dress code is business casual. Avoid overly casual attire during client meetings.</li>
-                                <li>Respectful communication is expected in all interactions (verbal, written, digital).</li>
-                                <li>Any form of harassment, discrimination, or bullying is strictly prohibited.</li>
+                            <h2 className="text-sm font-bold text-red-700 border-b border-red-200 pb-1 mb-2">2. ATTENDANCE & PUNCTUALITY</h2>
+                            <ul className="list-disc ml-4 space-y-1 text-slate-700">
+                                <li><strong>Working days:</strong> Monday to Saturday (unless otherwise specified).</li>
+                                <li><strong>Minimum attendance:</strong> 90% attendance is mandatory for certificate issuance.</li>
+                                <li><strong>Late arrivals:</strong> 3 late arrivals (beyond 15 minutes) = 1 absence.</li>
+                                <li><strong>Leave requests:</strong> Must be submitted at least 24 hours in advance via official channels.</li>
+                                <li><strong>Unapproved absence:</strong> More than 3 consecutive days without approval = automatic termination.</li>
+                                <li><strong>Daily reporting:</strong> Check-in/out times must be logged accurately.</li>
                             </ul>
                         </div>
 
-                        {/* Confidentiality */}
+                        {/* Section 3: Code of Conduct */}
                         <div className="mb-4">
-                            <h3 className="font-bold text-purple-700 text-xs mb-1 flex items-center gap-1">
-                                <span className="bg-purple-100 rounded-full w-5 h-5 flex items-center justify-center text-[10px]">3</span>
-                                Confidentiality & Data Protection
-                            </h3>
-                            <ul className="list-disc ml-6 text-slate-700 space-y-0.5">
-                                <li>All client information, project details, and company data are strictly confidential.</li>
-                                <li>Do not share any work-related information on social media or with external parties.</li>
-                                <li>Use company-provided tools and accounts for official work only.</li>
-                                <li>All intellectual property created during internship belongs to the company.</li>
+                            <h2 className="text-sm font-bold text-red-700 border-b border-red-200 pb-1 mb-2">3. CODE OF CONDUCT</h2>
+                            <ul className="list-disc ml-4 space-y-1 text-slate-700">
+                                <li>Maintain <strong>professional behavior</strong> at all times with colleagues, mentors, and clients.</li>
+                                <li>Follow the company <strong>dress code</strong> (business casual or as specified).</li>
+                                <li>Use of <strong>mobile phones</strong> is restricted during working hours except for work purposes.</li>
+                                <li><strong>Social media:</strong> Do not post any work-related content without prior approval.</li>
+                                <li><strong>Harassment:</strong> Zero tolerance for any form of harassment (verbal, physical, sexual, cyber).</li>
+                                <li><strong>Substance abuse:</strong> Consumption of alcohol or drugs on premises is strictly prohibited.</li>
+                                <li>Maintain <strong>cleanliness</strong> of your workspace and common areas.</li>
                             </ul>
                         </div>
 
-                        {/* Use of Company Resources */}
+                        {/* Section 4: Confidentiality */}
                         <div className="mb-4">
-                            <h3 className="font-bold text-purple-700 text-xs mb-1 flex items-center gap-1">
-                                <span className="bg-purple-100 rounded-full w-5 h-5 flex items-center justify-center text-[10px]">4</span>
-                                Use of Company Resources
-                            </h3>
-                            <ul className="list-disc ml-6 text-slate-700 space-y-0.5">
-                                <li>Company equipment (laptops, software, accounts) must be used for work purposes only.</li>
-                                <li>Personal use of company resources should be minimal and not interfere with work.</li>
-                                <li>Report any loss, damage, or malfunction of equipment immediately to IT/Admin.</li>
-                                <li>All company property must be returned upon completion or termination of internship.</li>
+                            <h2 className="text-sm font-bold text-red-700 border-b border-red-200 pb-1 mb-2">4. CONFIDENTIALITY & INTELLECTUAL PROPERTY</h2>
+                            <ul className="list-disc ml-4 space-y-1 text-slate-700">
+                                <li>All client information, project details, and business strategies are <strong>strictly confidential</strong>.</li>
+                                <li>Do not share, copy, or transfer any company data to personal devices or external parties.</li>
+                                <li>All work created during internship is <strong>company property</strong> (code, designs, documents, etc.).</li>
+                                <li>Confidentiality obligations continue <strong>even after internship ends</strong>.</li>
+                                <li>Breach of confidentiality may result in <strong>legal action</strong> and immediate termination.</li>
                             </ul>
                         </div>
 
-                        {/* Communication */}
+                        {/* Section 5: Work & Performance */}
                         <div className="mb-4">
-                            <h3 className="font-bold text-purple-700 text-xs mb-1 flex items-center gap-1">
-                                <span className="bg-purple-100 rounded-full w-5 h-5 flex items-center justify-center text-[10px]">5</span>
-                                Communication & Reporting
-                            </h3>
-                            <ul className="list-disc ml-6 text-slate-700 space-y-0.5">
-                                <li>Submit daily End-of-Day (EOD) reports to your mentor summarizing work done.</li>
-                                <li>Respond to work-related messages/emails within 2 hours during working hours.</li>
-                                <li>Inform your mentor in advance if you are unable to complete assigned tasks.</li>
-                                <li>Participate actively in team meetings and training sessions.</li>
+                            <h2 className="text-sm font-bold text-red-700 border-b border-red-200 pb-1 mb-2">5. WORK EXPECTATIONS & PERFORMANCE</h2>
+                            <ul className="list-disc ml-4 space-y-1 text-slate-700">
+                                <li>Complete assigned tasks within <strong>given deadlines</strong>.</li>
+                                <li>Communicate proactively if facing any blockers or delays.</li>
+                                <li>Participate actively in <strong>team meetings and training sessions</strong>.</li>
+                                <li>Submit <strong>daily/weekly progress reports</strong> as required.</li>
+                                <li>Seek feedback and show <strong>continuous improvement</strong>.</li>
+                                <li>Quality of work will be evaluated for final assessment and certificate.</li>
                             </ul>
                         </div>
 
-                        {/* Social Media */}
+                        {/* Section 6: IT & Security */}
+                        <div className="mb-3">
+                            <h2 className="text-sm font-bold text-red-700 border-b border-red-200 pb-1 mb-2">6. IT USAGE & SECURITY POLICY</h2>
+                            <ul className="list-disc ml-4 space-y-1 text-slate-700">
+                                <li>Use company systems <strong>only for work purposes</strong>.</li>
+                                <li>Do not install unauthorized software or browser extensions.</li>
+                                <li>Do not access inappropriate websites or download copyrighted content.</li>
+                                <li>Protect login credentials - do not share with anyone.</li>
+                                <li>Report any security incidents immediately to IT/HR.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    {/* Footer */}
+                    <div className="bg-red-900 px-8 py-2 mt-auto">
+                        <div className="flex justify-between text-xs text-red-200">
+                            <p>© {new Date().getFullYear()} {data.companyName} - Annexure A</p>
+                            <p>Page 2 of 3</p>
+                        </div>
+                    </div>
+                </div>
+
+                {/* ===== PAGE 3: ANNEXURE A - PART 2 (Termination & Suspension) ===== */}
+                <div
+                    className="bg-white shadow-2xl print:shadow-none text-[10px] flex flex-col overflow-hidden"
+                    style={{ width: '210mm', height: '297mm', maxHeight: '297mm', pageBreakBefore: 'always' }}
+                >
+                    {/* Header */}
+                    <div className="bg-gradient-to-r from-red-700 to-red-900 px-8 py-3">
+                        <div className="flex justify-between items-center">
+                            <div>
+                                <h1 className="text-xl font-black text-white">ANNEXURE A (Continued)</h1>
+                                <p className="text-red-100 text-xs">Suspension, Termination & Acknowledgment</p>
+                            </div>
+                            <div className="text-right bg-white/20 rounded-lg px-3 py-1">
+                                <p className="text-sm font-bold text-white">{data.companyName}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="px-8 py-4 flex-1 overflow-hidden">
+                        {/* Section 7: Grounds for Suspension */}
                         <div className="mb-4">
-                            <h3 className="font-bold text-purple-700 text-xs mb-1 flex items-center gap-1">
-                                <span className="bg-purple-100 rounded-full w-5 h-5 flex items-center justify-center text-[10px]">6</span>
-                                Social Media & Online Presence
-                            </h3>
-                            <ul className="list-disc ml-6 text-slate-700 space-y-0.5">
-                                <li>Do not post client work or internal projects on personal social media without approval.</li>
-                                <li>Maintain a professional online presence that reflects well on the company.</li>
-                                <li>Any public statements about the company require prior approval from management.</li>
+                            <h2 className="text-sm font-bold text-red-700 border-b border-red-200 pb-1 mb-2">7. GROUNDS FOR SUSPENSION (Temporary)</h2>
+                            <p className="text-slate-600 mb-2">The company may suspend an intern temporarily pending investigation for:</p>
+                            <ul className="list-disc ml-4 space-y-1 text-slate-700">
+                                <li>Alleged misconduct or policy violation under investigation.</li>
+                                <li>Suspected breach of confidentiality or data theft.</li>
+                                <li>Involvement in workplace conflict requiring resolution.</li>
+                                <li>Pending background verification issues.</li>
+                            </ul>
+                            <p className="text-slate-600 mt-2 italic">During suspension, stipend may be withheld. Upon clearance, intern may resume or be terminated.</p>
+                        </div>
+
+                        {/* Section 8: Grounds for Immediate Termination */}
+                        <div className="mb-4 bg-red-50 rounded-lg p-3 border-2 border-red-200">
+                            <h2 className="text-sm font-bold text-red-800 border-b border-red-300 pb-1 mb-2">⚠️ 8. GROUNDS FOR IMMEDIATE TERMINATION</h2>
+                            <p className="text-red-700 mb-2 font-semibold">The internship will be terminated immediately without notice if the intern:</p>
+                            <ul className="list-disc ml-4 space-y-1 text-slate-800">
+                                <li><strong>Theft or fraud:</strong> Stealing company property, data, or committing financial fraud.</li>
+                                <li><strong>Data breach:</strong> Unauthorized sharing of confidential/client information.</li>
+                                <li><strong>Harassment:</strong> Any form of harassment against colleagues, clients, or staff.</li>
+                                <li><strong>Violence:</strong> Physical altercation or threatening behavior.</li>
+                                <li><strong>Substance abuse:</strong> Being under influence of alcohol/drugs at work.</li>
+                                <li><strong>Falsification:</strong> Providing false documents, certificates, or information.</li>
+                                <li><strong>Insubordination:</strong> Refusing to follow reasonable work instructions.</li>
+                                <li><strong>Damage to property:</strong> Intentional damage to company assets.</li>
+                                <li><strong>Absence without leave:</strong> 3+ consecutive days without approval or communication.</li>
+                                <li><strong>Gross negligence:</strong> Actions causing significant harm to company reputation or clients.</li>
+                                <li><strong>Criminal activity:</strong> Involvement in any illegal activities.</li>
+                                <li><strong>Social media misconduct:</strong> Defamatory posts about company, clients, or colleagues.</li>
                             </ul>
                         </div>
 
-                        {/* Termination */}
+                        {/* Section 9: Termination by Company */}
                         <div className="mb-4">
-                            <h3 className="font-bold text-purple-700 text-xs mb-1 flex items-center gap-1">
-                                <span className="bg-purple-100 rounded-full w-5 h-5 flex items-center justify-center text-[10px]">7</span>
-                                Termination Policy
-                            </h3>
-                            <ul className="list-disc ml-6 text-slate-700 space-y-0.5">
-                                <li>Either party may terminate the internship with a 7-day written notice.</li>
-                                <li>Immediate termination may occur for gross misconduct, policy violations, or poor performance.</li>
-                                <li>Stipend will be calculated on a pro-rata basis for the days worked.</li>
-                                <li>No certificate will be issued if internship is terminated for misconduct.</li>
+                            <h2 className="text-sm font-bold text-red-700 border-b border-red-200 pb-1 mb-2">9. TERMINATION BY COMPANY (With Notice)</h2>
+                            <p className="text-slate-600 mb-2">The company may terminate the internship with 7 days notice for:</p>
+                            <ul className="list-disc ml-4 space-y-1 text-slate-700">
+                                <li>Consistent poor performance despite feedback and support.</li>
+                                <li>Repeated policy violations (3 written warnings).</li>
+                                <li>Attendance below 70% without valid reasons.</li>
+                                <li>Business restructuring or project discontinuation.</li>
+                                <li>Mutual agreement that the internship is not the right fit.</li>
                             </ul>
                         </div>
 
-                        {/* Acknowledgement Box */}
-                        <div className="bg-gradient-to-r from-purple-50 to-violet-50 rounded-lg p-4 border-2 border-purple-200 mt-4">
-                            <p className="font-bold text-purple-800 text-xs mb-2">Intern's Acknowledgement:</p>
-                            <p className="text-slate-700 text-[10px] mb-3">
-                                I, <strong>{data.internName || '________________'}</strong>, hereby confirm that I have read, understood, and agree to abide by all the policies and guidelines mentioned in this Annexure A. I understand that violation of these policies may result in disciplinary action, including termination of my internship.
+                        {/* Section 10: Resignation by Intern */}
+                        <div className="mb-4">
+                            <h2 className="text-sm font-bold text-red-700 border-b border-red-200 pb-1 mb-2">10. RESIGNATION BY INTERN</h2>
+                            <ul className="list-disc ml-4 space-y-1 text-slate-700">
+                                <li>Intern may resign by providing <strong>minimum 7 days written notice</strong>.</li>
+                                <li>All company property (laptop, ID card, access cards) must be returned.</li>
+                                <li>Pending tasks must be handed over properly.</li>
+                                <li>Certificate will be issued only if intern completes <strong>minimum 75% of internship duration</strong>.</li>
+                                <li>Leaving without notice will result in <strong>no certificate and negative reference</strong>.</li>
+                            </ul>
+                        </div>
+
+                        {/* Section 11: Certificate & PPO */}
+                        <div className="mb-4">
+                            <h2 className="text-sm font-bold text-green-700 border-b border-green-200 pb-1 mb-2">11. CERTIFICATE & PRE-PLACEMENT OFFER (PPO)</h2>
+                            <ul className="list-disc ml-4 space-y-1 text-slate-700">
+                                <li>Certificate of completion issued upon <strong>successful completion</strong> of internship.</li>
+                                <li>Certificate requires: 90%+ attendance, satisfactory performance, proper handover.</li>
+                                <li>Top performers may receive <strong>Pre-Placement Offer (PPO)</strong> for full-time role.</li>
+                                <li>PPO is discretionary and based on performance, attitude, and business needs.</li>
+                            </ul>
+                        </div>
+
+                        {/* Acknowledgment */}
+                        <div className="bg-slate-100 rounded-lg p-4 border-2 border-slate-300">
+                            <h2 className="text-sm font-bold text-slate-800 mb-3">ACKNOWLEDGMENT & ACCEPTANCE</h2>
+                            <p className="text-slate-700 mb-4">
+                                I, <strong>{data.internName || '________________________'}</strong>, have read and understood all terms,
+                                conditions, and policies mentioned in this Annexure A. I agree to abide by all rules and understand
+                                that violation may result in suspension or termination of my internship.
                             </p>
-                            <div className="flex justify-between items-end mt-4">
+                            <div className="flex justify-between items-end pt-4">
                                 <div>
+                                    <p className="text-xs text-slate-500 mb-8">Intern's Signature</p>
                                     <div className="border-t border-slate-400 pt-1 w-48">
-                                        <p className="text-[10px] text-slate-600">Intern's Signature</p>
+                                        <p className="font-bold text-slate-800 text-xs">{data.internName || '________________________'}</p>
                                     </div>
                                 </div>
-                                <div>
-                                    <div className="border-t border-slate-400 pt-1 w-32 text-center">
-                                        <p className="text-[10px] text-slate-600">Date</p>
+                                <div className="text-center">
+                                    <p className="text-xs text-slate-500 mb-8">Date</p>
+                                    <div className="border-t border-slate-400 pt-1 w-32">
+                                        <p className="text-xs text-slate-600">____/____/________</p>
+                                    </div>
+                                </div>
+                                <div className="text-right">
+                                    <p className="text-xs text-slate-500 mb-8">Witness (HR)</p>
+                                    <div className="border-t border-slate-400 pt-1 w-48">
+                                        <p className="font-bold text-slate-800 text-xs">{data.hrName}</p>
                                     </div>
                                 </div>
                             </div>
@@ -278,10 +358,10 @@ export const InternshipLetterTemplate = forwardRef<HTMLDivElement, InternshipLet
                     </div>
 
                     {/* Footer */}
-                    <div className="bg-purple-900 px-8 py-2 mt-auto">
-                        <div className="flex justify-between text-xs text-purple-200">
-                            <p>© {new Date().getFullYear()} {data.companyName} | Annexure A - Page 2</p>
-                            <p>{data.companyTagline}</p>
+                    <div className="bg-red-900 px-8 py-2 mt-auto">
+                        <div className="flex justify-between text-xs text-red-200">
+                            <p>© {new Date().getFullYear()} {data.companyName} - Annexure A</p>
+                            <p>Page 3 of 3</p>
                         </div>
                     </div>
                 </div>

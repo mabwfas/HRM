@@ -1,4 +1,4 @@
-import { forwardRef } from 'react';
+import { forwardRef, useMemo } from 'react';
 import { WarningLetterData, HR_SIGNATORY_OPTIONS } from '../../types';
 import { CompanySeal } from '../ui/CompanySeal';
 
@@ -6,130 +6,117 @@ interface WarningLetterTemplateProps {
     data: WarningLetterData;
 }
 
+const generateCode = (name: string): string => {
+    const initials = (name || 'XX').split(' ').map(w => w.charAt(0).toUpperCase()).join('').substring(0, 3).padEnd(2, 'X');
+    return `DMH/WRN/${new Date().getFullYear()}/${initials}-${Math.floor(1000 + Math.random() * 9000)}`;
+};
+
 export const WarningLetterTemplate = forwardRef<HTMLDivElement, WarningLetterTemplateProps>(
     ({ data }, ref) => {
         const signatory = HR_SIGNATORY_OPTIONS.find(s => s.name === data.hrName);
         const signatureImage = signatory?.signatureImage || '/prasun_signature.png';
+        const refNumber = useMemo(() => generateCode(data.employeeName || ''), [data.employeeName]);
 
         return (
             <div
                 ref={ref}
                 data-print="document"
-                className="bg-white shadow-2xl print:shadow-none"
+                className="bg-white shadow-2xl print:shadow-none text-[11px] flex flex-col"
                 style={{ width: '210mm', height: '297mm', maxHeight: '297mm', overflow: 'hidden' }}
             >
-                {/* Header */}
-                <div className="relative overflow-hidden">
-                    <div className="absolute inset-0 bg-gradient-to-br from-orange-500 via-red-500 to-rose-600"></div>
-                    <div className="absolute inset-0 opacity-10">
-                        <div className="absolute top-0 right-0 w-96 h-96 bg-white rounded-full -translate-y-1/2 translate-x-1/2"></div>
-                    </div>
-                    <div className="relative px-10 py-8">
-                        <div className="flex justify-between items-start">
-                            <div>
-                                <h1 className="text-3xl font-black text-white tracking-tight">{data.companyName}</h1>
-                                <p className="text-orange-100 mt-1 text-sm italic">{data.companyTagline}</p>
-                            </div>
-                            <div className="text-right">
-                                <div className="bg-white/20 backdrop-blur-sm rounded-2xl px-6 py-4 border border-white/30">
-                                    <p className="text-xl font-black text-white">WARNING</p>
-                                    <p className="text-lg font-bold text-orange-100">LETTER</p>
-                                </div>
-                            </div>
+                {/* Compact Header */}
+                <div className="bg-gradient-to-r from-orange-500 via-red-500 to-rose-600 px-8 py-4">
+                    <div className="flex justify-between items-center">
+                        <div>
+                            <h1 className="text-2xl font-black text-white">{data.companyName}</h1>
+                            <p className="text-orange-100 text-xs">{data.companyTagline}</p>
+                        </div>
+                        <div className="bg-white/20 rounded-xl px-4 py-2 text-center">
+                            <p className="text-sm font-black text-white">WARNING LETTER</p>
                         </div>
                     </div>
                 </div>
 
-                {/* Date & Reference */}
-                <div className="px-10 py-4 bg-gradient-to-r from-orange-50 to-red-50 border-b border-orange-100">
-                    <div className="flex justify-between text-sm">
-                        <span className="text-slate-600"><strong>Ref:</strong> {data.refNumber}</span>
-                        <span className="text-slate-600"><strong>Date:</strong> {data.date}</span>
-                    </div>
+                {/* Ref & Date */}
+                <div className="px-8 py-2 bg-orange-50 border-b border-orange-200 flex justify-between text-xs">
+                    <span><strong>Ref:</strong> {refNumber}</span>
+                    <span><strong>Date:</strong> {data.date}</span>
                 </div>
 
-                {/* Content */}
-                <div className="px-10 py-8 space-y-6">
-                    {/* Employee Card */}
-                    <div className="bg-gradient-to-br from-slate-50 to-slate-100 rounded-2xl p-6 border border-slate-200">
-                        <div className="flex items-center gap-4">
-                            <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-slate-500 to-slate-600 flex items-center justify-center shadow-lg">
-                                <span className="text-2xl font-bold text-white">{data.employeeName?.charAt(0) || 'E'}</span>
-                            </div>
-                            <div>
-                                <p className="text-xl font-bold text-slate-800">{data.employeeName || '[Employee Name]'}</p>
-                                <p className="text-sm text-slate-600">{data.designation} • {data.department}</p>
-                                <p className="text-xs text-slate-400">ID: {data.employeeId}</p>
-                            </div>
+                {/* Main Content */}
+                <div className="flex-1 px-8 py-4 flex flex-col">
+                    {/* Employee Info - Compact */}
+                    <div className="bg-slate-50 rounded-xl p-3 border border-slate-200 flex items-center gap-3 mb-3">
+                        <div className="w-10 h-10 rounded-full bg-slate-500 flex items-center justify-center text-white font-bold">
+                            {data.employeeName?.charAt(0) || 'E'}
                         </div>
-                    </div>
-
-                    {/* Warning Type Banner */}
-                    <div className="bg-gradient-to-r from-orange-500 to-red-500 rounded-2xl p-4 text-center">
-                        <p className="text-white text-xl font-black">⚠️ {data.warningType.toUpperCase()} ⚠️</p>
+                        <div className="flex-1">
+                            <p className="font-bold text-slate-800">{data.employeeName || '[Employee Name]'}</p>
+                            <p className="text-xs text-slate-600">{data.designation} • {data.department} • ID: {data.employeeId}</p>
+                        </div>
+                        <div className="bg-red-500 text-white px-3 py-1 rounded-full text-xs font-bold">
+                            {data.warningType.toUpperCase()}
+                        </div>
                     </div>
 
                     {/* Subject */}
-                    <div className="text-slate-700">
-                        <p className="font-semibold text-lg text-red-700">
-                            Subject: {data.warningType}
-                        </p>
-                    </div>
+                    <p className="font-semibold text-red-700 mb-3">Subject: {data.warningType}</p>
 
                     {/* Incident Details */}
-                    <div className="bg-red-50 rounded-2xl p-6 border border-red-200">
-                        <h3 className="font-bold text-red-800 mb-3">Incident Details</h3>
-                        <div className="space-y-2 text-sm">
-                            <p><strong>Date of Incident:</strong> {data.incidentDate || '—'}</p>
+                    <div className="bg-red-50 rounded-lg p-3 border border-red-200 mb-3">
+                        <h3 className="font-bold text-red-800 mb-2 text-sm">Incident Details</h3>
+                        <div className="space-y-1 text-xs">
+                            <p><strong>Date:</strong> {data.incidentDate || '—'}</p>
                             <p><strong>Description:</strong> {data.incidentDescription || '[Incident description]'}</p>
                             <p><strong>Previous Warnings:</strong> {data.previousWarnings}</p>
                         </div>
                     </div>
 
                     {/* Expected Improvement */}
-                    <div className="bg-amber-50 rounded-2xl p-6 border border-amber-200">
-                        <h3 className="font-bold text-amber-800 mb-3">Expected Improvement</h3>
-                        <p className="text-slate-700">{data.expectedImprovement}</p>
+                    <div className="bg-amber-50 rounded-lg p-3 border border-amber-200 mb-3">
+                        <h3 className="font-bold text-amber-800 mb-1 text-sm">Expected Improvement</h3>
+                        <p className="text-xs text-slate-700">{data.expectedImprovement}</p>
                     </div>
 
                     {/* Consequences */}
-                    <div className="bg-slate-800 rounded-2xl p-6 text-white">
-                        <h3 className="font-bold mb-2">⚠️ Consequence if Not Improved</h3>
-                        <p className="text-slate-200">{data.consequenceIfNotImproved}</p>
+                    <div className="bg-slate-800 rounded-lg p-3 text-white mb-3">
+                        <h3 className="font-bold mb-1 text-sm">Consequence if Not Improved</h3>
+                        <p className="text-xs text-slate-200">{data.consequenceIfNotImproved}</p>
                     </div>
 
-                    <p className="text-slate-700">
+                    <p className="text-slate-700 text-xs mb-4">
                         Please acknowledge receipt of this warning by signing below. A copy will be placed in your personnel file.
                     </p>
-                </div>
 
-                {/* Signature Section */}
-                <div className="px-10 py-10">
-                    <div className="flex flex-col items-center">
-                        <p className="text-sm text-slate-500 mb-2">For {data.companyName}</p>
-                        <img src={signatureImage} alt="Signature" className="h-14 object-contain mb-2" />
-                        <div className="border-t border-slate-400 pt-2 w-56 text-center">
-                            <p className="font-bold text-slate-800">{data.hrName}</p>
-                            <p className="text-sm text-slate-600">{data.hrDesignation}</p>
-                        </div>
-                        <div className="mt-4">
-                            <CompanySeal companyName={data.companyName} size="md" />
-                        </div>
-                        <div className="mt-6 text-center">
-                            <p className="text-sm text-slate-500 mb-8">Employee Acknowledgement</p>
-                            <div className="border-t border-slate-400 pt-2 w-56">
-                                <p className="font-bold text-slate-800">{data.employeeName || '________________'}</p>
-                                <p className="text-sm text-slate-600">Date: ________________</p>
+                    {/* Signatures - Horizontal */}
+                    <div className="mt-auto pt-3 border-t border-slate-200">
+                        <div className="flex justify-between items-end">
+                            <div className="text-center">
+                                <p className="text-xs text-slate-500 mb-1">For {data.companyName}</p>
+                                <img src={signatureImage} alt="Signature" className="h-10 object-contain mx-auto" />
+                                <div className="border-t border-slate-400 pt-1 w-40">
+                                    <p className="font-bold text-slate-800 text-xs">{data.hrName}</p>
+                                    <p className="text-xs text-slate-600">{data.hrDesignation}</p>
+                                </div>
+                            </div>
+                            <CompanySeal companyName={data.companyName} size="sm" />
+                            <div className="text-center">
+                                <p className="text-xs text-slate-500 mb-1">Employee Acknowledgement</p>
+                                <div className="h-10"></div>
+                                <div className="border-t border-slate-400 pt-1 w-40">
+                                    <p className="font-bold text-slate-800 text-xs">{data.employeeName || '________________'}</p>
+                                    <p className="text-xs text-slate-600">Date: ____________</p>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
 
                 {/* Footer */}
-                <div className="bg-orange-900 px-10 py-4 mt-auto">
-                    <div className="flex justify-between items-center text-xs text-orange-200">
-                        <p>© {new Date().getFullYear()} {data.companyName}. CONFIDENTIAL</p>
-                        <p>{data.companyTagline}</p>
+                <div className="bg-orange-900 px-8 py-2 mt-auto">
+                    <div className="flex justify-between text-xs text-orange-200">
+                        <p>© {new Date().getFullYear()} {data.companyName} - CONFIDENTIAL</p>
+                        <p className="font-mono font-bold text-orange-100">Ref: {refNumber}</p>
                     </div>
                 </div>
             </div>

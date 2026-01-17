@@ -28,8 +28,8 @@ export const AppraisalLetterTemplate = forwardRef<HTMLDivElement, AppraisalLette
         return (
             <div
                 ref={ref}
-                className="bg-white shadow-2xl print:shadow-none text-[11px] flex flex-col overflow-hidden"
-                style={{ width: '210mm', height: '297mm', maxHeight: '297mm' }}
+                className="bg-white shadow-2xl print:shadow-none text-[11px] flex flex-col"
+                style={{ width: '210mm' }}
             >
                 {/* Header */}
                 <div className="bg-gradient-to-r from-cyan-600 via-teal-600 to-emerald-700 px-8 py-4">

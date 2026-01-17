@@ -26,10 +26,10 @@ export const JoiningLetterTemplate = forwardRef<HTMLDivElement, JoiningLetterTem
                 ref={ref}
                 data-print="document"
                 className="bg-white shadow-2xl print:shadow-none"
-                style={{ width: '210mm', height: '297mm', maxHeight: '297mm', overflow: 'hidden' }}
+                style={{ width: '210mm' }}
             >
                 {/* Header */}
-                <div className="relative overflow-hidden">
+                <div className="relative">
                     <div className="absolute inset-0 bg-gradient-to-br from-green-500 via-emerald-500 to-teal-600"></div>
                     <div className="absolute inset-0 opacity-10">
                         <div className="absolute top-0 right-0 w-96 h-96 bg-white rounded-full -translate-y-1/2 translate-x-1/2"></div>

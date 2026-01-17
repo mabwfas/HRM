@@ -7,6 +7,7 @@ import { ExperienceCertificateTemplate } from './components/templates/Experience
 import { RelievingLetterTemplate } from './components/templates/RelievingLetterTemplate';
 import { AppraisalLetterTemplate } from './components/templates/AppraisalLetterTemplate';
 import { InternshipCompletionTemplate } from './components/templates/InternshipCompletionTemplate';
+import { LORTemplate } from './components/templates/LORTemplate';
 import { TrainingCertificateTemplate } from './components/templates/TrainingCertificateTemplate';
 import { PromotionLetterTemplate } from './components/templates/PromotionLetterTemplate';
 import { WarningLetterTemplate } from './components/templates/WarningLetterTemplate';
@@ -288,13 +289,14 @@ function App() {
                         selectedDoc === 'relieving-letter' ? relievingData.employeeName :
                             selectedDoc === 'appraisal-letter' ? appraisalData.employeeName :
                                 selectedDoc === 'internship-completion' ? internshipCompletionData.internName :
-                                    selectedDoc === 'training-certificate' ? trainingCertificateData.employeeName :
-                                        selectedDoc === 'promotion-letter' ? promotionData.employeeName :
-                                            selectedDoc === 'warning-letter' ? warningData.employeeName :
-                                                selectedDoc === 'termination-letter' ? terminationData.employeeName :
-                                                    selectedDoc === 'joining-letter' ? joiningData.employeeName :
-                                                        selectedDoc === 'address-proof' ? addressProofData.employeeName :
-                                                            'document';
+                                    selectedDoc === 'lor' ? internshipCompletionData.internName :
+                                        selectedDoc === 'training-certificate' ? trainingCertificateData.employeeName :
+                                            selectedDoc === 'promotion-letter' ? promotionData.employeeName :
+                                                selectedDoc === 'warning-letter' ? warningData.employeeName :
+                                                    selectedDoc === 'termination-letter' ? terminationData.employeeName :
+                                                        selectedDoc === 'joining-letter' ? joiningData.employeeName :
+                                                            selectedDoc === 'address-proof' ? addressProofData.employeeName :
+                                                                'document';
 
         const filename = `digital-heroes-${selectedDoc}-${(candidateName || 'document').toLowerCase().replace(/\s+/g, '-')}.pdf`;
 
@@ -404,6 +406,7 @@ function App() {
                         {selectedDoc === 'relieving-letter' && <RelievingLetterTemplate ref={previewRef} data={relievingData} showSeal={showSeal} />}
                         {selectedDoc === 'appraisal-letter' && <AppraisalLetterTemplate ref={previewRef} data={appraisalData} showSeal={showSeal} />}
                         {selectedDoc === 'internship-completion' && <InternshipCompletionTemplate ref={previewRef} data={internshipCompletionData} />}
+                        {selectedDoc === 'lor' && <LORTemplate ref={previewRef} data={internshipCompletionData} />}
                         {selectedDoc === 'training-certificate' && <TrainingCertificateTemplate ref={previewRef} data={trainingCertificateData} />}
                         {selectedDoc === 'promotion-letter' && <PromotionLetterTemplate ref={previewRef} data={promotionData} />}
                         {selectedDoc === 'warning-letter' && <WarningLetterTemplate ref={previewRef} data={warningData} />}
@@ -1240,8 +1243,8 @@ function App() {
                             </>
                         )}
 
-                        {/* ===== INTERNSHIP COMPLETION FORM ===== */}
-                        {selectedDoc === 'internship-completion' && (
+                        {/* ===== INTERNSHIP COMPLETION / LOR FORM ===== */}
+                        {(selectedDoc === 'internship-completion' || selectedDoc === 'lor') && (
                             <>
                                 <Card title="Document Details" headerClassName="bg-slate-50">
                                     <div className="space-y-3">
@@ -1584,6 +1587,7 @@ function App() {
                             {selectedDoc === 'relieving-letter' && <RelievingLetterTemplate ref={previewRef} data={relievingData} showSeal={showSeal} />}
                             {selectedDoc === 'appraisal-letter' && <AppraisalLetterTemplate ref={previewRef} data={appraisalData} showSeal={showSeal} />}
                             {selectedDoc === 'internship-completion' && <InternshipCompletionTemplate ref={previewRef} data={internshipCompletionData} />}
+                            {selectedDoc === 'lor' && <LORTemplate ref={previewRef} data={internshipCompletionData} />}
                             {selectedDoc === 'training-certificate' && <TrainingCertificateTemplate ref={previewRef} data={trainingCertificateData} />}
                             {selectedDoc === 'promotion-letter' && <PromotionLetterTemplate ref={previewRef} data={promotionData} />}
                             {selectedDoc === 'warning-letter' && <WarningLetterTemplate ref={previewRef} data={warningData} />}

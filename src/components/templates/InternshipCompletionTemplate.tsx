@@ -1,4 +1,4 @@
-import { forwardRef } from 'react';
+import { forwardRef, useMemo } from 'react';
 import { InternshipCompletionData, HR_SIGNATORY_OPTIONS } from '../../types';
 import { CompanySeal } from '../ui/CompanySeal';
 
@@ -6,10 +6,29 @@ interface InternshipCompletionTemplateProps {
     data: InternshipCompletionData;
 }
 
+// Generate unique certificate code based on name and random numbers
+const generateCertificateCode = (name: string, type: 'IC' | 'LOR' = 'IC'): string => {
+    const nameCode = (name || 'INTERN')
+        .toUpperCase()
+        .replace(/[^A-Z]/g, '')
+        .substring(0, 3)
+        .padEnd(3, 'X');
+    const year = new Date().getFullYear();
+    const randomNum = Math.floor(1000 + Math.random() * 9000); // 4-digit random
+    const suffix = Math.floor(10 + Math.random() * 90); // 2-digit random
+    return `DH/${type}/${year}/${nameCode}${randomNum}-${suffix}`;
+};
+
 export const InternshipCompletionTemplate = forwardRef<HTMLDivElement, InternshipCompletionTemplateProps>(
     ({ data }, ref) => {
         const signatory = HR_SIGNATORY_OPTIONS.find(s => s.name === data.hrName);
         const signatureImage = signatory?.signatureImage || '/prasun_signature.png';
+
+        // Generate stable certificate code based on intern name
+        const certificateCode = useMemo(() =>
+            generateCertificateCode(data.internName || '', 'IC'),
+            [data.internName]
+        );
 
         return (
             <div
@@ -122,11 +141,11 @@ export const InternshipCompletionTemplate = forwardRef<HTMLDivElement, Internshi
                     </div>
                 </div>
 
-                {/* Footer */}
+                {/* Footer with Certificate Code */}
                 <div className="bg-violet-900 px-10 py-4 mt-auto">
                     <div className="flex justify-between items-center text-xs text-violet-200">
                         <p>© {new Date().getFullYear()} {data.companyName}. All Rights Reserved.</p>
-                        <p>{data.companyTagline}</p>
+                        <p className="font-mono font-bold text-violet-100">Certificate No: {certificateCode}</p>
                     </div>
                 </div>
             </div>
@@ -135,3 +154,4 @@ export const InternshipCompletionTemplate = forwardRef<HTMLDivElement, Internshi
 );
 
 InternshipCompletionTemplate.displayName = 'InternshipCompletionTemplate';
+

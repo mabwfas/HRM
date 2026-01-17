@@ -870,7 +870,7 @@ export const initialAddressProofLetterData: AddressProofLetterData = {
 };
 
 // Document type union
-export type DocumentType = 'offer-letter' | 'salary-slip' | 'internship-letter' | 'experience-certificate' | 'relieving-letter' | 'appraisal-letter' | 'internship-completion' | 'training-certificate' | 'promotion-letter' | 'warning-letter' | 'termination-letter' | 'joining-letter' | 'address-proof';
+export type DocumentType = 'offer-letter' | 'salary-slip' | 'internship-letter' | 'experience-certificate' | 'relieving-letter' | 'appraisal-letter' | 'internship-completion' | 'lor' | 'training-certificate' | 'promotion-letter' | 'warning-letter' | 'termination-letter' | 'joining-letter' | 'address-proof';
 
 export interface DocumentOption {
     id: DocumentType;
@@ -885,6 +885,7 @@ export const DOCUMENT_OPTIONS: DocumentOption[] = [
     { id: 'salary-slip', label: 'Salary Slip', description: 'Monthly payslip', icon: '💰', color: 'emerald' },
     { id: 'internship-letter', label: 'Internship Letter', description: 'Intern offer', icon: '🎓', color: 'purple' },
     { id: 'internship-completion', label: 'Internship Certificate', description: 'Completion cert', icon: '🎖️', color: 'violet' },
+    { id: 'lor', label: 'Letter of Recommendation', description: 'Top performers only', icon: '⭐', color: 'amber' },
     { id: 'training-certificate', label: 'Training Certificate', description: 'Training complete', icon: '📜', color: 'indigo' },
     { id: 'joining-letter', label: 'Joining Letter', description: 'Confirmation', icon: '✅', color: 'green' },
     { id: 'promotion-letter', label: 'Promotion Letter', description: 'Promotion notice', icon: '🚀', color: 'sky' },

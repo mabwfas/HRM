@@ -16,8 +16,8 @@ export const InternshipLetterTemplate = forwardRef<HTMLDivElement, InternshipLet
             <div ref={ref} className="bg-white">
                 {/* ===== PAGE 1: MAIN OFFER LETTER ===== */}
                 <div
-                    className="bg-white shadow-2xl print:shadow-none text-[11px] flex flex-col overflow-hidden"
-                    style={{ width: '210mm', height: '297mm', maxHeight: '297mm' }}
+                    className="bg-white shadow-2xl print:shadow-none text-[11px] flex flex-col"
+                    style={{ width: '210mm', minHeight: '297mm' }}
                 >
                     {/* Header */}
                     <div className="bg-gradient-to-r from-purple-700 via-violet-700 to-indigo-800 px-8 py-4">
@@ -135,15 +135,15 @@ export const InternshipLetterTemplate = forwardRef<HTMLDivElement, InternshipLet
 
                 {/* ===== PAGE 2: ANNEXURE A - PART 1 ===== */}
                 <div
-                    className="bg-white shadow-2xl print:shadow-none text-[10px] flex flex-col overflow-hidden break-before-page"
+                    className="bg-white shadow-2xl print:shadow-none text-[10px] flex flex-col"
                     style={{ width: '210mm', minHeight: '297mm' }}
                 >
                     {/* Header */}
-                    <div className="bg-gradient-to-r from-red-600 to-orange-600 px-8 py-3">
+                    <div className="bg-gradient-to-r from-purple-700 via-violet-700 to-indigo-800 px-8 py-3">
                         <div className="flex justify-between items-center">
                             <div>
                                 <h1 className="text-xl font-black text-white">ANNEXURE A</h1>
-                                <p className="text-red-100 text-xs">Internship Terms, Policies & Code of Conduct</p>
+                                <p className="text-purple-200 text-xs">Internship Terms, Policies & Code of Conduct</p>
                             </div>
                             <div className="text-right bg-white/20 rounded-lg px-3 py-1">
                                 <p className="text-sm font-bold text-white">{data.companyName}</p>
@@ -154,7 +154,7 @@ export const InternshipLetterTemplate = forwardRef<HTMLDivElement, InternshipLet
                     <div className="px-8 py-4 flex-1 overflow-hidden">
                         {/* Section 1: General Terms */}
                         <div className="mb-4">
-                            <h2 className="text-sm font-bold text-red-700 border-b border-red-200 pb-1 mb-2">1. GENERAL TERMS & CONDITIONS</h2>
+                            <h2 className="text-sm font-bold text-purple-700 border-b border-purple-200 pb-1 mb-2">1. GENERAL TERMS & CONDITIONS</h2>
                             <ul className="list-disc ml-4 space-y-1 text-slate-700">
                                 <li>This internship is a <strong>training program</strong> and does not constitute employment.</li>
                                 <li>The internship period is fixed as mentioned in the offer letter and may be extended or shortened at the company's discretion.</li>
@@ -166,7 +166,7 @@ export const InternshipLetterTemplate = forwardRef<HTMLDivElement, InternshipLet
 
                         {/* Section 2: Attendance & Punctuality */}
                         <div className="mb-4">
-                            <h2 className="text-sm font-bold text-red-700 border-b border-red-200 pb-1 mb-2">2. ATTENDANCE & PUNCTUALITY</h2>
+                            <h2 className="text-sm font-bold text-purple-700 border-b border-purple-200 pb-1 mb-2">2. ATTENDANCE & PUNCTUALITY</h2>
                             <ul className="list-disc ml-4 space-y-1 text-slate-700">
                                 <li><strong>Working days:</strong> Monday to Saturday (unless otherwise specified).</li>
                                 <li><strong>Minimum attendance:</strong> 90% attendance is mandatory for certificate issuance.</li>
@@ -179,7 +179,7 @@ export const InternshipLetterTemplate = forwardRef<HTMLDivElement, InternshipLet
 
                         {/* Section 3: Code of Conduct */}
                         <div className="mb-4">
-                            <h2 className="text-sm font-bold text-red-700 border-b border-red-200 pb-1 mb-2">3. CODE OF CONDUCT</h2>
+                            <h2 className="text-sm font-bold text-purple-700 border-b border-purple-200 pb-1 mb-2">3. CODE OF CONDUCT</h2>
                             <ul className="list-disc ml-4 space-y-1 text-slate-700">
                                 <li>Maintain <strong>professional behavior</strong> at all times with colleagues, mentors, and clients.</li>
                                 <li>Follow the company <strong>dress code</strong> (business casual or as specified).</li>
@@ -193,7 +193,7 @@ export const InternshipLetterTemplate = forwardRef<HTMLDivElement, InternshipLet
 
                         {/* Section 4: Confidentiality */}
                         <div className="mb-4">
-                            <h2 className="text-sm font-bold text-red-700 border-b border-red-200 pb-1 mb-2">4. CONFIDENTIALITY & INTELLECTUAL PROPERTY</h2>
+                            <h2 className="text-sm font-bold text-purple-700 border-b border-purple-200 pb-1 mb-2">4. CONFIDENTIALITY & INTELLECTUAL PROPERTY</h2>
                             <ul className="list-disc ml-4 space-y-1 text-slate-700">
                                 <li>All client information, project details, and business strategies are <strong>strictly confidential</strong>.</li>
                                 <li>Do not share, copy, or transfer any company data to personal devices or external parties.</li>
@@ -205,7 +205,7 @@ export const InternshipLetterTemplate = forwardRef<HTMLDivElement, InternshipLet
 
                         {/* Section 5: Work & Performance */}
                         <div className="mb-4">
-                            <h2 className="text-sm font-bold text-red-700 border-b border-red-200 pb-1 mb-2">5. WORK EXPECTATIONS & PERFORMANCE</h2>
+                            <h2 className="text-sm font-bold text-purple-700 border-b border-purple-200 pb-1 mb-2">5. WORK EXPECTATIONS & PERFORMANCE</h2>
                             <ul className="list-disc ml-4 space-y-1 text-slate-700">
                                 <li>Complete assigned tasks within <strong>given deadlines</strong>.</li>
                                 <li>Communicate proactively if facing any blockers or delays.</li>
@@ -218,7 +218,7 @@ export const InternshipLetterTemplate = forwardRef<HTMLDivElement, InternshipLet
 
                         {/* Section 6: IT & Security */}
                         <div className="mb-3">
-                            <h2 className="text-sm font-bold text-red-700 border-b border-red-200 pb-1 mb-2">6. IT USAGE & SECURITY POLICY</h2>
+                            <h2 className="text-sm font-bold text-purple-700 border-b border-purple-200 pb-1 mb-2">6. IT USAGE & SECURITY POLICY</h2>
                             <ul className="list-disc ml-4 space-y-1 text-slate-700">
                                 <li>Use company systems <strong>only for work purposes</strong>.</li>
                                 <li>Do not install unauthorized software or browser extensions.</li>
@@ -230,8 +230,8 @@ export const InternshipLetterTemplate = forwardRef<HTMLDivElement, InternshipLet
                     </div>
 
                     {/* Footer */}
-                    <div className="bg-red-900 px-8 py-2 mt-auto">
-                        <div className="flex justify-between text-xs text-red-200">
+                    <div className="bg-purple-900 px-8 py-2 mt-auto">
+                        <div className="flex justify-between text-xs text-purple-200">
                             <p>© {new Date().getFullYear()} {data.companyName} - Annexure A</p>
                             <p>Page 2 of 3</p>
                         </div>
@@ -240,15 +240,15 @@ export const InternshipLetterTemplate = forwardRef<HTMLDivElement, InternshipLet
 
                 {/* ===== PAGE 3: ANNEXURE A - PART 2 (Termination & Suspension) ===== */}
                 <div
-                    className="bg-white shadow-2xl print:shadow-none text-[10px] flex flex-col overflow-hidden break-before-page"
+                    className="bg-white shadow-2xl print:shadow-none text-[10px] flex flex-col"
                     style={{ width: '210mm', minHeight: '297mm' }}
                 >
                     {/* Header */}
-                    <div className="bg-gradient-to-r from-red-700 to-red-900 px-8 py-3">
+                    <div className="bg-gradient-to-r from-purple-700 via-violet-700 to-indigo-800 px-8 py-3">
                         <div className="flex justify-between items-center">
                             <div>
                                 <h1 className="text-xl font-black text-white">ANNEXURE A (Continued)</h1>
-                                <p className="text-red-100 text-xs">Suspension, Termination & Acknowledgment</p>
+                                <p className="text-purple-200 text-xs">Suspension, Termination & Acknowledgment</p>
                             </div>
                             <div className="text-right bg-white/20 rounded-lg px-3 py-1">
                                 <p className="text-sm font-bold text-white">{data.companyName}</p>
@@ -259,7 +259,7 @@ export const InternshipLetterTemplate = forwardRef<HTMLDivElement, InternshipLet
                     <div className="px-8 py-4 flex-1 overflow-hidden">
                         {/* Section 7: Grounds for Suspension */}
                         <div className="mb-4">
-                            <h2 className="text-sm font-bold text-red-700 border-b border-red-200 pb-1 mb-2">7. GROUNDS FOR SUSPENSION (Temporary)</h2>
+                            <h2 className="text-sm font-bold text-purple-700 border-b border-purple-200 pb-1 mb-2">7. GROUNDS FOR SUSPENSION (Temporary)</h2>
                             <p className="text-slate-600 mb-2">The company may suspend an intern temporarily pending investigation for:</p>
                             <ul className="list-disc ml-4 space-y-1 text-slate-700">
                                 <li>Alleged misconduct or policy violation under investigation.</li>
@@ -271,9 +271,9 @@ export const InternshipLetterTemplate = forwardRef<HTMLDivElement, InternshipLet
                         </div>
 
                         {/* Section 8: Grounds for Immediate Termination */}
-                        <div className="mb-4 bg-red-50 rounded-lg p-3 border-2 border-red-200">
-                            <h2 className="text-sm font-bold text-red-800 border-b border-red-300 pb-1 mb-2">⚠️ 8. GROUNDS FOR IMMEDIATE TERMINATION</h2>
-                            <p className="text-red-700 mb-2 font-semibold">The internship will be terminated immediately without notice if the intern:</p>
+                        <div className="mb-4 bg-amber-50 rounded-lg p-3 border-2 border-amber-200">
+                            <h2 className="text-sm font-bold text-amber-800 border-b border-amber-300 pb-1 mb-2">⚠️ 8. GROUNDS FOR IMMEDIATE TERMINATION</h2>
+                            <p className="text-amber-700 mb-2 font-semibold">The internship will be terminated immediately without notice if the intern:</p>
                             <ul className="list-disc ml-4 space-y-1 text-slate-800">
                                 <li><strong>Theft or fraud:</strong> Stealing company property, data, or committing financial fraud.</li>
                                 <li><strong>Data breach:</strong> Unauthorized sharing of confidential/client information.</li>
@@ -292,7 +292,7 @@ export const InternshipLetterTemplate = forwardRef<HTMLDivElement, InternshipLet
 
                         {/* Section 9: Termination by Company */}
                         <div className="mb-4">
-                            <h2 className="text-sm font-bold text-red-700 border-b border-red-200 pb-1 mb-2">9. TERMINATION BY COMPANY (With Notice)</h2>
+                            <h2 className="text-sm font-bold text-purple-700 border-b border-purple-200 pb-1 mb-2">9. TERMINATION BY COMPANY (With Notice)</h2>
                             <p className="text-slate-600 mb-2">The company may terminate the internship with 7 days notice for:</p>
                             <ul className="list-disc ml-4 space-y-1 text-slate-700">
                                 <li>Consistent poor performance despite feedback and support.</li>
@@ -305,7 +305,7 @@ export const InternshipLetterTemplate = forwardRef<HTMLDivElement, InternshipLet
 
                         {/* Section 10: Resignation by Intern */}
                         <div className="mb-4">
-                            <h2 className="text-sm font-bold text-red-700 border-b border-red-200 pb-1 mb-2">10. RESIGNATION BY INTERN</h2>
+                            <h2 className="text-sm font-bold text-purple-700 border-b border-purple-200 pb-1 mb-2">10. RESIGNATION BY INTERN</h2>
                             <ul className="list-disc ml-4 space-y-1 text-slate-700">
                                 <li>Intern may resign by providing <strong>minimum 7 days written notice</strong>.</li>
                                 <li>All company property (laptop, ID card, access cards) must be returned.</li>
@@ -317,10 +317,11 @@ export const InternshipLetterTemplate = forwardRef<HTMLDivElement, InternshipLet
 
                         {/* Section 11: Certificate & PPO */}
                         <div className="mb-4">
-                            <h2 className="text-sm font-bold text-green-700 border-b border-green-200 pb-1 mb-2">11. CERTIFICATE & PRE-PLACEMENT OFFER (PPO)</h2>
+                            <h2 className="text-sm font-bold text-emerald-700 border-b border-emerald-200 pb-1 mb-2">11. CERTIFICATE, LOR & PRE-PLACEMENT OFFER (PPO)</h2>
                             <ul className="list-disc ml-4 space-y-1 text-slate-700">
                                 <li>Certificate of completion issued upon <strong>successful completion</strong> of internship.</li>
                                 <li>Certificate requires: 90%+ attendance, satisfactory performance, proper handover.</li>
+                                <li><strong>Letter of Recommendation (LOR)</strong> is reserved for <strong>TOP performing interns ONLY</strong> (top 10%).</li>
                                 <li>Top performers may receive <strong>Pre-Placement Offer (PPO)</strong> for full-time role.</li>
                                 <li>PPO is discretionary and based on performance, attitude, and business needs.</li>
                             </ul>
@@ -358,8 +359,8 @@ export const InternshipLetterTemplate = forwardRef<HTMLDivElement, InternshipLet
                     </div>
 
                     {/* Footer */}
-                    <div className="bg-red-900 px-8 py-2 mt-auto">
-                        <div className="flex justify-between text-xs text-red-200">
+                    <div className="bg-purple-900 px-8 py-2 mt-auto">
+                        <div className="flex justify-between text-xs text-purple-200">
                             <p>© {new Date().getFullYear()} {data.companyName} - Annexure A</p>
                             <p>Page 3 of 3</p>
                         </div>

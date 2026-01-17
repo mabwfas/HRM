@@ -328,30 +328,30 @@ export const InternshipLetterTemplate = forwardRef<HTMLDivElement, InternshipLet
                         </div>
 
                         {/* Acknowledgment */}
-                        <div className="bg-slate-100 rounded-lg p-4 border-2 border-slate-300">
-                            <h2 className="text-sm font-bold text-slate-800 mb-3">ACKNOWLEDGMENT & ACCEPTANCE</h2>
-                            <p className="text-slate-700 mb-4">
+                        <div className="bg-slate-100 rounded-lg p-3 border-2 border-slate-300">
+                            <h2 className="text-sm font-bold text-slate-800 mb-2">ACKNOWLEDGMENT & ACCEPTANCE</h2>
+                            <p className="text-slate-700 mb-3 text-[9px]">
                                 I, <strong>{data.internName || '________________________'}</strong>, have read and understood all terms,
                                 conditions, and policies mentioned in this Annexure A. I agree to abide by all rules and understand
                                 that violation may result in suspension or termination of my internship.
                             </p>
-                            <div className="flex justify-between items-end pt-4">
+                            <div className="flex justify-between items-end pt-2">
                                 <div>
-                                    <p className="text-xs text-slate-500 mb-8">Intern's Signature</p>
-                                    <div className="border-t border-slate-400 pt-1 w-48">
-                                        <p className="font-bold text-slate-800 text-xs">{data.internName || '________________________'}</p>
+                                    <p className="text-[9px] text-slate-500 mb-4">Intern's Signature</p>
+                                    <div className="border-t border-slate-400 pt-1 w-40">
+                                        <p className="font-bold text-slate-800 text-[9px]">{data.internName || '________________________'}</p>
                                     </div>
                                 </div>
                                 <div className="text-center">
-                                    <p className="text-xs text-slate-500 mb-8">Date</p>
-                                    <div className="border-t border-slate-400 pt-1 w-32">
-                                        <p className="text-xs text-slate-600">____/____/________</p>
+                                    <p className="text-[9px] text-slate-500 mb-4">Date</p>
+                                    <div className="border-t border-slate-400 pt-1 w-28">
+                                        <p className="text-[9px] text-slate-600">____/____/________</p>
                                     </div>
                                 </div>
                                 <div className="text-right">
-                                    <p className="text-xs text-slate-500 mb-8">Witness (HR)</p>
-                                    <div className="border-t border-slate-400 pt-1 w-48">
-                                        <p className="font-bold text-slate-800 text-xs">{data.hrName}</p>
+                                    <p className="text-[9px] text-slate-500 mb-4">Witness (HR)</p>
+                                    <div className="border-t border-slate-400 pt-1 w-40">
+                                        <p className="font-bold text-slate-800 text-[9px]">{data.hrName}</p>
                                     </div>
                                 </div>
                             </div>

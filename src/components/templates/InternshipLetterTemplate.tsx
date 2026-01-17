@@ -151,7 +151,7 @@ export const InternshipLetterTemplate = forwardRef<HTMLDivElement, InternshipLet
                         </div>
                     </div>
 
-                    <div className="px-8 py-4 flex-1 overflow-hidden">
+                    <div className="px-8 py-4 flex-1">
                         {/* Section 1: General Terms */}
                         <div className="mb-4">
                             <h2 className="text-sm font-bold text-purple-700 border-b border-purple-200 pb-1 mb-2">1. GENERAL TERMS & CONDITIONS</h2>
@@ -256,7 +256,7 @@ export const InternshipLetterTemplate = forwardRef<HTMLDivElement, InternshipLet
                         </div>
                     </div>
 
-                    <div className="px-8 py-4 flex-1 overflow-hidden">
+                    <div className="px-8 py-4 flex-1">
                         {/* Section 7: Grounds for Suspension */}
                         <div className="mb-4">
                             <h2 className="text-sm font-bold text-purple-700 border-b border-purple-200 pb-1 mb-2">7. GROUNDS FOR SUSPENSION (Temporary)</h2>

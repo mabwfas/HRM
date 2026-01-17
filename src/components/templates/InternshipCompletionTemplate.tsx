@@ -16,7 +16,7 @@ const generateCertificateCode = (name: string, type: 'IC' | 'LOR' = 'IC'): strin
     const year = new Date().getFullYear();
     const randomNum = Math.floor(1000 + Math.random() * 9000); // 4-digit random
     const suffix = Math.floor(10 + Math.random() * 90); // 2-digit random
-    return `DH/${type}/${year}/${nameCode}${randomNum}-${suffix}`;
+    return `DMH/${type}/${year}/${nameCode}${randomNum}-${suffix}`;
 };
 
 export const InternshipCompletionTemplate = forwardRef<HTMLDivElement, InternshipCompletionTemplateProps>(

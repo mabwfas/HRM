@@ -16,7 +16,7 @@ const generateCertificateCode = (name: string): string => {
     const year = new Date().getFullYear();
     const randomNum = Math.floor(1000 + Math.random() * 9000);
     const suffix = Math.floor(10 + Math.random() * 90);
-    return `DH/LOR/${year}/${nameCode}${randomNum}-${suffix}`;
+    return `DMH/LOR/${year}/${nameCode}${randomNum}-${suffix}`;
 };
 
 export const LORTemplate = forwardRef<HTMLDivElement, LORTemplateProps>(
@@ -30,11 +30,15 @@ export const LORTemplate = forwardRef<HTMLDivElement, LORTemplateProps>(
         );
 
         const uniqueRefNumber = useMemo(() => {
-            const nameCode = (data.internName || 'INT').toUpperCase().replace(/[^A-Z]/g, '').substring(0, 3);
-            const dateObj = new Date();
-            const dateString = dateObj.toISOString().split('T')[0].replace(/-/g, '');
-            const randomSuffix = Math.floor(1000 + Math.random() * 9000);
-            return `DH/LOR/${dateObj.getFullYear()}/${nameCode}-${dateString}-${randomSuffix}`;
+            // Get employee initials (first letter of each word in name)
+            const initials = (data.internName || 'XX')
+                .split(' ')
+                .map(word => word.charAt(0).toUpperCase())
+                .join('')
+                .substring(0, 3);
+            const year = new Date().getFullYear();
+            const randomNum = Math.floor(1000 + Math.random() * 9000);
+            return `DMH/LOR/${year}/${initials}-${randomNum}`;
         }, [data.internName, data.date]);
 
         return (

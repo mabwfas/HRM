@@ -5,10 +5,11 @@ import { generateRefNumber, generateEmployeeId, DOC_TYPES } from '../../utils/re
 
 interface WarningLetterTemplateProps {
     data: WarningLetterData;
+    showSeal?: boolean;
 }
 
 export const WarningLetterTemplate = forwardRef<HTMLDivElement, WarningLetterTemplateProps>(
-    ({ data }, ref) => {
+    ({ data, showSeal = true }, ref) => {
         const signatory = HR_SIGNATORY_OPTIONS.find(s => s.name === data.hrName);
         const signatureImage = signatory?.signatureImage || '/prasun_signature.png';
         const refNumber = useMemo(() => generateRefNumber(data.employeeName || '', DOC_TYPES.WRN), [data.employeeName]);
@@ -96,7 +97,7 @@ export const WarningLetterTemplate = forwardRef<HTMLDivElement, WarningLetterTem
                                     <p className="text-slate-600 text-sm">{data.hrDesignation}</p>
                                 </div>
                             </div>
-                            <CompanySeal companyName={data.companyName} size="md" />
+                            {showSeal && <CompanySeal companyName={data.companyName} size="md" />}
                             <div>
                                 <div className="h-12"></div>
                                 <div className="border-t-2 border-slate-400 pt-1 mt-1 w-44">

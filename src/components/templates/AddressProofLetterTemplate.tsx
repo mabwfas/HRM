@@ -5,10 +5,11 @@ import { generateRefNumber, generateEmployeeId, DOC_TYPES } from '../../utils/re
 
 interface AddressProofLetterTemplateProps {
     data: AddressProofLetterData;
+    showSeal?: boolean;
 }
 
 export const AddressProofLetterTemplate = forwardRef<HTMLDivElement, AddressProofLetterTemplateProps>(
-    ({ data }, ref) => {
+    ({ data, showSeal = true }, ref) => {
         const signatory = HR_SIGNATORY_OPTIONS.find(s => s.name === data.hrName);
         const signatureImage = signatory?.signatureImage || '/prasun_signature.png';
         const refNumber = useMemo(() => generateRefNumber(data.employeeName || '', DOC_TYPES.ADR), [data.employeeName]);
@@ -101,7 +102,7 @@ export const AddressProofLetterTemplate = forwardRef<HTMLDivElement, AddressProo
                                     <p className="text-slate-600 text-sm">{data.hrDesignation}</p>
                                 </div>
                             </div>
-                            <CompanySeal companyName={data.companyName} size="md" />
+                            {showSeal && <CompanySeal companyName={data.companyName} size="md" />}
                         </div>
                     </div>
                 </div>

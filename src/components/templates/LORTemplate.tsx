@@ -5,10 +5,11 @@ import { generateRefNumber, DOC_TYPES } from '../../utils/refGenerator';
 
 interface LORTemplateProps {
     data: InternshipCompletionData;
+    showSeal?: boolean;
 }
 
 export const LORTemplate = forwardRef<HTMLDivElement, LORTemplateProps>(
-    ({ data }, ref) => {
+    ({ data, showSeal = true }, ref) => {
         const signatory = HR_SIGNATORY_OPTIONS.find(s => s.name === data.hrName);
         const signatureImage = signatory?.signatureImage || '/prasun_signature.png';
 
@@ -103,7 +104,7 @@ export const LORTemplate = forwardRef<HTMLDivElement, LORTemplateProps>(
                                     <p className="text-slate-600 text-sm">{data.hrDesignation}</p>
                                 </div>
                             </div>
-                            <CompanySeal companyName={data.companyName} size="md" />
+                            {showSeal && <CompanySeal companyName={data.companyName} size="md" />}
                         </div>
                     </div>
                 </div>

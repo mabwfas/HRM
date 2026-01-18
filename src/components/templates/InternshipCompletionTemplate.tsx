@@ -5,10 +5,11 @@ import { generateRefNumber, DOC_TYPES } from '../../utils/refGenerator';
 
 interface InternshipCompletionTemplateProps {
     data: InternshipCompletionData;
+    showSeal?: boolean;
 }
 
 export const InternshipCompletionTemplate = forwardRef<HTMLDivElement, InternshipCompletionTemplateProps>(
-    ({ data }, ref) => {
+    ({ data, showSeal = true }, ref) => {
         const signatory = HR_SIGNATORY_OPTIONS.find(s => s.name === data.hrName);
         const signatureImage = signatory?.signatureImage || '/prasun_signature.png';
 
@@ -110,7 +111,7 @@ export const InternshipCompletionTemplate = forwardRef<HTMLDivElement, Internshi
                                     <p className="text-slate-600 text-sm">{data.hrDesignation}</p>
                                 </div>
                             </div>
-                            <CompanySeal companyName={data.companyName} size="md" />
+                            {showSeal && <CompanySeal companyName={data.companyName} size="md" />}
                         </div>
                     </div>
                 </div>

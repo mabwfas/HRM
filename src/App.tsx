@@ -405,14 +405,14 @@ function App() {
                         {selectedDoc === 'experience-certificate' && <ExperienceCertificateTemplate ref={previewRef} data={experienceData} showSeal={showSeal} />}
                         {selectedDoc === 'relieving-letter' && <RelievingLetterTemplate ref={previewRef} data={relievingData} showSeal={showSeal} />}
                         {selectedDoc === 'appraisal-letter' && <AppraisalLetterTemplate ref={previewRef} data={appraisalData} showSeal={showSeal} />}
-                        {selectedDoc === 'internship-completion' && <InternshipCompletionTemplate ref={previewRef} data={internshipCompletionData} />}
-                        {selectedDoc === 'lor' && <LORTemplate ref={previewRef} data={internshipCompletionData} />}
-                        {selectedDoc === 'training-certificate' && <TrainingCertificateTemplate ref={previewRef} data={trainingCertificateData} />}
-                        {selectedDoc === 'promotion-letter' && <PromotionLetterTemplate ref={previewRef} data={promotionData} />}
-                        {selectedDoc === 'warning-letter' && <WarningLetterTemplate ref={previewRef} data={warningData} />}
-                        {selectedDoc === 'termination-letter' && <TerminationLetterTemplate ref={previewRef} data={terminationData} />}
-                        {selectedDoc === 'joining-letter' && <JoiningLetterTemplate ref={previewRef} data={joiningData} />}
-                        {selectedDoc === 'address-proof' && <AddressProofLetterTemplate ref={previewRef} data={addressProofData} />}
+                        {selectedDoc === 'internship-completion' && <InternshipCompletionTemplate ref={previewRef} data={internshipCompletionData} showSeal={showSeal} />}
+                        {selectedDoc === 'lor' && <LORTemplate ref={previewRef} data={internshipCompletionData} showSeal={showSeal} />}
+                        {selectedDoc === 'training-certificate' && <TrainingCertificateTemplate ref={previewRef} data={trainingCertificateData} showSeal={showSeal} />}
+                        {selectedDoc === 'promotion-letter' && <PromotionLetterTemplate ref={previewRef} data={promotionData} showSeal={showSeal} />}
+                        {selectedDoc === 'warning-letter' && <WarningLetterTemplate ref={previewRef} data={warningData} showSeal={showSeal} />}
+                        {selectedDoc === 'termination-letter' && <TerminationLetterTemplate ref={previewRef} data={terminationData} showSeal={showSeal} />}
+                        {selectedDoc === 'joining-letter' && <JoiningLetterTemplate ref={previewRef} data={joiningData} showSeal={showSeal} />}
+                        {selectedDoc === 'address-proof' && <AddressProofLetterTemplate ref={previewRef} data={addressProofData} showSeal={showSeal} />}
                     </div>
                 </div>
             </div>
@@ -1312,6 +1312,24 @@ function App() {
                         {/* ===== TRAINING CERTIFICATE FORM ===== */}
                         {selectedDoc === 'training-certificate' && (
                             <>
+                                <Card title="🎯 Quick Select Role" headerClassName="bg-gradient-to-r from-indigo-500 to-purple-500 text-white">
+                                    <Select
+                                        label="Select Role (Auto-fills details)"
+                                        name="rolePreset"
+                                        value={trainingCertificateData.designation}
+                                        options={ROLE_PRESETS.map(r => ({ value: r.designation, label: r.designation }))}
+                                        onChange={(e) => {
+                                            const preset = ROLE_PRESETS.find(r => r.designation === e.target.value);
+                                            if (preset) {
+                                                setTrainingCertificateData(prev => ({
+                                                    ...prev,
+                                                    designation: preset.designation,
+                                                    department: preset.department,
+                                                }));
+                                            }
+                                        }}
+                                    />
+                                </Card>
                                 <Card title="Employee Details" headerClassName="bg-indigo-50">
                                     <div className="space-y-3">
                                         <Input label="Employee Name" name="employeeName" value={trainingCertificateData.employeeName} onChange={handleChange(setTrainingCertificateData)} />
@@ -1337,6 +1355,25 @@ function App() {
                         {/* ===== PROMOTION LETTER FORM ===== */}
                         {selectedDoc === 'promotion-letter' && (
                             <>
+                                <Card title="🎯 Quick Select Role" headerClassName="bg-gradient-to-r from-sky-500 to-blue-500 text-white">
+                                    <Select
+                                        label="Current Role (Auto-fills details)"
+                                        name="rolePreset"
+                                        value={promotionData.currentDesignation}
+                                        options={ROLE_PRESETS.map(r => ({ value: r.designation, label: `${r.designation} - ₹${(r.annualCtc / 100000).toFixed(1)}L` }))}
+                                        onChange={(e) => {
+                                            const preset = ROLE_PRESETS.find(r => r.designation === e.target.value);
+                                            if (preset) {
+                                                setPromotionData(prev => ({
+                                                    ...prev,
+                                                    currentDesignation: preset.designation,
+                                                    department: preset.department,
+                                                    currentCtc: preset.annualCtc,
+                                                }));
+                                            }
+                                        }}
+                                    />
+                                </Card>
                                 <Card title="Document Details" headerClassName="bg-slate-50">
                                     <div className="space-y-3">
                                         <Input label="Reference Number" name="refNumber" value={promotionData.refNumber} onChange={handleChange(setPromotionData)} placeholder="DH/HR/PROM/2026/XXX" />
@@ -1389,6 +1426,24 @@ function App() {
                         {/* ===== WARNING LETTER FORM ===== */}
                         {selectedDoc === 'warning-letter' && (
                             <>
+                                <Card title="🎯 Quick Select Role" headerClassName="bg-gradient-to-r from-orange-500 to-red-500 text-white">
+                                    <Select
+                                        label="Select Role (Auto-fills details)"
+                                        name="rolePreset"
+                                        value={warningData.designation}
+                                        options={ROLE_PRESETS.map(r => ({ value: r.designation, label: r.designation }))}
+                                        onChange={(e) => {
+                                            const preset = ROLE_PRESETS.find(r => r.designation === e.target.value);
+                                            if (preset) {
+                                                setWarningData(prev => ({
+                                                    ...prev,
+                                                    designation: preset.designation,
+                                                    department: preset.department,
+                                                }));
+                                            }
+                                        }}
+                                    />
+                                </Card>
                                 <Card title="Document Details" headerClassName="bg-slate-50">
                                     <div className="space-y-3">
                                         <Input label="Reference Number" name="refNumber" value={warningData.refNumber} onChange={handleChange(setWarningData)} placeholder="DH/HR/WARN/2026/XXX" />
@@ -1444,6 +1499,24 @@ function App() {
                         {/* ===== TERMINATION LETTER FORM ===== */}
                         {selectedDoc === 'termination-letter' && (
                             <>
+                                <Card title="🎯 Quick Select Role" headerClassName="bg-gradient-to-r from-red-500 to-rose-600 text-white">
+                                    <Select
+                                        label="Select Role (Auto-fills details)"
+                                        name="rolePreset"
+                                        value={terminationData.designation}
+                                        options={ROLE_PRESETS.map(r => ({ value: r.designation, label: r.designation }))}
+                                        onChange={(e) => {
+                                            const preset = ROLE_PRESETS.find(r => r.designation === e.target.value);
+                                            if (preset) {
+                                                setTerminationData(prev => ({
+                                                    ...prev,
+                                                    designation: preset.designation,
+                                                    department: preset.department,
+                                                }));
+                                            }
+                                        }}
+                                    />
+                                </Card>
                                 <Card title="Document Details" headerClassName="bg-slate-50">
                                     <div className="space-y-3">
                                         <Input label="Reference Number" name="refNumber" value={terminationData.refNumber} onChange={handleChange(setTerminationData)} placeholder="DH/HR/TERM/2026/XXX" />
@@ -1498,6 +1571,26 @@ function App() {
                         {/* ===== JOINING LETTER FORM ===== */}
                         {selectedDoc === 'joining-letter' && (
                             <>
+                                <Card title="🎯 Quick Select Role" headerClassName="bg-gradient-to-r from-green-500 to-emerald-500 text-white">
+                                    <Select
+                                        label="Select Role (Auto-fills details)"
+                                        name="rolePreset"
+                                        value={joiningData.designation}
+                                        options={ROLE_PRESETS.map(r => ({ value: r.designation, label: `${r.designation} - ₹${(r.annualCtc / 100000).toFixed(1)}L` }))}
+                                        onChange={(e) => {
+                                            const preset = ROLE_PRESETS.find(r => r.designation === e.target.value);
+                                            if (preset) {
+                                                setJoiningData(prev => ({
+                                                    ...prev,
+                                                    designation: preset.designation,
+                                                    department: preset.department,
+                                                    reportingTo: preset.reportingTo,
+                                                    annualCtc: preset.annualCtc,
+                                                }));
+                                            }
+                                        }}
+                                    />
+                                </Card>
                                 <Card title="Document Details" headerClassName="bg-slate-50">
                                     <div className="space-y-3">
                                         <Input label="Reference Number" name="refNumber" value={joiningData.refNumber} onChange={handleChange(setJoiningData)} placeholder="DH/HR/JOIN/2026/XXX" />
@@ -1546,6 +1639,24 @@ function App() {
                         {/* ===== ADDRESS PROOF FORM ===== */}
                         {selectedDoc === 'address-proof' && (
                             <>
+                                <Card title="🎯 Quick Select Role" headerClassName="bg-gradient-to-r from-slate-500 to-slate-700 text-white">
+                                    <Select
+                                        label="Select Role (Auto-fills details)"
+                                        name="rolePreset"
+                                        value={addressProofData.designation}
+                                        options={ROLE_PRESETS.map(r => ({ value: r.designation, label: r.designation }))}
+                                        onChange={(e) => {
+                                            const preset = ROLE_PRESETS.find(r => r.designation === e.target.value);
+                                            if (preset) {
+                                                setAddressProofData(prev => ({
+                                                    ...prev,
+                                                    designation: preset.designation,
+                                                    department: preset.department,
+                                                }));
+                                            }
+                                        }}
+                                    />
+                                </Card>
                                 <Card title="Employee Details" headerClassName="bg-slate-100">
                                     <div className="space-y-3">
                                         <Input label="Employee Name" name="employeeName" value={addressProofData.employeeName} onChange={handleChange(setAddressProofData)} />
@@ -1586,14 +1697,14 @@ function App() {
                             {selectedDoc === 'experience-certificate' && <ExperienceCertificateTemplate ref={previewRef} data={experienceData} showSeal={showSeal} />}
                             {selectedDoc === 'relieving-letter' && <RelievingLetterTemplate ref={previewRef} data={relievingData} showSeal={showSeal} />}
                             {selectedDoc === 'appraisal-letter' && <AppraisalLetterTemplate ref={previewRef} data={appraisalData} showSeal={showSeal} />}
-                            {selectedDoc === 'internship-completion' && <InternshipCompletionTemplate ref={previewRef} data={internshipCompletionData} />}
-                            {selectedDoc === 'lor' && <LORTemplate ref={previewRef} data={internshipCompletionData} />}
-                            {selectedDoc === 'training-certificate' && <TrainingCertificateTemplate ref={previewRef} data={trainingCertificateData} />}
-                            {selectedDoc === 'promotion-letter' && <PromotionLetterTemplate ref={previewRef} data={promotionData} />}
-                            {selectedDoc === 'warning-letter' && <WarningLetterTemplate ref={previewRef} data={warningData} />}
-                            {selectedDoc === 'termination-letter' && <TerminationLetterTemplate ref={previewRef} data={terminationData} />}
-                            {selectedDoc === 'joining-letter' && <JoiningLetterTemplate ref={previewRef} data={joiningData} />}
-                            {selectedDoc === 'address-proof' && <AddressProofLetterTemplate ref={previewRef} data={addressProofData} />}
+                            {selectedDoc === 'internship-completion' && <InternshipCompletionTemplate ref={previewRef} data={internshipCompletionData} showSeal={showSeal} />}
+                            {selectedDoc === 'lor' && <LORTemplate ref={previewRef} data={internshipCompletionData} showSeal={showSeal} />}
+                            {selectedDoc === 'training-certificate' && <TrainingCertificateTemplate ref={previewRef} data={trainingCertificateData} showSeal={showSeal} />}
+                            {selectedDoc === 'promotion-letter' && <PromotionLetterTemplate ref={previewRef} data={promotionData} showSeal={showSeal} />}
+                            {selectedDoc === 'warning-letter' && <WarningLetterTemplate ref={previewRef} data={warningData} showSeal={showSeal} />}
+                            {selectedDoc === 'termination-letter' && <TerminationLetterTemplate ref={previewRef} data={terminationData} showSeal={showSeal} />}
+                            {selectedDoc === 'joining-letter' && <JoiningLetterTemplate ref={previewRef} data={joiningData} showSeal={showSeal} />}
+                            {selectedDoc === 'address-proof' && <AddressProofLetterTemplate ref={previewRef} data={addressProofData} showSeal={showSeal} />}
                         </div>
                     </div>
                 </div>

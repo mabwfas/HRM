@@ -5,10 +5,11 @@ import { generateRefNumber, generateEmployeeId, DOC_TYPES } from '../../utils/re
 
 interface PromotionLetterTemplateProps {
     data: PromotionLetterData;
+    showSeal?: boolean;
 }
 
 export const PromotionLetterTemplate = forwardRef<HTMLDivElement, PromotionLetterTemplateProps>(
-    ({ data }, ref) => {
+    ({ data, showSeal = true }, ref) => {
         const signatory = HR_SIGNATORY_OPTIONS.find(s => s.name === data.hrName);
         const signatureImage = signatory?.signatureImage || '/prasun_signature.png';
         const refNumber = useMemo(() => generateRefNumber(data.employeeName || '', DOC_TYPES.PRM), [data.employeeName]);
@@ -121,7 +122,7 @@ export const PromotionLetterTemplate = forwardRef<HTMLDivElement, PromotionLette
                                     <p className="text-slate-600 text-xs">{data.hrDesignation}</p>
                                 </div>
                             </div>
-                            <CompanySeal companyName={data.companyName} size="sm" />
+                            {showSeal && <CompanySeal companyName={data.companyName} size="sm" />}
                         </div>
                     </div>
                 </div>

@@ -5,10 +5,11 @@ import { generateRefNumber, generateEmployeeId, DOC_TYPES } from '../../utils/re
 
 interface JoiningLetterTemplateProps {
     data: JoiningLetterData;
+    showSeal?: boolean;
 }
 
 export const JoiningLetterTemplate = forwardRef<HTMLDivElement, JoiningLetterTemplateProps>(
-    ({ data }, ref) => {
+    ({ data, showSeal = true }, ref) => {
         const signatory = HR_SIGNATORY_OPTIONS.find(s => s.name === data.hrName);
         const signatureImage = signatory?.signatureImage || '/prasun_signature.png';
         const refNumber = generateRefNumber(data.employeeName || '', DOC_TYPES.JON);
@@ -116,7 +117,7 @@ export const JoiningLetterTemplate = forwardRef<HTMLDivElement, JoiningLetterTem
                                     <p className="text-slate-600 text-xs">{data.hrDesignation}</p>
                                 </div>
                             </div>
-                            <CompanySeal companyName={data.companyName} size="sm" />
+                            {showSeal && <CompanySeal companyName={data.companyName} size="sm" />}
                             <div>
                                 <div className="h-10"></div>
                                 <div className="border-t-2 border-slate-400 pt-1 mt-1 w-44">

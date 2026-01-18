@@ -19,7 +19,7 @@ export const TerminationLetterTemplate = forwardRef<HTMLDivElement, TerminationL
                 ref={ref}
                 data-print="document"
                 className="bg-white shadow-2xl print:shadow-none flex flex-col"
-                style={{ width: '210mm' }}
+                style={{ width: '210mm', minHeight: '297mm' }}
             >
                 {/* Header */}
                 <div className="bg-gradient-to-r from-red-600 via-rose-600 to-pink-700 px-5 py-2">
@@ -40,8 +40,8 @@ export const TerminationLetterTemplate = forwardRef<HTMLDivElement, TerminationL
                     <span><strong>Date:</strong> {data.date}</span>
                 </div>
 
-                {/* Main Content */}
-                <div className="px-5 py-2 flex flex-col">
+                {/* Main Content - flex-1 to push footer down */}
+                <div className="px-5 py-2 flex-1 flex flex-col">
                     {/* Employee Info */}
                     <div className="bg-slate-50 rounded p-1.5 border border-slate-200 flex items-center gap-2 mb-1.5">
                         <div className="w-6 h-6 rounded-full bg-slate-500 flex items-center justify-center text-white text-xs font-bold">
@@ -91,8 +91,8 @@ export const TerminationLetterTemplate = forwardRef<HTMLDivElement, TerminationL
 
                     <p className="text-[10px] text-slate-600 mb-1.5">Please return all company property. We wish you the best.</p>
 
-                    {/* Signatures */}
-                    <div className="pt-1.5 border-t border-slate-200 flex justify-between items-end">
+                    {/* Signatures - mt-auto pushes to bottom */}
+                    <div className="pt-1.5 border-t border-slate-200 flex justify-between items-end mt-auto">
                         <div className="text-center">
                             <img src={signatureImage} alt="Signature" className="h-6 object-contain mx-auto" />
                             <div className="border-t border-slate-400 pt-0.5 w-22">
@@ -111,8 +111,8 @@ export const TerminationLetterTemplate = forwardRef<HTMLDivElement, TerminationL
                     </div>
                 </div>
 
-                {/* Footer */}
-                <div className="bg-red-900 px-5 py-1 mt-auto">
+                {/* Footer - Always at bottom */}
+                <div className="bg-red-900 px-5 py-1">
                     <div className="flex justify-between text-[10px] text-red-200">
                         <p>© {new Date().getFullYear()} {data.companyName} - CONFIDENTIAL</p>
                         <p className="font-mono text-red-100">{refNumber}</p>

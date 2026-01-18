@@ -27,7 +27,7 @@ export const LORTemplate = forwardRef<HTMLDivElement, LORTemplateProps>(
                 ref={ref}
                 data-print="document"
                 className="bg-white shadow-2xl print:shadow-none flex flex-col"
-                style={{ width: '210mm' }}
+                style={{ width: '210mm', minHeight: '297mm' }}
             >
                 {/* Header */}
                 <div className="bg-gradient-to-r from-amber-600 via-yellow-600 to-orange-600 px-5 py-2">
@@ -48,8 +48,8 @@ export const LORTemplate = forwardRef<HTMLDivElement, LORTemplateProps>(
                     <span><strong>Date:</strong> {data.date}</span>
                 </div>
 
-                {/* Main Content Area */}
-                <div className="px-5 py-2 flex flex-col">
+                {/* Main Content Area - flex-1 to push footer down */}
+                <div className="px-5 py-2 flex-1 flex flex-col">
                     {/* Intern Info */}
                     <div className="bg-amber-50 rounded p-1.5 border border-amber-200 mb-2 flex items-center gap-2">
                         <div className="w-6 h-6 rounded-full bg-amber-500 flex items-center justify-center text-white text-xs font-bold">
@@ -84,8 +84,8 @@ export const LORTemplate = forwardRef<HTMLDivElement, LORTemplateProps>(
                         <p>I wholeheartedly recommend <strong className="text-amber-700">{data.internName || '[Intern Name]'}</strong> for any future endeavors.</p>
                     </div>
 
-                    {/* Signature */}
-                    <div className="mt-2 pt-1.5 border-t border-slate-200 flex items-end justify-between">
+                    {/* Signature - mt-auto pushes to bottom */}
+                    <div className="mt-auto pt-1.5 border-t border-slate-200 flex items-end justify-between">
                         <div className="text-center">
                             <p className="text-[9px] text-slate-500 mb-0.5">Best Regards</p>
                             <img src={signatureImage} alt="Signature" className="h-6 object-contain mx-auto" />
@@ -98,8 +98,8 @@ export const LORTemplate = forwardRef<HTMLDivElement, LORTemplateProps>(
                     </div>
                 </div>
 
-                {/* Footer */}
-                <div className="bg-amber-800 px-5 py-1 mt-auto">
+                {/* Footer - Always at bottom */}
+                <div className="bg-amber-800 px-5 py-1">
                     <div className="flex justify-between text-[10px] text-amber-100">
                         <p>© {new Date().getFullYear()} {data.companyName}</p>
                         <p className="font-mono text-amber-50">{certificateCode}</p>

@@ -23,7 +23,7 @@ export const PromotionLetterTemplate = forwardRef<HTMLDivElement, PromotionLette
                 ref={ref}
                 data-print="document"
                 className="bg-white shadow-2xl print:shadow-none flex flex-col"
-                style={{ width: '210mm' }}
+                style={{ width: '210mm', minHeight: '297mm' }}
             >
                 {/* Header */}
                 <div className="bg-gradient-to-r from-sky-500 via-blue-500 to-indigo-600 px-5 py-2">
@@ -44,8 +44,8 @@ export const PromotionLetterTemplate = forwardRef<HTMLDivElement, PromotionLette
                     <span><strong>Date:</strong> {data.date}</span>
                 </div>
 
-                {/* Main Content */}
-                <div className="px-5 py-2 flex flex-col">
+                {/* Main Content - flex-1 to push footer down */}
+                <div className="px-5 py-2 flex-1 flex flex-col">
                     {/* Employee Info */}
                     <div className="bg-sky-50 rounded p-1.5 border border-sky-200 flex items-center gap-2 mb-1.5">
                         <div className="w-6 h-6 rounded-full bg-sky-500 flex items-center justify-center text-white text-xs font-bold">
@@ -102,8 +102,8 @@ export const PromotionLetterTemplate = forwardRef<HTMLDivElement, PromotionLette
                         <p className="text-slate-600 text-[10px]">{data.newResponsibilities}</p>
                     </div>
 
-                    {/* Signature */}
-                    <div className="pt-1.5 border-t border-slate-200 flex items-end justify-between">
+                    {/* Signature - mt-auto pushes to bottom */}
+                    <div className="pt-1.5 border-t border-slate-200 flex items-end justify-between mt-auto">
                         <div className="text-center">
                             <img src={signatureImage} alt="Signature" className="h-6 object-contain mx-auto" />
                             <div className="border-t border-slate-400 pt-0.5 w-24">
@@ -115,8 +115,8 @@ export const PromotionLetterTemplate = forwardRef<HTMLDivElement, PromotionLette
                     </div>
                 </div>
 
-                {/* Footer */}
-                <div className="bg-sky-900 px-5 py-1 mt-auto">
+                {/* Footer - Always at bottom */}
+                <div className="bg-sky-900 px-5 py-1">
                     <div className="flex justify-between text-[10px] text-sky-200">
                         <p>© {new Date().getFullYear()} {data.companyName}</p>
                         <p className="font-mono text-sky-100">{refNumber}</p>

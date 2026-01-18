@@ -19,7 +19,7 @@ export const AddressProofLetterTemplate = forwardRef<HTMLDivElement, AddressProo
                 ref={ref}
                 data-print="document"
                 className="bg-white shadow-2xl print:shadow-none flex flex-col"
-                style={{ width: '210mm' }}
+                style={{ width: '210mm', minHeight: '297mm' }}
             >
                 {/* Header */}
                 <div className="bg-gradient-to-r from-slate-600 via-slate-700 to-slate-800 px-5 py-2">
@@ -40,8 +40,8 @@ export const AddressProofLetterTemplate = forwardRef<HTMLDivElement, AddressProo
                     <span><strong>Date:</strong> {data.date}</span>
                 </div>
 
-                {/* Main Content */}
-                <div className="px-5 py-2 flex flex-col">
+                {/* Main Content - flex-1 to push footer down */}
+                <div className="px-5 py-2 flex-1 flex flex-col">
                     {/* Title */}
                     <div className="text-center mb-2">
                         <h2 className="text-base font-black text-slate-800 uppercase">To Whom It May Concern</h2>
@@ -84,8 +84,8 @@ export const AddressProofLetterTemplate = forwardRef<HTMLDivElement, AddressProo
 
                     <p className="text-[10px] text-slate-600 mb-1.5">This certificate is issued upon request. For verification, contact HR.</p>
 
-                    {/* Signature */}
-                    <div className="pt-1.5 border-t border-slate-200 flex items-end justify-between">
+                    {/* Signature - mt-auto pushes to bottom */}
+                    <div className="pt-1.5 border-t border-slate-200 flex items-end justify-between mt-auto">
                         <div className="text-center">
                             <img src={signatureImage} alt="Signature" className="h-6 object-contain mx-auto" />
                             <div className="border-t border-slate-400 pt-0.5 w-24">
@@ -97,8 +97,8 @@ export const AddressProofLetterTemplate = forwardRef<HTMLDivElement, AddressProo
                     </div>
                 </div>
 
-                {/* Footer */}
-                <div className="bg-slate-900 px-5 py-1 mt-auto">
+                {/* Footer - Always at bottom */}
+                <div className="bg-slate-900 px-5 py-1">
                     <div className="flex justify-between text-[10px] text-slate-400">
                         <p>© {new Date().getFullYear()} {data.companyName}</p>
                         <p className="font-mono text-slate-300">{refNumber}</p>

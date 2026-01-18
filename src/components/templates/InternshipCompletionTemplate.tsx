@@ -12,11 +12,6 @@ export const InternshipCompletionTemplate = forwardRef<HTMLDivElement, Internshi
         const signatory = HR_SIGNATORY_OPTIONS.find(s => s.name === data.hrName);
         const signatureImage = signatory?.signatureImage || '/prasun_signature.png';
 
-        const certificateCode = useMemo(() =>
-            generateRefNumber(data.internName || '', DOC_TYPES.IC),
-            [data.internName]
-        );
-
         const refNumber = useMemo(() =>
             generateRefNumber(data.internName || '', DOC_TYPES.IC),
             [data.internName]
@@ -27,99 +22,104 @@ export const InternshipCompletionTemplate = forwardRef<HTMLDivElement, Internshi
                 ref={ref}
                 data-print="document"
                 className="bg-white shadow-2xl print:shadow-none flex flex-col"
-                style={{ minHeight: '297mm', maxHeight: '297mm' }}
+                style={{ width: '210mm', height: '297mm' }}
             >
                 {/* Header */}
-                <div className="bg-gradient-to-r from-violet-600 via-purple-600 to-fuchsia-700 px-5 py-2">
+                <div className="bg-gradient-to-r from-violet-600 via-purple-600 to-fuchsia-700 px-10 py-4">
                     <div className="flex justify-between items-center">
                         <div>
-                            <h1 className="text-lg font-black text-white">{data.companyName}</h1>
-                            <p className="text-violet-100 text-[10px] italic">{data.companyTagline}</p>
+                            <h1 className="text-2xl font-black text-white">{data.companyName}</h1>
+                            <p className="text-violet-100 text-sm">{data.companyTagline}</p>
                         </div>
-                        <div className="bg-white/20 rounded px-2 py-1 text-center">
-                            <p className="text-[10px] font-black text-white">INTERNSHIP CERTIFICATE</p>
+                        <div className="bg-white/20 backdrop-blur rounded-lg px-4 py-2">
+                            <p className="text-base font-black text-white">INTERNSHIP CERTIFICATE</p>
                         </div>
                     </div>
                 </div>
 
                 {/* Ref & Date */}
-                <div className="px-5 py-0.5 bg-violet-50 border-b border-violet-200 flex justify-between text-[10px]">
+                <div className="px-10 py-2 bg-violet-50 border-b border-violet-200 flex justify-between text-sm">
                     <span><strong>Ref:</strong> {refNumber}</span>
                     <span><strong>Date:</strong> {data.date}</span>
                 </div>
 
-                {/* Main Content - takes ~60% of remaining space */}
-                <div className="px-5 py-2">
+                {/* Main Content */}
+                <div className="px-10 py-6 flex-1 flex flex-col">
                     {/* Title */}
-                    <div className="text-center mb-2">
-                        <h2 className="text-base font-black text-slate-800 uppercase">Certificate of Completion</h2>
-                        <div className="w-16 h-0.5 bg-violet-500 mx-auto mt-1 rounded-full"></div>
+                    <div className="text-center mb-6">
+                        <h2 className="text-2xl font-black text-slate-800 uppercase tracking-wide">Certificate of Completion</h2>
+                        <div className="w-24 h-1 bg-violet-500 mx-auto mt-2 rounded-full"></div>
                     </div>
 
                     {/* Intern Card */}
-                    <div className="bg-violet-50 rounded p-1.5 border border-violet-200 flex items-center gap-2 mb-2">
-                        <div className="w-6 h-6 rounded-full bg-violet-500 flex items-center justify-center text-white text-xs font-bold">
+                    <div className="bg-gradient-to-r from-violet-50 to-purple-50 rounded-xl p-5 border border-violet-200 flex items-center gap-5 mb-6">
+                        <div className="w-16 h-16 rounded-full bg-gradient-to-br from-violet-500 to-purple-600 flex items-center justify-center text-white text-2xl font-bold shadow-md">
                             {data.internName?.charAt(0) || 'I'}
                         </div>
                         <div>
-                            <p className="font-bold text-violet-800 text-sm">{data.internName || '[Intern Name]'}</p>
-                            <p className="text-violet-600 text-[10px]">{data.internshipRole} • {data.department}</p>
+                            <p className="font-bold text-violet-800 text-xl">{data.internName || '[Intern Name]'}</p>
+                            <p className="text-violet-600">{data.internshipRole} • {data.department}</p>
                         </div>
                     </div>
 
                     {/* Certificate Text */}
-                    <p className="text-slate-700 text-[10px] text-center mb-2 leading-relaxed">
-                        This is to certify that <strong className="text-violet-700">{data.internName || '[Intern Name]'}</strong> has
-                        successfully completed an internship at <strong>{data.companyName}</strong> as a <strong>{data.internshipRole}</strong>.
-                    </p>
+                    <div className="text-slate-700 text-base leading-relaxed space-y-4 mb-6">
+                        <p className="text-justify">
+                            This is to certify that <strong className="text-violet-700">{data.internName || '[Intern Name]'}</strong> has
+                            successfully completed an internship at <strong>{data.companyName}</strong> as a <strong>{data.internshipRole}</strong> in
+                            the <strong>{data.department}</strong> department.
+                        </p>
+                    </div>
 
                     {/* Duration Grid */}
-                    <div className="grid grid-cols-3 gap-1.5 mb-2">
-                        <div className="bg-green-50 rounded p-1.5 text-center border border-green-200">
-                            <p className="text-[9px] text-green-600 font-semibold">Start</p>
-                            <p className="font-bold text-green-800 text-[10px]">{data.startDate || '—'}</p>
+                    <div className="grid grid-cols-3 gap-4 mb-6">
+                        <div className="bg-green-50 rounded-lg p-4 text-center border border-green-200">
+                            <p className="text-sm text-green-600 font-semibold">Start Date</p>
+                            <p className="font-bold text-green-800 text-lg">{data.startDate || '—'}</p>
                         </div>
-                        <div className="bg-violet-50 rounded p-1.5 text-center border border-violet-200">
-                            <p className="text-[9px] text-violet-600 font-semibold">Duration</p>
-                            <p className="font-bold text-violet-800 text-[10px]">{data.duration}</p>
+                        <div className="bg-violet-50 rounded-lg p-4 text-center border border-violet-200">
+                            <p className="text-sm text-violet-600 font-semibold">Duration</p>
+                            <p className="font-bold text-violet-800 text-lg">{data.duration}</p>
                         </div>
-                        <div className="bg-amber-50 rounded p-1.5 text-center border border-amber-200">
-                            <p className="text-[9px] text-amber-600 font-semibold">End</p>
-                            <p className="font-bold text-amber-800 text-[10px]">{data.endDate || '—'}</p>
+                        <div className="bg-amber-50 rounded-lg p-4 text-center border border-amber-200">
+                            <p className="text-sm text-amber-600 font-semibold">End Date</p>
+                            <p className="font-bold text-amber-800 text-lg">{data.endDate || '—'}</p>
                         </div>
                     </div>
 
                     {/* Performance & Skills */}
-                    <div className="bg-emerald-50 rounded p-1.5 border border-emerald-200 mb-2 text-[10px]">
-                        <span>Performance: <strong className="text-emerald-700">{data.performanceRating}</strong></span>
-                        <span className="ml-3">Skills: <strong>{data.skills}</strong></span>
-                    </div>
-
-                    <p className="text-slate-600 text-center text-[10px]">We wish them all the best in their future endeavors.</p>
-                </div>
-
-                {/* Spacer to push signature to bottom */}
-                <div className="flex-1"></div>
-
-                {/* Signature Section - at bottom */}
-                <div className="px-5 py-2 border-t border-slate-200">
-                    <div className="flex items-end justify-between">
-                        <div className="text-center">
-                            <img src={signatureImage} alt="Signature" className="h-6 object-contain mx-auto" />
-                            <div className="border-t border-slate-400 pt-0.5 w-24">
-                                <p className="font-bold text-slate-800 text-[10px]">{data.hrName}</p>
-                                <p className="text-[9px] text-slate-600">{data.hrDesignation}</p>
-                            </div>
+                    <div className="bg-emerald-50 rounded-lg p-4 border border-emerald-200 mb-6">
+                        <div className="flex gap-8">
+                            <span className="text-base"><strong>Performance:</strong> <span className="text-emerald-700 font-bold">{data.performanceRating}</span></span>
+                            <span className="text-base"><strong>Skills:</strong> {data.skills}</span>
                         </div>
-                        <CompanySeal companyName={data.companyName} size="sm" />
+                    </div>
+
+                    <p className="text-slate-600 text-center text-base">We wish them all the best in their future endeavors.</p>
+
+                    {/* Spacer */}
+                    <div className="flex-1"></div>
+
+                    {/* Signature */}
+                    <div className="pt-4 border-t border-slate-200 mt-4">
+                        <div className="flex items-end justify-between">
+                            <div>
+                                <img src={signatureImage} alt="Signature" className="h-12 object-contain" />
+                                <div className="border-t-2 border-slate-400 pt-1 mt-1 w-48">
+                                    <p className="font-bold text-slate-800">{data.hrName}</p>
+                                    <p className="text-slate-600 text-sm">{data.hrDesignation}</p>
+                                </div>
+                            </div>
+                            <CompanySeal companyName={data.companyName} size="md" />
+                        </div>
                     </div>
                 </div>
 
-                {/* Footer - Always at bottom */}
-                <div className="bg-violet-900 px-5 py-1">
-                    <div className="flex justify-between text-[10px] text-violet-200">
+                {/* Footer */}
+                <div className="bg-violet-900 px-10 py-3">
+                    <div className="flex justify-between text-sm text-violet-200">
                         <p>© {new Date().getFullYear()} {data.companyName}</p>
-                        <p className="font-mono text-violet-100">{certificateCode}</p>
+                        <p className="font-mono text-xs">{refNumber}</p>
                     </div>
                 </div>
             </div>

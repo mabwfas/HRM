@@ -19,94 +19,98 @@ export const AddressProofLetterTemplate = forwardRef<HTMLDivElement, AddressProo
                 ref={ref}
                 data-print="document"
                 className="bg-white shadow-2xl print:shadow-none flex flex-col"
-                style={{ minHeight: '297mm', maxHeight: '297mm' }}
+                style={{ width: '210mm', height: '297mm' }}
             >
                 {/* Header */}
-                <div className="bg-gradient-to-r from-slate-600 via-slate-700 to-slate-800 px-5 py-2">
+                <div className="bg-gradient-to-r from-slate-600 via-slate-700 to-slate-800 px-10 py-4">
                     <div className="flex justify-between items-center">
                         <div>
-                            <h1 className="text-lg font-black text-white">{data.companyName}</h1>
-                            <p className="text-slate-300 text-[10px]">{data.companyTagline}</p>
+                            <h1 className="text-2xl font-black text-white">{data.companyName}</h1>
+                            <p className="text-slate-300 text-sm">{data.companyTagline}</p>
                         </div>
-                        <div className="bg-white/20 rounded px-2 py-1 text-center">
-                            <p className="text-[10px] font-black text-white">ADDRESS PROOF</p>
+                        <div className="bg-white/20 backdrop-blur rounded-lg px-4 py-2">
+                            <p className="text-base font-black text-white">ADDRESS PROOF LETTER</p>
                         </div>
                     </div>
                 </div>
 
                 {/* Ref & Date */}
-                <div className="px-5 py-0.5 bg-slate-50 border-b border-slate-200 flex justify-between text-[10px]">
+                <div className="px-10 py-2 bg-slate-50 border-b border-slate-200 flex justify-between text-sm">
                     <span><strong>Ref:</strong> {refNumber}</span>
                     <span><strong>Date:</strong> {data.date}</span>
                 </div>
 
-                {/* Main Content - ~60% */}
-                <div className="px-5 py-2">
+                {/* Main Content */}
+                <div className="px-10 py-6 flex-1 flex flex-col">
                     {/* Title */}
-                    <div className="text-center mb-2">
-                        <h2 className="text-base font-black text-slate-800 uppercase">To Whom It May Concern</h2>
-                        <div className="w-16 h-0.5 bg-slate-500 mx-auto mt-1 rounded-full"></div>
+                    <div className="text-center mb-6">
+                        <h2 className="text-2xl font-black text-slate-800 uppercase tracking-wide">To Whom It May Concern</h2>
+                        <div className="w-24 h-1 bg-slate-500 mx-auto mt-2 rounded-full"></div>
                     </div>
 
                     {/* Employee Info */}
-                    <div className="bg-slate-50 rounded p-1.5 border border-slate-200 flex items-center gap-2 mb-2">
-                        <div className="w-6 h-6 rounded-full bg-slate-500 flex items-center justify-center text-white text-xs font-bold">
+                    <div className="bg-slate-50 rounded-xl p-5 border border-slate-200 flex items-center gap-5 mb-6">
+                        <div className="w-16 h-16 rounded-full bg-slate-500 flex items-center justify-center text-white text-2xl font-bold">
                             {data.employeeName?.charAt(0) || 'E'}
                         </div>
                         <div>
-                            <p className="font-bold text-slate-800 text-sm">{data.employeeName || '[Employee Name]'}</p>
-                            <p className="text-[10px] text-slate-600">{data.designation} • {data.department} • ID: {employeeId}</p>
+                            <p className="font-bold text-slate-800 text-xl">{data.employeeName || '[Employee Name]'}</p>
+                            <p className="text-slate-600">{data.designation} • {data.department} • ID: {employeeId}</p>
                         </div>
                     </div>
 
                     {/* Main Content */}
-                    <p className="text-slate-700 text-[10px] mb-2 leading-relaxed">
-                        This is to certify that <strong>{data.employeeName || '[Employee Name]'}</strong> (ID: <strong>{employeeId}</strong>) is employed with <strong>{data.companyName}</strong> as a <strong>{data.designation}</strong> in the <strong>{data.department}</strong> department since <strong>{data.joiningDate || '[Joining Date]'}</strong>.
-                    </p>
+                    <div className="text-slate-700 text-base leading-relaxed space-y-4 mb-6">
+                        <p className="text-justify">
+                            This is to certify that <strong>{data.employeeName || '[Employee Name]'}</strong> (Employee ID: <strong>{employeeId}</strong>)
+                            is employed with <strong>{data.companyName}</strong> as a <strong>{data.designation}</strong> in
+                            the <strong>{data.department}</strong> department since <strong>{data.joiningDate || '[Joining Date]'}</strong>.
+                        </p>
+                    </div>
 
                     {/* Address Card */}
-                    <div className="bg-blue-50 rounded p-2 border border-blue-200 mb-2">
-                        <h3 className="font-bold text-blue-800 text-[10px] mb-0.5">Residential Address (As per records)</h3>
-                        <p className="text-slate-700 text-[10px]">{data.employeeAddress || '[Employee Address]'}</p>
+                    <div className="bg-blue-50 rounded-lg p-6 border border-blue-200 mb-6">
+                        <h3 className="font-bold text-blue-800 text-lg mb-2">Residential Address (As per our records)</h3>
+                        <p className="text-slate-700 text-base">{data.employeeAddress || '[Employee Address]'}</p>
                     </div>
 
                     {/* Purpose & Company Address */}
-                    <div className="grid grid-cols-2 gap-1.5">
-                        <div className="bg-amber-50 rounded p-1.5 border border-amber-200">
-                            <p className="text-[9px] text-amber-600 font-semibold">Purpose</p>
-                            <p className="font-bold text-amber-800 text-[10px]">{data.purpose}</p>
+                    <div className="grid grid-cols-2 gap-4 mb-6">
+                        <div className="bg-amber-50 rounded-lg p-5 border border-amber-200">
+                            <p className="text-sm text-amber-600 font-semibold mb-1">Purpose of Certificate</p>
+                            <p className="font-bold text-amber-800 text-lg">{data.purpose}</p>
                         </div>
-                        <div className="bg-slate-50 rounded p-1.5 border border-slate-200">
-                            <p className="text-[9px] text-slate-500 font-semibold">Company Address</p>
-                            <p className="text-[9px] text-slate-800">{data.companyAddress}</p>
+                        <div className="bg-slate-50 rounded-lg p-5 border border-slate-200">
+                            <p className="text-sm text-slate-500 font-semibold mb-1">Company Address</p>
+                            <p className="text-slate-800">{data.companyAddress}</p>
                         </div>
                     </div>
 
-                    <p className="text-[10px] text-slate-600 mt-1.5">This certificate is issued upon request. For verification, contact HR.</p>
-                </div>
+                    <p className="text-base text-slate-600">This certificate is issued upon the request of the employee for the purpose mentioned above. For verification, please contact HR.</p>
 
-                {/* Spacer */}
-                <div className="flex-1"></div>
+                    {/* Spacer */}
+                    <div className="flex-1"></div>
 
-                {/* Signature */}
-                <div className="px-5 py-2 border-t border-slate-200">
-                    <div className="flex items-end justify-between">
-                        <div className="text-center">
-                            <img src={signatureImage} alt="Signature" className="h-6 object-contain mx-auto" />
-                            <div className="border-t border-slate-400 pt-0.5 w-24">
-                                <p className="font-bold text-slate-800 text-[10px]">{data.hrName}</p>
-                                <p className="text-[9px] text-slate-600">{data.hrDesignation}</p>
+                    {/* Signature */}
+                    <div className="pt-4 border-t border-slate-200 mt-4">
+                        <div className="flex items-end justify-between">
+                            <div>
+                                <img src={signatureImage} alt="Signature" className="h-12 object-contain" />
+                                <div className="border-t-2 border-slate-400 pt-1 mt-1 w-48">
+                                    <p className="font-bold text-slate-800">{data.hrName}</p>
+                                    <p className="text-slate-600 text-sm">{data.hrDesignation}</p>
+                                </div>
                             </div>
+                            <CompanySeal companyName={data.companyName} size="md" />
                         </div>
-                        <CompanySeal companyName={data.companyName} size="sm" />
                     </div>
                 </div>
 
                 {/* Footer */}
-                <div className="bg-slate-900 px-5 py-1">
-                    <div className="flex justify-between text-[10px] text-slate-400">
+                <div className="bg-slate-900 px-10 py-3">
+                    <div className="flex justify-between text-sm text-slate-400">
                         <p>© {new Date().getFullYear()} {data.companyName}</p>
-                        <p className="font-mono text-slate-300">{refNumber}</p>
+                        <p className="font-mono text-xs">{refNumber}</p>
                     </div>
                 </div>
             </div>

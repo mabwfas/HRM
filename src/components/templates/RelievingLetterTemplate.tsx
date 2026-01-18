@@ -1,7 +1,7 @@
 import { forwardRef, useMemo } from 'react';
 import { RelievingLetterData, HR_SIGNATORY_OPTIONS } from '../../types';
 import { CompanySeal } from '../ui/CompanySeal';
-import { generateEmployeeId } from '../../utils/refGenerator';
+import { generateEmployeeId, generateRefNumber, DOC_TYPES } from '../../utils/refGenerator';
 
 interface RelievingLetterTemplateProps {
     data: RelievingLetterData;
@@ -20,6 +20,7 @@ export const RelievingLetterTemplate = forwardRef<HTMLDivElement, RelievingLette
     ({ data, showSeal = true }, ref) => {
         const signatory = HR_SIGNATORY_OPTIONS.find(s => s.name === data.hrName);
         const employeeId = useMemo(() => generateEmployeeId(data.employeeName || ''), [data.employeeName]);
+        const refNumber = useMemo(() => generateRefNumber(data.employeeName || '', DOC_TYPES.REL), [data.employeeName]);
         const signatureImage = signatory?.signatureImage || '/prasun_signature.png';
         const fullRoleTitle = getFullRoleTitle(data.designation, data.customRole1, data.customRole2);
 
@@ -45,7 +46,7 @@ export const RelievingLetterTemplate = forwardRef<HTMLDivElement, RelievingLette
 
                 {/* Ref & Date */}
                 <div className="px-8 py-2 bg-rose-50 border-b border-rose-100 flex justify-between text-xs">
-                    <span><strong>Ref:</strong> {data.refNumber}</span>
+                    <span><strong>Ref:</strong> {refNumber}</span>
                     <span><strong>Date:</strong> {data.date}</span>
                 </div>
 

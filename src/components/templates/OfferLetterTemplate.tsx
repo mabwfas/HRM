@@ -1,6 +1,7 @@
-import { forwardRef } from 'react';
+import { forwardRef, useMemo } from 'react';
 import { OfferLetterData, HR_SIGNATORY_OPTIONS, ROLE_PRESETS } from '../../types';
 import { CompanySeal } from '../ui/CompanySeal';
+import { generateRefNumber, DOC_TYPES } from '../../utils/refGenerator';
 
 interface OfferLetterTemplateProps {
     data: OfferLetterData;
@@ -29,6 +30,7 @@ export const OfferLetterTemplate = forwardRef<HTMLDivElement, OfferLetterTemplat
         const rolePreset = ROLE_PRESETS.find(r => r.designation === data.designation);
         const responsibilities = rolePreset?.responsibilities || 'As assigned by your reporting manager';
         const fullRoleTitle = getFullRoleTitle(data.designation, data.customRole1, data.customRole2);
+        const refNumber = useMemo(() => generateRefNumber(data.candidateName || '', DOC_TYPES.OFR), [data.candidateName]);
 
         return (
             <div
@@ -66,7 +68,7 @@ export const OfferLetterTemplate = forwardRef<HTMLDivElement, OfferLetterTemplat
 
                     {/* Reference & Date Bar */}
                     <div className="px-10 py-3 bg-gradient-to-r from-slate-50 to-blue-50 border-b border-slate-200 flex justify-between text-xs">
-                        <span><strong className="text-slate-600">Ref:</strong> <span className="font-mono text-blue-700">{data.refPrefix}/{data.refYear}/{data.refNumber}</span></span>
+                        <span><strong className="text-slate-600">Ref:</strong> <span className="font-mono text-blue-700">{refNumber}</span></span>
                         <span><strong className="text-slate-600">Date:</strong> <span className="text-slate-800">{data.date}</span></span>
                     </div>
 

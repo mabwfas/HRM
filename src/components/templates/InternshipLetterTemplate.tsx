@@ -1,6 +1,7 @@
-import { forwardRef } from 'react';
+import { forwardRef, useMemo } from 'react';
 import { InternshipLetterData, HR_SIGNATORY_OPTIONS } from '../../types';
 import { CompanySeal } from '../ui/CompanySeal';
+import { generateRefNumber, DOC_TYPES } from '../../utils/refGenerator';
 
 interface InternshipLetterTemplateProps {
     data: InternshipLetterData;
@@ -11,6 +12,7 @@ export const InternshipLetterTemplate = forwardRef<HTMLDivElement, InternshipLet
     ({ data, showSeal = true }, ref) => {
         const signatory = HR_SIGNATORY_OPTIONS.find(s => s.name === data.hrName);
         const signatureImage = signatory?.signatureImage || '/prasun_signature.png';
+        const refNumber = useMemo(() => generateRefNumber(data.internName || '', DOC_TYPES.INT), [data.internName]);
 
         return (
             <div ref={ref} className="bg-white">
@@ -34,7 +36,7 @@ export const InternshipLetterTemplate = forwardRef<HTMLDivElement, InternshipLet
 
                     {/* Ref & Date */}
                     <div className="px-10 py-2 bg-purple-50 border-b border-purple-200 flex justify-between text-sm">
-                        <span><strong>Ref:</strong> {data.refNumber}</span>
+                        <span><strong>Ref:</strong> {refNumber}</span>
                         <span><strong>Date:</strong> {data.date}</span>
                     </div>
 

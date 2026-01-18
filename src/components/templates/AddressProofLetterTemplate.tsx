@@ -19,7 +19,7 @@ export const AddressProofLetterTemplate = forwardRef<HTMLDivElement, AddressProo
                 ref={ref}
                 data-print="document"
                 className="bg-white shadow-2xl print:shadow-none flex flex-col"
-                style={{ width: '210mm', minHeight: '297mm' }}
+                style={{ minHeight: '297mm' }}
             >
                 {/* Header */}
                 <div className="bg-gradient-to-r from-slate-600 via-slate-700 to-slate-800 px-5 py-2">

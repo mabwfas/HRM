@@ -27,7 +27,7 @@ export const InternshipCompletionTemplate = forwardRef<HTMLDivElement, Internshi
                 ref={ref}
                 data-print="document"
                 className="bg-white shadow-2xl print:shadow-none flex flex-col"
-                style={{ width: '210mm', minHeight: '297mm' }}
+                style={{ minHeight: '297mm' }}
             >
                 {/* Header */}
                 <div className="bg-gradient-to-r from-violet-600 via-purple-600 to-fuchsia-700 px-5 py-2">

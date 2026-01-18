@@ -19,7 +19,7 @@ export const TerminationLetterTemplate = forwardRef<HTMLDivElement, TerminationL
                 ref={ref}
                 data-print="document"
                 className="bg-white shadow-2xl print:shadow-none flex flex-col"
-                style={{ width: '210mm', minHeight: '297mm' }}
+                style={{ minHeight: '297mm' }}
             >
                 {/* Header */}
                 <div className="bg-gradient-to-r from-red-600 via-rose-600 to-pink-700 px-5 py-2">

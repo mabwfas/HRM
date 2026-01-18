@@ -19,7 +19,7 @@ export const WarningLetterTemplate = forwardRef<HTMLDivElement, WarningLetterTem
                 ref={ref}
                 data-print="document"
                 className="bg-white shadow-2xl print:shadow-none flex flex-col"
-                style={{ width: '210mm', minHeight: '297mm' }}
+                style={{ minHeight: '297mm' }}
             >
                 {/* Header */}
                 <div className="bg-gradient-to-r from-orange-500 via-red-500 to-rose-600 px-5 py-2">

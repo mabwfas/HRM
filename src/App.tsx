@@ -1579,7 +1579,7 @@ function App() {
                 {/* Preview Panel - Hidden on mobile unless preview view, visible on md+ */}
                 <div className={`${mobileView === 'preview' ? 'flex' : 'hidden'} md:flex flex-1 bg-slate-200 overflow-auto p-2 md:p-6 justify-center print:p-0 print:bg-white print:block`}>
                     <div className="print:w-full w-full md:w-auto overflow-x-auto" id="print-content">
-                        <div className="transform scale-[0.7] md:scale-[0.85] origin-top">
+                        <div className="print:transform-none">
                             {selectedDoc === 'offer-letter' && <OfferLetterTemplate ref={previewRef} data={offerData} showSeal={showSeal} />}
                             {selectedDoc === 'salary-slip' && <SalarySlipTemplate ref={previewRef} data={salaryData} showSeal={showSeal} />}
                             {selectedDoc === 'internship-letter' && <InternshipLetterTemplate ref={previewRef} data={internshipData} showSeal={showSeal} />}
@@ -1629,35 +1629,20 @@ function App() {
         @media print {
           body { margin: 0; padding: 0; }
           .print\\:hidden { display: none !important; }
-          /* Ensure preview panel is visible and full width */
           #print-content { 
             display: block !important;
-            width: 210mm !important;
-            max-width: none !important;
             overflow: visible !important;
           }
           #print-content > div {
             display: block !important;
-            width: 210mm !important;
-            min-width: 210mm !important;
-            max-width: 210mm !important;
             box-shadow: none !important;
             margin: 0 !important;
             padding: 0 !important;
             transform: none !important;
-            transform-origin: top left !important;
           }
-          /* Override any scaling */
-          .scale-\\[0\\.7\\], .scale-\\[0\\.85\\], .scale-\\[0\\.5\\] {
-            transform: none !important;
-          }
-          /* Ensure templates render at full size without overflow hidden */
           #print-content > div > div {
-            width: 210mm !important;
-            min-height: auto !important;
             overflow: visible !important;
           }
-          /* Page breaks between multi-page documents */
           [data-print="document"] {
             page-break-after: always;
             overflow: visible !important;

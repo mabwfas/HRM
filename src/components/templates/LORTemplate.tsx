@@ -27,7 +27,7 @@ export const LORTemplate = forwardRef<HTMLDivElement, LORTemplateProps>(
                 ref={ref}
                 data-print="document"
                 className="bg-white shadow-2xl print:shadow-none flex flex-col"
-                style={{ width: '210mm', minHeight: '297mm' }}
+                style={{ minHeight: '297mm' }}
             >
                 {/* Header */}
                 <div className="bg-gradient-to-r from-amber-600 via-yellow-600 to-orange-600 px-5 py-2">

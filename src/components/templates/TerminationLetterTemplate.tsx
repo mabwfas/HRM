@@ -52,7 +52,7 @@ export const TerminationLetterTemplate = forwardRef<HTMLDivElement, TerminationL
                             <p className="text-slate-600">{data.designation} • {data.department} • ID: {employeeId}</p>
                         </div>
                         <div className="bg-red-500 text-white px-4 py-1.5 rounded-full font-bold">
-                            {data.terminationType?.toUpperCase() || 'TERMINATION'}
+                            🚫 {data.terminationType?.toUpperCase() || 'TERMINATION'}
                         </div>
                     </div>
 

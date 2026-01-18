@@ -44,7 +44,7 @@ export const AddressProofLetterTemplate = forwardRef<HTMLDivElement, AddressProo
                 <div className="px-10 py-6 flex-1 flex flex-col">
                     {/* Title */}
                     <div className="text-center mb-6">
-                        <h2 className="text-2xl font-black text-slate-800 uppercase tracking-wide">To Whom It May Concern</h2>
+                        <h2 className="text-2xl font-black text-slate-800 uppercase tracking-wide">🏠 Address Proof Certificate</h2>
                         <div className="w-24 h-1 bg-slate-500 mx-auto mt-2 rounded-full"></div>
                     </div>
 

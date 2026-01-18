@@ -56,7 +56,7 @@ export const JoiningLetterTemplate = forwardRef<HTMLDivElement, JoiningLetterTem
                             <p className="text-green-600">{data.designation} • {data.department} • ID: {employeeId}</p>
                         </div>
                         <div className="bg-green-500 text-white px-4 py-1.5 rounded-full font-bold">
-                            WELCOME ABOARD!
+                            🎉 WELCOME ABOARD!
                         </div>
                     </div>
 

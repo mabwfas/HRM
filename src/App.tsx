@@ -1356,23 +1356,42 @@ function App() {
                         {selectedDoc === 'promotion-letter' && (
                             <>
                                 <Card title="🎯 Quick Select Role" headerClassName="bg-gradient-to-r from-sky-500 to-blue-500 text-white">
-                                    <Select
-                                        label="Current Role (Auto-fills details)"
-                                        name="rolePreset"
-                                        value={promotionData.currentDesignation}
-                                        options={ROLE_PRESETS.map(r => ({ value: r.designation, label: `${r.designation} - ₹${(r.annualCtc / 100000).toFixed(1)}L` }))}
-                                        onChange={(e) => {
-                                            const preset = ROLE_PRESETS.find(r => r.designation === e.target.value);
-                                            if (preset) {
-                                                setPromotionData(prev => ({
-                                                    ...prev,
-                                                    currentDesignation: preset.designation,
-                                                    department: preset.department,
-                                                    currentCtc: preset.annualCtc,
-                                                }));
-                                            }
-                                        }}
-                                    />
+                                    <div className="space-y-3">
+                                        <Select
+                                            label="Current Role (Auto-fills current details)"
+                                            name="rolePreset"
+                                            value={promotionData.currentDesignation}
+                                            options={ROLE_PRESETS.map(r => ({ value: r.designation, label: `${r.designation} - ₹${(r.annualCtc / 100000).toFixed(1)}L` }))}
+                                            onChange={(e) => {
+                                                const preset = ROLE_PRESETS.find(r => r.designation === e.target.value);
+                                                if (preset) {
+                                                    setPromotionData(prev => ({
+                                                        ...prev,
+                                                        currentDesignation: preset.designation,
+                                                        department: preset.department,
+                                                        currentCtc: preset.annualCtc,
+                                                    }));
+                                                }
+                                            }}
+                                        />
+                                        <Select
+                                            label="New Role (Auto-fills new designation, CTC & responsibilities)"
+                                            name="newRolePreset"
+                                            value={promotionData.newDesignation}
+                                            options={ROLE_PRESETS.map(r => ({ value: r.designation, label: `${r.designation} - ₹${(r.annualCtc / 100000).toFixed(1)}L` }))}
+                                            onChange={(e) => {
+                                                const preset = ROLE_PRESETS.find(r => r.designation === e.target.value);
+                                                if (preset) {
+                                                    setPromotionData(prev => ({
+                                                        ...prev,
+                                                        newDesignation: preset.designation,
+                                                        newCtc: preset.annualCtc,
+                                                        newResponsibilities: preset.responsibilities,
+                                                    }));
+                                                }
+                                            }}
+                                        />
+                                    </div>
                                 </Card>
                                 <Card title="Document Details" headerClassName="bg-slate-50">
                                     <div className="space-y-3">

@@ -19,7 +19,7 @@ export const AddressProofLetterTemplate = forwardRef<HTMLDivElement, AddressProo
                 ref={ref}
                 data-print="document"
                 className="bg-white shadow-2xl print:shadow-none flex flex-col"
-                style={{ minHeight: '297mm' }}
+                style={{ minHeight: '297mm', maxHeight: '297mm' }}
             >
                 {/* Header */}
                 <div className="bg-gradient-to-r from-slate-600 via-slate-700 to-slate-800 px-5 py-2">
@@ -40,8 +40,8 @@ export const AddressProofLetterTemplate = forwardRef<HTMLDivElement, AddressProo
                     <span><strong>Date:</strong> {data.date}</span>
                 </div>
 
-                {/* Main Content - flex-1 to push footer down */}
-                <div className="px-5 py-2 flex-1 flex flex-col">
+                {/* Main Content - ~60% */}
+                <div className="px-5 py-2">
                     {/* Title */}
                     <div className="text-center mb-2">
                         <h2 className="text-base font-black text-slate-800 uppercase">To Whom It May Concern</h2>
@@ -71,7 +71,7 @@ export const AddressProofLetterTemplate = forwardRef<HTMLDivElement, AddressProo
                     </div>
 
                     {/* Purpose & Company Address */}
-                    <div className="grid grid-cols-2 gap-1.5 mb-2">
+                    <div className="grid grid-cols-2 gap-1.5">
                         <div className="bg-amber-50 rounded p-1.5 border border-amber-200">
                             <p className="text-[9px] text-amber-600 font-semibold">Purpose</p>
                             <p className="font-bold text-amber-800 text-[10px]">{data.purpose}</p>
@@ -82,10 +82,15 @@ export const AddressProofLetterTemplate = forwardRef<HTMLDivElement, AddressProo
                         </div>
                     </div>
 
-                    <p className="text-[10px] text-slate-600 mb-1.5">This certificate is issued upon request. For verification, contact HR.</p>
+                    <p className="text-[10px] text-slate-600 mt-1.5">This certificate is issued upon request. For verification, contact HR.</p>
+                </div>
 
-                    {/* Signature - mt-auto pushes to bottom */}
-                    <div className="pt-1.5 border-t border-slate-200 flex items-end justify-between mt-auto">
+                {/* Spacer */}
+                <div className="flex-1"></div>
+
+                {/* Signature */}
+                <div className="px-5 py-2 border-t border-slate-200">
+                    <div className="flex items-end justify-between">
                         <div className="text-center">
                             <img src={signatureImage} alt="Signature" className="h-6 object-contain mx-auto" />
                             <div className="border-t border-slate-400 pt-0.5 w-24">
@@ -97,7 +102,7 @@ export const AddressProofLetterTemplate = forwardRef<HTMLDivElement, AddressProo
                     </div>
                 </div>
 
-                {/* Footer - Always at bottom */}
+                {/* Footer */}
                 <div className="bg-slate-900 px-5 py-1">
                     <div className="flex justify-between text-[10px] text-slate-400">
                         <p>© {new Date().getFullYear()} {data.companyName}</p>

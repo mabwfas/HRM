@@ -27,7 +27,7 @@ export const InternshipCompletionTemplate = forwardRef<HTMLDivElement, Internshi
                 ref={ref}
                 data-print="document"
                 className="bg-white shadow-2xl print:shadow-none flex flex-col"
-                style={{ minHeight: '297mm' }}
+                style={{ minHeight: '297mm', maxHeight: '297mm' }}
             >
                 {/* Header */}
                 <div className="bg-gradient-to-r from-violet-600 via-purple-600 to-fuchsia-700 px-5 py-2">
@@ -48,8 +48,8 @@ export const InternshipCompletionTemplate = forwardRef<HTMLDivElement, Internshi
                     <span><strong>Date:</strong> {data.date}</span>
                 </div>
 
-                {/* Main Content - flex-1 to push footer down */}
-                <div className="px-5 py-2 flex-1 flex flex-col">
+                {/* Main Content - takes ~60% of remaining space */}
+                <div className="px-5 py-2">
                     {/* Title */}
                     <div className="text-center mb-2">
                         <h2 className="text-base font-black text-slate-800 uppercase">Certificate of Completion</h2>
@@ -95,10 +95,15 @@ export const InternshipCompletionTemplate = forwardRef<HTMLDivElement, Internshi
                         <span className="ml-3">Skills: <strong>{data.skills}</strong></span>
                     </div>
 
-                    <p className="text-slate-600 text-center text-[10px] mb-1.5">We wish them all the best in their future endeavors.</p>
+                    <p className="text-slate-600 text-center text-[10px]">We wish them all the best in their future endeavors.</p>
+                </div>
 
-                    {/* Signature - mt-auto pushes to bottom of flex container */}
-                    <div className="pt-1.5 border-t border-slate-200 flex items-end justify-between mt-auto">
+                {/* Spacer to push signature to bottom */}
+                <div className="flex-1"></div>
+
+                {/* Signature Section - at bottom */}
+                <div className="px-5 py-2 border-t border-slate-200">
+                    <div className="flex items-end justify-between">
                         <div className="text-center">
                             <img src={signatureImage} alt="Signature" className="h-6 object-contain mx-auto" />
                             <div className="border-t border-slate-400 pt-0.5 w-24">

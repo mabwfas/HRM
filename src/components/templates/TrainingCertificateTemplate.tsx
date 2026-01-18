@@ -21,7 +21,7 @@ export const TrainingCertificateTemplate = forwardRef<HTMLDivElement, TrainingCe
                 ref={ref}
                 data-print="document"
                 className="bg-white shadow-2xl print:shadow-none flex flex-col"
-                style={{ minHeight: '297mm' }}
+                style={{ minHeight: '297mm', maxHeight: '297mm' }}
             >
                 {/* Header */}
                 <div className="bg-gradient-to-r from-indigo-600 via-blue-600 to-cyan-600 px-5 py-2">
@@ -42,8 +42,8 @@ export const TrainingCertificateTemplate = forwardRef<HTMLDivElement, TrainingCe
                     <span><strong>Date:</strong> {data.date}</span>
                 </div>
 
-                {/* Main Content - flex-1 to push footer down */}
-                <div className="px-5 py-2 flex-1 flex flex-col">
+                {/* Main Content - ~60% */}
+                <div className="px-5 py-2">
                     {/* Title */}
                     <div className="text-center mb-2">
                         <h2 className="text-base font-black text-slate-800 uppercase">Certificate of Completion</h2>
@@ -73,7 +73,7 @@ export const TrainingCertificateTemplate = forwardRef<HTMLDivElement, TrainingCe
                     </div>
 
                     {/* Details Grid */}
-                    <div className="grid grid-cols-3 gap-1.5 mb-2">
+                    <div className="grid grid-cols-3 gap-1.5">
                         <div className="bg-slate-50 rounded p-1.5 border border-slate-200 text-center">
                             <p className="text-[9px] text-slate-500 font-semibold">Date</p>
                             <p className="font-bold text-slate-800 text-[10px]">{data.trainingDate || '—'}</p>
@@ -87,9 +87,14 @@ export const TrainingCertificateTemplate = forwardRef<HTMLDivElement, TrainingCe
                             <p className="font-bold text-blue-800 text-[9px]">{data.trainerName}</p>
                         </div>
                     </div>
+                </div>
 
-                    {/* Signature - mt-auto pushes to bottom */}
-                    <div className="pt-1.5 border-t border-slate-200 flex items-end justify-between mt-auto">
+                {/* Spacer */}
+                <div className="flex-1"></div>
+
+                {/* Signature */}
+                <div className="px-5 py-2 border-t border-slate-200">
+                    <div className="flex items-end justify-between">
                         <div className="text-center">
                             <img src={signatureImage} alt="Signature" className="h-6 object-contain mx-auto" />
                             <div className="border-t border-slate-400 pt-0.5 w-24">
@@ -101,7 +106,7 @@ export const TrainingCertificateTemplate = forwardRef<HTMLDivElement, TrainingCe
                     </div>
                 </div>
 
-                {/* Footer - Always at bottom */}
+                {/* Footer */}
                 <div className="bg-indigo-900 px-5 py-1">
                     <div className="flex justify-between text-[10px] text-indigo-200">
                         <p>© {new Date().getFullYear()} {data.companyName}</p>

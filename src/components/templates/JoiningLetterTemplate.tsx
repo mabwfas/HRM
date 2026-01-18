@@ -25,8 +25,8 @@ export const JoiningLetterTemplate = forwardRef<HTMLDivElement, JoiningLetterTem
             <div
                 ref={ref}
                 data-print="document"
-                className="bg-white shadow-2xl print:shadow-none"
-                style={{ width: '210mm' }}
+                className="bg-white shadow-2xl print:shadow-none flex flex-col"
+                style={{ minHeight: '297mm', maxHeight: '297mm' }}
             >
                 {/* Header */}
                 <div className="relative">

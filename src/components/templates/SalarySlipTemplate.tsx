@@ -40,7 +40,7 @@ export const SalarySlipTemplate = forwardRef<HTMLDivElement, SalarySlipTemplateP
             <div
                 ref={ref}
                 className="bg-white shadow-2xl print:shadow-none text-[11px] flex flex-col"
-                style={{ width: '210mm' }}
+                style={{ minHeight: '297mm', maxHeight: '297mm' }}
             >
                 {/* Header */}
                 <div className="bg-gradient-to-r from-slate-800 via-slate-900 to-slate-800 px-8 py-4">

@@ -1,7 +1,7 @@
 import { forwardRef, useMemo } from 'react';
 import { InternshipCompletionData, HR_SIGNATORY_OPTIONS } from '../../types';
 import { CompanySeal } from '../ui/CompanySeal';
-import { generateRefNumber, generateEmployeeId, DOC_TYPES } from '../../utils/refGenerator';
+import { generateRefNumber, DOC_TYPES } from '../../utils/refGenerator';
 
 interface InternshipCompletionTemplateProps {
     data: InternshipCompletionData;

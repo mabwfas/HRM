@@ -25,44 +25,43 @@ export const LORTemplate = forwardRef<HTMLDivElement, LORTemplateProps>(
                 style={{ width: '210mm', height: '297mm' }}
             >
                 {/* Header */}
-                <div className="bg-gradient-to-r from-amber-600 via-yellow-500 to-orange-500 px-10 py-6">
+                <div className="bg-gradient-to-r from-amber-600 via-yellow-500 to-orange-500 px-10 py-4">
                     <div className="flex justify-between items-center">
                         <div>
-                            <h1 className="text-3xl font-black text-white tracking-tight">{data.companyName}</h1>
-                            <p className="text-amber-100 text-base mt-1">{data.companyTagline}</p>
+                            <h1 className="text-2xl font-black text-white tracking-tight">{data.companyName}</h1>
+                            <p className="text-amber-100 text-sm">{data.companyTagline}</p>
                         </div>
-                        <div className="bg-white/20 backdrop-blur rounded-xl px-6 py-3">
-                            <p className="text-xl font-black text-white tracking-wide">LETTER OF</p>
-                            <p className="text-xl font-black text-white tracking-wide">RECOMMENDATION</p>
+                        <div className="bg-white/20 backdrop-blur rounded-lg px-4 py-2">
+                            <p className="text-base font-black text-white tracking-wide">LETTER OF RECOMMENDATION</p>
                         </div>
                     </div>
                 </div>
 
                 {/* Reference & Date */}
-                <div className="px-10 py-3 bg-amber-50 border-b-2 border-amber-200 flex justify-between text-base">
-                    <span className="text-slate-700"><strong className="text-amber-800">Ref:</strong> {refNumber}</span>
-                    <span className="text-slate-700"><strong className="text-amber-800">Date:</strong> {data.date}</span>
+                <div className="px-10 py-2 bg-amber-50 border-b border-amber-200 flex justify-between text-sm">
+                    <span><strong>Ref:</strong> {refNumber}</span>
+                    <span><strong>Date:</strong> {data.date}</span>
                 </div>
 
                 {/* Main Content */}
-                <div className="px-10 py-8 flex-1">
+                <div className="px-10 py-5 flex-1 flex flex-col">
                     {/* Intern Profile Card */}
-                    <div className="bg-gradient-to-r from-amber-50 to-orange-50 rounded-2xl p-6 border-2 border-amber-200 mb-8 flex items-center gap-6">
-                        <div className="w-20 h-20 rounded-full bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center text-white text-3xl font-black shadow-lg">
+                    <div className="bg-gradient-to-r from-amber-50 to-orange-50 rounded-xl p-4 border border-amber-200 mb-5 flex items-center gap-4">
+                        <div className="w-14 h-14 rounded-full bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center text-white text-2xl font-black shadow-md">
                             {data.internName?.charAt(0) || 'I'}
                         </div>
                         <div className="flex-1">
-                            <p className="font-black text-amber-900 text-2xl">{data.internName || '[Intern Name]'}</p>
-                            <p className="text-amber-700 text-lg mt-1">{data.internshipRole} • {data.department}</p>
+                            <p className="font-black text-amber-900 text-xl">{data.internName || '[Intern Name]'}</p>
+                            <p className="text-amber-700 text-sm">{data.internshipRole} • {data.department}</p>
                         </div>
-                        <div className="bg-gradient-to-r from-amber-500 to-orange-500 text-white px-5 py-2 rounded-full text-base font-bold shadow-md">
+                        <div className="bg-gradient-to-r from-amber-500 to-orange-500 text-white px-3 py-1 rounded-full text-sm font-bold">
                             ⭐ TOP PERFORMER
                         </div>
                     </div>
 
                     {/* Letter Body */}
-                    <div className="text-slate-800 text-lg leading-[2] space-y-6">
-                        <p className="font-bold text-xl text-slate-700">To Whom It May Concern,</p>
+                    <div className="text-slate-700 text-base leading-relaxed space-y-4">
+                        <p className="font-bold text-lg">To Whom It May Concern,</p>
 
                         <p className="text-justify">
                             It is with great pleasure that I recommend <strong className="text-amber-700">{data.internName || '[Intern Name]'}</strong>,
@@ -81,38 +80,39 @@ export const LORTemplate = forwardRef<HTMLDivElement, LORTemplateProps>(
                         <p className="text-justify">
                             {data.internName?.split(' ')[0] || 'They'} consistently exhibited strong analytical abilities, excellent
                             communication skills, and a remarkable ability to collaborate effectively with team members. Their
-                            dedication, professionalism, and eagerness to learn made a significant positive impact on our organization.
+                            dedication and professionalism made a significant positive impact on our organization.
                         </p>
 
                         <p className="text-justify">
                             I wholeheartedly recommend <strong className="text-amber-700">{data.internName || '[Intern Name]'}</strong> for
-                            any future endeavors. I am confident that they will continue to excel and be a valuable asset to any
-                            organization fortunate enough to have them.
+                            any future endeavors. I am confident they will be a valuable asset to any organization.
                         </p>
                     </div>
-                </div>
 
-                {/* Signature Section */}
-                <div className="px-10 py-6 border-t-2 border-slate-200 bg-slate-50">
-                    <p className="text-lg text-slate-600 mb-4">Wishing them all the best,</p>
-                    <div className="flex items-end justify-between">
-                        <div>
-                            <img src={signatureImage} alt="Signature" className="h-16 object-contain" />
-                            <div className="border-t-2 border-slate-400 pt-2 mt-2 w-56">
-                                <p className="font-bold text-slate-800 text-lg">{data.hrName}</p>
-                                <p className="text-slate-600">{data.hrDesignation}</p>
-                                <p className="text-slate-500 text-sm">{data.companyName}</p>
+                    {/* Spacer */}
+                    <div className="flex-1"></div>
+
+                    {/* Signature Section */}
+                    <div className="pt-4 border-t border-slate-200 mt-4">
+                        <p className="text-base text-slate-600 mb-3">Wishing them all the best,</p>
+                        <div className="flex items-end justify-between">
+                            <div>
+                                <img src={signatureImage} alt="Signature" className="h-12 object-contain" />
+                                <div className="border-t-2 border-slate-400 pt-1 mt-1 w-48">
+                                    <p className="font-bold text-slate-800">{data.hrName}</p>
+                                    <p className="text-slate-600 text-sm">{data.hrDesignation}</p>
+                                </div>
                             </div>
+                            <CompanySeal companyName={data.companyName} size="md" />
                         </div>
-                        <CompanySeal companyName={data.companyName} size="lg" />
                     </div>
                 </div>
 
                 {/* Footer */}
-                <div className="bg-amber-800 px-10 py-4">
+                <div className="bg-amber-800 px-10 py-3">
                     <div className="flex justify-between items-center text-amber-100">
-                        <p className="text-base">© {new Date().getFullYear()} {data.companyName}</p>
-                        <p className="font-mono text-sm">{refNumber}</p>
+                        <p className="text-sm">© {new Date().getFullYear()} {data.companyName}</p>
+                        <p className="font-mono text-xs">{refNumber}</p>
                     </div>
                 </div>
             </div>

@@ -422,7 +422,7 @@ function App() {
     return (
         <div className={`flex flex-col md:flex-row h-screen w-screen overflow-hidden font-sans ${darkMode ? 'dark bg-slate-900' : 'bg-slate-100'}`}>
             {/* Mobile Header - Only visible on mobile */}
-            <div className="md:hidden bg-gradient-to-r from-slate-800 to-slate-900 p-3 flex items-center justify-between safe-area-top">
+            <div className="md:hidden bg-gradient-to-r from-slate-800 to-slate-900 pt-5 pb-3 px-4 flex items-center justify-between safe-area-top">
                 <div className="flex-1 min-w-0">
                     <h1 className="text-base font-bold text-white truncate">Digital Heroes HR</h1>
                     <p className="text-xs text-slate-400 truncate">{currentDocOption?.icon} {currentDocOption?.label}</p>

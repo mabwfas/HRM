@@ -422,17 +422,24 @@ function App() {
     return (
         <div className={`flex flex-col md:flex-row h-screen w-screen overflow-hidden font-sans ${darkMode ? 'dark bg-slate-900' : 'bg-slate-100'}`}>
             {/* Mobile Header - Only visible on mobile */}
-            <div className="md:hidden bg-gradient-to-r from-slate-800 to-slate-900 p-4 flex items-center justify-between">
-                <div>
-                    <h1 className="text-lg font-bold text-white">Digital Heroes</h1>
-                    <p className="text-xs text-slate-400">{currentDocOption?.icon} {currentDocOption?.label}</p>
+            <div className="md:hidden bg-gradient-to-r from-slate-800 to-slate-900 p-3 flex items-center justify-between safe-area-top">
+                <div className="flex-1 min-w-0">
+                    <h1 className="text-base font-bold text-white truncate">Digital Heroes HR</h1>
+                    <p className="text-xs text-slate-400 truncate">{currentDocOption?.icon} {currentDocOption?.label}</p>
                 </div>
-                <div className="flex gap-2">
-                    <button onClick={() => setDarkMode(!darkMode)} className="p-2 rounded-lg bg-slate-700 text-white">
+                <div className="flex gap-1.5">
+                    <button
+                        onClick={() => setShowSeal(!showSeal)}
+                        className={`p-2 rounded-lg text-sm ${showSeal ? 'bg-blue-600 text-white' : 'bg-slate-700 text-slate-300'}`}
+                        title={showSeal ? 'Hide Seal' : 'Show Seal'}
+                    >
+                        {showSeal ? '⭕' : '⭕'}
+                    </button>
+                    <button onClick={() => setDarkMode(!darkMode)} className="p-2 rounded-lg bg-slate-700 text-white text-sm">
                         {darkMode ? '☀️' : '🌙'}
                     </button>
-                    <Button onClick={handleDownloadPDF} size="sm">
-                        📥 PDF
+                    <Button onClick={handleDownloadPDF} size="sm" className="!px-3 !py-2">
+                        📥
                     </Button>
                 </div>
             </div>
@@ -1730,27 +1737,35 @@ function App() {
             </div>
 
             {/* Mobile Bottom Navigation - Only visible on mobile */}
-            <div className="md:hidden bg-white border-t border-slate-200 flex print:hidden">
+            <div className="md:hidden bg-white border-t border-slate-200 flex print:hidden safe-area-bottom shadow-lg">
                 <button
                     onClick={() => setMobileView('docs')}
-                    className={`flex-1 py-3 flex flex-col items-center gap-1 transition-all ${mobileView === 'docs' ? 'bg-blue-50 text-blue-600' : 'text-slate-500'}`}
+                    className={`flex-1 py-4 flex flex-col items-center gap-0.5 transition-all active:scale-95 ${mobileView === 'docs' ? 'bg-blue-50 text-blue-600 border-t-2 border-blue-500' : 'text-slate-500'}`}
                 >
-                    <span className="text-xl">📄</span>
-                    <span className="text-xs font-medium">Documents</span>
+                    <span className="text-2xl">📄</span>
+                    <span className="text-[10px] font-semibold uppercase">Docs</span>
                 </button>
                 <button
                     onClick={() => setMobileView('form')}
-                    className={`flex-1 py-3 flex flex-col items-center gap-1 transition-all ${mobileView === 'form' ? 'bg-blue-50 text-blue-600' : 'text-slate-500'}`}
+                    className={`flex-1 py-4 flex flex-col items-center gap-0.5 transition-all active:scale-95 ${mobileView === 'form' ? 'bg-blue-50 text-blue-600 border-t-2 border-blue-500' : 'text-slate-500'}`}
                 >
-                    <span className="text-xl">✏️</span>
-                    <span className="text-xs font-medium">Edit</span>
+                    <span className="text-2xl">✏️</span>
+                    <span className="text-[10px] font-semibold uppercase">Edit</span>
                 </button>
                 <button
                     onClick={() => setMobileView('preview')}
-                    className={`flex-1 py-3 flex flex-col items-center gap-1 transition-all ${mobileView === 'preview' ? 'bg-blue-50 text-blue-600' : 'text-slate-500'}`}
+                    className={`flex-1 py-4 flex flex-col items-center gap-0.5 transition-all active:scale-95 ${mobileView === 'preview' ? 'bg-blue-50 text-blue-600 border-t-2 border-blue-500' : 'text-slate-500'}`}
                 >
-                    <span className="text-xl">👁️</span>
-                    <span className="text-xs font-medium">Preview</span>
+                    <span className="text-2xl">👁️</span>
+                    <span className="text-[10px] font-semibold uppercase">Preview</span>
+                </button>
+                {/* Quick Download button in nav */}
+                <button
+                    onClick={handleDownloadPDF}
+                    className="py-4 px-5 flex flex-col items-center gap-0.5 transition-all active:scale-95 bg-gradient-to-r from-blue-500 to-blue-600 text-white"
+                >
+                    <span className="text-2xl">📥</span>
+                    <span className="text-[10px] font-semibold uppercase">Save</span>
                 </button>
             </div>
 

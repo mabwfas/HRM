@@ -56,6 +56,31 @@ body {
         transform: translateY(-2px);
         box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.1);
     }
+
+    /* Safe area insets for iOS devices with notch */
+    .safe-area-top {
+        padding-top: env(safe-area-inset-top, 0);
+    }
+
+    .safe-area-bottom {
+        padding-bottom: env(safe-area-inset-bottom, 0);
+    }
+
+    /* Improved touch targets for mobile */
+    .touch-target {
+        min-height: 44px;
+        min-width: 44px;
+    }
+
+    /* Momentum scrolling for iOS */
+    .scroll-touch {
+        -webkit-overflow-scrolling: touch;
+    }
+
+    /* Active state for mobile buttons */
+    .active\:scale-95:active {
+        transform: scale(0.95);
+    }
 }
 
 @keyframes fadeIn {
